@@ -1,0 +1,433 @@
+"use client";
+
+import { useEffect, useState, useCallback, useMemo, useRef } from "react";
+import Link from "next/link";
+import ForceGraph2D from "@/components/ForceGraphWrapper";
+import {
+  TYPE_COLORS,
+  TYPE_LABELS,
+  TYPE_SHORT,
+  SOURCE_EMOJI,
+  type PipelineData,
+  type Constellation,
+} from "@/lib/types";
+
+interface GraphNode {
+  id: string;
+  title: string;
+  type: string;
+  score: number;
+  idea_ids: number[];
+  explanation: string;
+  x?: number;
+  y?: number;
+}
+
+interface GraphLink {
+  source: string | GraphNode;
+  target: string | GraphNode;
+  weight: number;
+}
+
+interface HubIdea {
+  id: number;
+  title: string;
+  source: string;
+  constellations: string[];
+  count: number;
+}
+
+const TYPE_EXAMPLES: Record<string, string> = {
+  chain: "Proprietary product \u2192 open-source clones \u2192 cheaper alternatives \u2192 users migrating.",
+  triangulation: "A post refusing apps + a data privacy scandal + AI agent sandboxes \u2192 the silent collapse of user agency.",
+  convergence: "A distributed systems paper + an organizational resilience article \u2192 both describing fault tolerance under stress.",
+  absence: "AI coding agents + audit tools + regulation concerns, but no standardized logging for agent decisions.",
+  spectrum: "From fully autonomous AI to fully supervised AI, with intermediate positions along the control spectrum.",
+};
+
+const TYPE_ORDER = ["chain", "triangulation", "convergence", "absence", "spectrum"] as const;
+
+function truncate(str: string, max: number) {
+  return str.length > max ? str.slice(0, max) + "\u2026" : str;
+}
+
+export default function ConstellationMapPage() {
+  const [data, setData] = useState<PipelineData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
+  const [highlightedHub, setHighlightedHub] = useState<HubIdea | null>(null);
+  const [hoveredNode, setHoveredNode] = useState<GraphNode | null>(null);
+  const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
+  const [activeTypes, setActiveTypes] = useState<Set<string>>(new Set(Object.keys(TYPE_COLORS)));
+  const [minScore, setMinScore] = useState(6);
+  const [searchText, setSearchText] = useState("");
+  const [showHelp, setShowHelp] = useState(false);
+  const graphRef = useRef<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
+
+  useEffect(() => {
+    fetch("/data.json")
+      .then((r) => r.json())
+      .then((d: PipelineData) => { setData(d); setLoading(false); });
+  }, []);
+
+  const toggleType = useCallback((type: string) => {
+    setActiveTypes((prev) => {
+      const next = new Set(prev);
+      if (next.has(type)) next.delete(type); else next.add(type);
+      return next;
+    });
+  }, []);
+
+  // Build graph nodes & links from constellations
+  const { graphNodes, graphLinks } = useMemo(() => {
+    if (!data) return { graphNodes: [], graphLinks: [] };
+    const nodes: GraphNode[] = data.constellations.map((c, i) => ({
+      id: `c_${i}`,
+      title: c.title,
+      type: c.constellation_type,
+      score: c.score,
+      idea_ids: c.idea_ids,
+      explanation: c.explanation,
+    }));
+
+    const links: GraphLink[] = [];
+    for (let i = 0; i < nodes.length; i++) {
+      const setA = new Set(nodes[i].idea_ids);
+      for (let j = i + 1; j < nodes.length; j++) {
+        const shared = nodes[j].idea_ids.filter((id) => setA.has(id));
+        if (shared.length > 0) {
+          links.push({ source: nodes[i].id, target: nodes[j].id, weight: shared.length });
+        }
+      }
+    }
+    return { graphNodes: nodes, graphLinks: links };
+  }, [data]);
+
+  // Filtered graph
+  const filteredData = useMemo(() => {
+    const sl = searchText.toLowerCase();
+    const nodes = graphNodes.filter(
+      (n) => activeTypes.has(n.type) && n.score >= minScore &&
+        (searchText === "" || n.title.toLowerCase().includes(sl))
+    );
+    const ids = new Set(nodes.map((n) => n.id));
+    const links = graphLinks.filter((l) => {
+      const sId = typeof l.source === "string" ? l.source : l.source.id;
+      const tId = typeof l.target === "string" ? l.target : l.target.id;
+      return ids.has(sId) && ids.has(tId);
+    });
+    return { nodes: nodes.map((n) => ({ ...n })), links: links.map((l) => ({ ...l })) };
+  }, [graphNodes, graphLinks, activeTypes, minScore, searchText]);
+
+  // Hub ideas
+  const hubIdeas = useMemo(() => {
+    if (!data) return [];
+    const map = new Map<number, string[]>();
+    graphNodes.forEach((n) => {
+      n.idea_ids.forEach((id) => {
+        if (!map.has(id)) map.set(id, []);
+        map.get(id)!.push(n.id);
+      });
+    });
+    return [...map.entries()]
+      .filter(([, c]) => c.length >= 3)
+      .sort((a, b) => b[1].length - a[1].length)
+      .slice(0, 15)
+      .map(([id, cIds]) => {
+        const idea = data.ideas[id];
+        return { id, title: idea?.title || `ID:${id}`, source: idea?.source || "?", constellations: cIds, count: cIds.length };
+      });
+  }, [data, graphNodes]);
+
+  const highlightedNodeIds = useMemo(() => {
+    if (!highlightedHub) return null;
+    return new Set(highlightedHub.constellations);
+  }, [highlightedHub]);
+
+  const hubIdeaIdSet = useMemo(() => new Set(hubIdeas.map((h) => h.id)), [hubIdeas]);
+
+  // Canvas renderers
+  const nodeCanvasObject = useCallback(
+    (node: any, ctx: CanvasRenderingContext2D, globalScale: number) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+      const n = node as GraphNode;
+      const color = TYPE_COLORS[n.type] || "#888";
+      const radius = 6 + (n.score - 6) * 2;
+      const dimmed = highlightedNodeIds && !highlightedNodeIds.has(n.id);
+      ctx.globalAlpha = dimmed ? 0.12 : 1;
+
+      if (n.score >= 9) {
+        ctx.beginPath(); ctx.arc(n.x!, n.y!, radius + 1.5, 0, Math.PI * 2);
+        ctx.fillStyle = "#ffffff"; ctx.fill();
+      }
+      ctx.beginPath(); ctx.arc(n.x!, n.y!, radius, 0, Math.PI * 2);
+      ctx.fillStyle = color; ctx.fill();
+
+      const isHovered = hoveredNode?.id === n.id;
+      if ((n.score >= 9 || isHovered) && globalScale > 0.4) {
+        const label = truncate(n.title, 35);
+        const fontSize = Math.max(3.5, 11 / globalScale);
+        ctx.font = `${fontSize}px Inter, sans-serif`;
+        ctx.textAlign = "center"; ctx.textBaseline = "top";
+        ctx.strokeStyle = "rgba(10,14,26,0.8)"; ctx.lineWidth = 3 / globalScale; ctx.lineJoin = "round";
+        ctx.strokeText(label, n.x!, n.y! + radius + 2);
+        ctx.fillStyle = dimmed ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.7)";
+        ctx.fillText(label, n.x!, n.y! + radius + 2);
+      }
+      ctx.globalAlpha = 1;
+    },
+    [highlightedNodeIds, hoveredNode]
+  );
+
+  const linkCanvasObject = useCallback(
+    (link: any, ctx: CanvasRenderingContext2D) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+      const src = link.source as GraphNode;
+      const tgt = link.target as GraphNode;
+      if (typeof src === "string" || typeof tgt === "string") return;
+      const w = link.weight as number;
+      const opacity = Math.min(0.2 + (w - 1) * 0.2, 0.6);
+      const width = Math.min(1 + (w - 1) * 0.8, 3);
+      const dimmed = highlightedNodeIds && (!highlightedNodeIds.has(src.id) || !highlightedNodeIds.has(tgt.id));
+      ctx.beginPath(); ctx.moveTo(src.x!, src.y!); ctx.lineTo(tgt.x!, tgt.y!);
+      ctx.strokeStyle = dimmed ? "rgba(142,220,230,0.04)" : `rgba(142,220,230,${opacity})`;
+      ctx.lineWidth = width; ctx.stroke();
+    },
+    [highlightedNodeIds]
+  );
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center" style={{ background: "#0a0e1a" }}>
+        <span className="text-white/60 text-sm font-mono">Loading constellation map...</span>
+      </div>
+    );
+  }
+
+  if (!data) return null;
+
+  return (
+    <div className="fixed inset-0 overflow-hidden" style={{ background: "#0a0e1a" }} onMouseMove={(e) => setTooltipPos({ x: e.clientX, y: e.clientY })}>
+
+      {/* Header */}
+      <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between h-14 px-6" style={{ background: "rgba(10,14,26,0.82)", borderBottom: "1px solid rgba(255,255,255,0.06)", backdropFilter: "blur(16px)" }}>
+        <div className="flex items-center gap-2">
+          <Link href="/" className="text-white font-bold text-sm hover:text-white/80 transition-colors">Constellate</Link>
+          <span className="text-white/25 text-xs">&middot;</span>
+          <span className="text-white/50 text-xs font-mono">Constellation Map</span>
+        </div>
+        <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 max-w-2xl items-center gap-3 text-center">
+          <p className="text-white/50 text-[11px] font-mono leading-tight pointer-events-none">
+            {filteredData.nodes.length} constellations from {data.metadata.total_ideas} ideas &middot; {Object.keys(TYPE_COLORS).length} types &middot; Click any node to explore
+          </p>
+          <button onClick={() => setShowHelp(true)} className="text-white/60 hover:text-[#8EDCE6] text-xs font-mono whitespace-nowrap transition-colors flex items-center gap-1.5 px-2 py-1 rounded-md hover:bg-white/5">
+            <span className="text-sm">&#9432;</span> What am I looking at?
+          </button>
+        </div>
+        <Link href="/" className="hidden sm:inline-flex text-white/50 hover:text-white/80 text-xs transition-colors">
+          &larr; Back to landing
+        </Link>
+      </div>
+
+      {/* Graph */}
+      <ForceGraph2D
+        ref={graphRef}
+        graphData={filteredData}
+        nodeId="id"
+        nodeCanvasObject={nodeCanvasObject}
+        nodePointerAreaPaint={(node: any, color: string, ctx: CanvasRenderingContext2D) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+          const radius = 6 + ((node as GraphNode).score - 6) * 2;
+          ctx.beginPath(); ctx.arc(node.x, node.y, radius + 4, 0, Math.PI * 2);
+          ctx.fillStyle = color; ctx.fill();
+        }}
+        linkCanvasObject={linkCanvasObject}
+        onNodeHover={(node: any) => setHoveredNode(node ? (node as GraphNode) : null)} // eslint-disable-line @typescript-eslint/no-explicit-any
+        onNodeClick={(node: any) => { setSelectedNode(node as GraphNode); setHighlightedHub(null); }} // eslint-disable-line @typescript-eslint/no-explicit-any
+        onBackgroundClick={() => { setSelectedNode(null); setHighlightedHub(null); }}
+        backgroundColor="#0a0e1a"
+        width={typeof window !== "undefined" ? window.innerWidth : 1200}
+        height={typeof window !== "undefined" ? window.innerHeight : 800}
+        cooldownTicks={100}
+      />
+
+      {/* Tooltip */}
+      {hoveredNode && (
+        <div className="fixed z-50 pointer-events-none px-3 py-2 rounded-lg text-xs font-mono" style={{ left: tooltipPos.x + 14, top: tooltipPos.y - 10, background: "rgba(10,14,26,0.92)", border: "1px solid rgba(255,255,255,0.15)", backdropFilter: "blur(12px)", maxWidth: 300 }}>
+          <div className="font-semibold mb-1 text-white">{hoveredNode.title}</div>
+          <div className="flex gap-3 text-white/60">
+            <span style={{ color: TYPE_COLORS[hoveredNode.type] }}>{TYPE_LABELS[hoveredNode.type]}</span>
+            <span>Score {hoveredNode.score}</span>
+            <span>{hoveredNode.idea_ids.length} ideas</span>
+          </div>
+        </div>
+      )}
+
+      {/* Left panel */}
+      <div className="fixed top-[60px] left-4 bottom-20 w-80 z-40 overflow-y-auto rounded-xl p-4 flex flex-col gap-4" style={{ background: "rgba(10,14,26,0.85)", border: "1px solid rgba(255,255,255,0.08)", backdropFilter: "blur(16px)" }}>
+        <div>
+          <h3 className="text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Filters</h3>
+          <div className="flex flex-wrap gap-2 mb-3">
+            {Object.entries(TYPE_COLORS).map(([type, color]) => (
+              <label key={type} className="flex items-center gap-1.5 cursor-pointer text-xs">
+                <input type="checkbox" checked={activeTypes.has(type)} onChange={() => toggleType(type)} className="sr-only" />
+                <span className="w-3 h-3 rounded-sm border" style={{ background: activeTypes.has(type) ? color : "transparent", borderColor: color }} />
+                <span className="text-white/70" style={{ color: activeTypes.has(type) ? color : undefined }}>{TYPE_LABELS[type]}</span>
+              </label>
+            ))}
+          </div>
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs text-white/40 font-mono">Score &ge; {minScore}</span>
+            <input type="range" min={6} max={10} value={minScore} onChange={(e) => setMinScore(Number(e.target.value))} className="flex-1 accent-white/60" />
+          </div>
+          <input type="text" placeholder="Search by title..." value={searchText} onChange={(e) => setSearchText(e.target.value)} className="w-full px-3 py-1.5 text-xs rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/30 outline-none focus:border-white/25" />
+        </div>
+        <div>
+          <h3 className="text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Hub Ideas <span className="text-white/25">(in 3+ constellations)</span></h3>
+          <div className="flex flex-col gap-1">
+            {hubIdeas.map((hub) => (
+              <button key={hub.id} onClick={() => { setHighlightedHub(highlightedHub?.id === hub.id ? null : hub); setSelectedNode(null); }} className="text-left px-2 py-1.5 rounded-lg transition-colors text-xs" style={{ background: highlightedHub?.id === hub.id ? "rgba(255,255,255,0.1)" : "transparent" }}>
+                <div className="text-white/80 leading-tight">{SOURCE_EMOJI[hub.source] || "\uD83D\uDCCC"} {truncate(hub.title, 50)}</div>
+                <div className="text-white/35 mt-0.5">{hub.source} &middot; in {hub.count} constellations</div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Right panel — detail */}
+      {selectedNode && (
+        <div className="fixed top-[60px] right-4 bottom-20 w-96 z-40 overflow-y-auto rounded-xl p-5 flex flex-col gap-4" style={{ background: "rgba(10,14,26,0.9)", border: "1px solid rgba(255,255,255,0.08)", backdropFilter: "blur(16px)" }}>
+          <button onClick={() => setSelectedNode(null)} className="absolute top-3 right-3 text-white/30 hover:text-white/60 text-lg">&times;</button>
+          <div className="flex items-center gap-2">
+            <span className="px-2 py-0.5 rounded text-xs font-mono font-semibold" style={{ background: TYPE_COLORS[selectedNode.type], color: "#0a0e1a" }}>{TYPE_LABELS[selectedNode.type]}</span>
+            <span className="text-white/50 text-xs font-mono">Score {selectedNode.score}</span>
+          </div>
+          <p className="text-white/50 text-[12px] italic leading-snug -mt-2">{TYPE_SHORT[selectedNode.type]}</p>
+          <h2 className="text-white text-base font-semibold leading-snug">{selectedNode.title}</h2>
+          <p className="text-white/60 text-xs leading-relaxed">{selectedNode.explanation}</p>
+          <div>
+            <h4 className="text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Ideas ({selectedNode.idea_ids.length})</h4>
+            <div className="flex flex-col gap-1.5">
+              {selectedNode.idea_ids.map((ideaId) => {
+                const idea = data.ideas[ideaId];
+                if (!idea) return null;
+                const isHub = hubIdeaIdSet.has(ideaId);
+                return (
+                  <div key={ideaId} className="flex items-start gap-2 px-2 py-1.5 rounded-lg hover:bg-white/5 transition-colors">
+                    <span className="text-sm flex-shrink-0 mt-0.5">{SOURCE_EMOJI[idea.source] || "\uD83D\uDCCC"}</span>
+                    <div className="min-w-0 flex-1">
+                      <div className="text-xs text-white/80 leading-tight">{idea.title}{isHub && <span className="ml-1.5 text-yellow-400" title="Hub idea: appears in 3+ constellations">&#11088;</span>}</div>
+                      <div className="text-[10px] text-white/30">{idea.source}</div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Legend */}
+      <div className="fixed top-[60px] z-30 flex gap-3 px-4 py-2 rounded-lg" style={{ right: selectedNode ? "26rem" : "1rem", background: "rgba(10,14,26,0.8)", border: "1px solid rgba(255,255,255,0.06)", transition: "right 0.2s" }}>
+        {Object.entries(TYPE_COLORS).map(([type, color]) => (
+          <div key={type} className="flex items-center gap-1.5 text-xs">
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: color }} />
+            <span className="text-white/50">{TYPE_LABELS[type]}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Bottom stats */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 px-6 py-2.5 rounded-full text-xs font-mono text-white/40 text-center" style={{ background: "rgba(10,14,26,0.8)", border: "1px solid rgba(255,255,255,0.06)" }}>
+        {filteredData.nodes.length} constellations &middot; {Object.keys(TYPE_COLORS).length} types &middot; {filteredData.links.length} edges &middot; {hubIdeas.length} hub ideas
+      </div>
+
+      {/* Help modal */}
+      {showHelp && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4" onClick={() => setShowHelp(false)}>
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          <div className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-xl p-6 sm:p-8" style={{ background: "rgba(10,14,26,0.95)", border: "1px solid rgba(255,255,255,0.1)" }} onClick={(e) => e.stopPropagation()}>
+            <button onClick={() => setShowHelp(false)} className="absolute top-4 right-4 text-white/30 hover:text-white/60 text-lg">&times;</button>
+            <h3 className="text-white text-lg font-semibold mb-2">The 5 types of constellations</h3>
+            <p className="text-white/50 text-sm leading-relaxed mb-6">Constellate groups ideas into patterns of 3-6 items that reveal non-obvious connections. Each constellation falls into one of five categories:</p>
+            <div className="flex flex-col gap-5">
+              {TYPE_ORDER.map((type) => (
+                <div key={type} className="flex gap-4 items-start">
+                  <div className="flex-shrink-0 mt-1">
+                    <TypeIcon type={type} />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="inline-block px-2 py-0.5 rounded text-xs font-mono font-semibold mb-1.5" style={{ background: TYPE_COLORS[type], color: "#0a0e1a" }}>{TYPE_LABELS[type]}</span>
+                    <p className="text-white/70 text-sm leading-relaxed mb-1">{TYPE_SHORT[type]}</p>
+                    <p className="text-white/40 text-xs italic leading-relaxed">Example: {TYPE_EXAMPLES[type]}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button onClick={() => setShowHelp(false)} className="mt-6 w-full py-2 rounded-lg text-sm font-semibold transition-colors" style={{ background: "rgba(142,220,230,0.15)", color: "#8EDCE6", border: "1px solid rgba(142,220,230,0.25)" }}>Got it</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function TypeIcon({ type }: { type: string }) {
+  const color = TYPE_COLORS[type] || "#888";
+  switch (type) {
+    case "chain":
+      return (
+        <svg width="64" height="40" viewBox="0 0 64 40" fill="none">
+          <circle cx="8" cy="20" r="4" fill={color} /><line x1="12" y1="20" x2="22" y2="20" stroke={color} strokeWidth="1.5" />
+          <circle cx="26" cy="20" r="4" fill={color} /><line x1="30" y1="20" x2="40" y2="20" stroke={color} strokeWidth="1.5" />
+          <circle cx="44" cy="20" r="4" fill={color} /><line x1="48" y1="20" x2="52" y2="20" stroke={color} strokeWidth="1.5" />
+          <circle cx="56" cy="20" r="3" fill="none" stroke={color} strokeWidth="1" strokeDasharray="2 2" />
+          <polygon points="21,17 25,20 21,23" fill={color} /><polygon points="39,17 43,20 39,23" fill={color} />
+        </svg>
+      );
+    case "triangulation":
+      return (
+        <svg width="64" height="40" viewBox="0 0 64 40" fill="none">
+          <line x1="32" y1="6" x2="10" y2="34" stroke={color} strokeWidth="1" opacity="0.5" />
+          <line x1="32" y1="6" x2="54" y2="34" stroke={color} strokeWidth="1" opacity="0.5" />
+          <line x1="10" y1="34" x2="54" y2="34" stroke={color} strokeWidth="1" opacity="0.5" />
+          <circle cx="32" cy="6" r="4" fill={color} /><circle cx="10" cy="34" r="4" fill={color} /><circle cx="54" cy="34" r="4" fill={color} />
+          <circle cx="32" cy="24" r="5" fill={color} opacity="0.15" /><circle cx="32" cy="24" r="2" fill={color} opacity="0.4" />
+        </svg>
+      );
+    case "convergence":
+      return (
+        <svg width="64" height="40" viewBox="0 0 64 40" fill="none">
+          <line x1="10" y1="8" x2="27" y2="17" stroke={color} strokeWidth="1.5" />
+          <line x1="54" y1="8" x2="37" y2="17" stroke={color} strokeWidth="1.5" />
+          <line x1="10" y1="34" x2="27" y2="25" stroke={color} strokeWidth="1.5" />
+          <line x1="54" y1="34" x2="37" y2="25" stroke={color} strokeWidth="1.5" />
+          <circle cx="10" cy="8" r="3.5" fill={color} /><circle cx="54" cy="8" r="3.5" fill={color} />
+          <circle cx="10" cy="34" r="3.5" fill={color} /><circle cx="54" cy="34" r="3.5" fill={color} />
+          <circle cx="32" cy="20" r="6" fill={color} opacity="0.2" /><circle cx="32" cy="20" r="3" fill={color} />
+        </svg>
+      );
+    case "absence":
+      return (
+        <svg width="64" height="40" viewBox="0 0 64 40" fill="none">
+          <circle cx="12" cy="14" r="4" fill={color} /><circle cx="52" cy="14" r="4" fill={color} />
+          <circle cx="12" cy="30" r="4" fill={color} /><circle cx="52" cy="30" r="4" fill={color} />
+          <line x1="12" y1="14" x2="52" y2="14" stroke={color} strokeWidth="1" opacity="0.3" />
+          <line x1="12" y1="14" x2="12" y2="30" stroke={color} strokeWidth="1" opacity="0.3" />
+          <line x1="12" y1="30" x2="52" y2="30" stroke={color} strokeWidth="1" opacity="0.3" />
+          <line x1="52" y1="14" x2="52" y2="30" stroke={color} strokeWidth="1" opacity="0.3" />
+          <circle cx="32" cy="22" r="6" stroke={color} strokeWidth="1.5" strokeDasharray="3 2" fill="none" />
+          <text x="32" y="26" textAnchor="middle" fill={color} fontSize="10" fontWeight="bold">?</text>
+        </svg>
+      );
+    case "spectrum":
+      return (
+        <svg width="64" height="40" viewBox="0 0 64 40" fill="none">
+          <line x1="6" y1="20" x2="58" y2="20" stroke={color} strokeWidth="1" opacity="0.3" />
+          <circle cx="8" cy="20" r="4" fill={color} opacity="0.3" /><circle cx="22" cy="20" r="4" fill={color} opacity="0.5" />
+          <circle cx="36" cy="20" r="4" fill={color} opacity="0.7" /><circle cx="50" cy="20" r="4" fill={color} />
+          <path d="M3,20 L8,17 L8,23 Z" fill={color} opacity="0.3" /><path d="M61,20 L56,17 L56,23 Z" fill={color} />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
