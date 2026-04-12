@@ -1,3 +1,6 @@
+// SYNC NOTE: These types are duplicated from constellate-engine/src/types/index.ts.
+// Update both files when changing Constellation, EmergentPattern, IdeaRef, or PipelineMetadata.
+
 export interface Constellation {
   neighborhood_hash: string;
   constellation_type: string;
