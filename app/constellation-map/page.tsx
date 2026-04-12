@@ -189,15 +189,25 @@ export default function ConstellationMapPage() {
       ctx.beginPath(); ctx.arc(n.x!, n.y!, radius, 0, Math.PI * 2);
       ctx.fillStyle = color; ctx.fill();
 
+      // Show labels progressively based on zoom level:
+      // score 9-10: always visible (zoom > 0.4)
+      // score 7-8: visible at medium zoom (zoom > 1.0)
+      // score 6: visible at close zoom (zoom > 1.8)
+      // hovered: always visible
       const isHovered = hoveredNode?.id === n.id;
-      if ((n.score >= 9 || isHovered) && globalScale > 0.4) {
-        const label = truncate(n.title, 35);
+      const showLabel = isHovered ||
+        (n.score >= 9 && globalScale > 0.4) ||
+        (n.score >= 7 && globalScale > 1.0) ||
+        (globalScale > 1.8);
+      if (showLabel) {
+        const label = truncate(n.title, globalScale > 1.5 ? 50 : 35);
         const fontSize = Math.max(3.5, 11 / globalScale);
         ctx.font = `${fontSize}px Inter, sans-serif`;
         ctx.textAlign = "center"; ctx.textBaseline = "top";
         ctx.strokeStyle = "rgba(10,14,26,0.8)"; ctx.lineWidth = 3 / globalScale; ctx.lineJoin = "round";
         ctx.strokeText(label, n.x!, n.y! + radius + 2);
-        ctx.fillStyle = dimmed ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.7)";
+        const labelAlpha = isHovered || n.score >= 9 ? 0.85 : n.score >= 7 ? 0.65 : 0.5;
+        ctx.fillStyle = dimmed ? "rgba(255,255,255,0.15)" : `rgba(255,255,255,${labelAlpha})`;
         ctx.fillText(label, n.x!, n.y! + radius + 2);
       }
       ctx.globalAlpha = 1;
