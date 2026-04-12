@@ -11,6 +11,7 @@ import {
   type PipelineData,
   type Constellation,
 } from "@/lib/types";
+import WaitlistForm from "@/components/WaitlistForm";
 
 interface GraphNode {
   id: string;
@@ -338,6 +339,11 @@ export default function ConstellationMapPage() {
       {/* Bottom stats */}
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 px-6 py-2.5 rounded-full text-xs font-mono text-white/40 text-center" style={{ background: "rgba(10,14,26,0.8)", border: "1px solid rgba(255,255,255,0.06)" }}>
         {filteredData.nodes.length} constellations &middot; {Object.keys(TYPE_COLORS).length} types &middot; {filteredData.links.length} edges &middot; {hubIdeas.length} hub ideas
+      </div>
+
+      {/* Floating waitlist CTA */}
+      <div className="fixed bottom-20 right-4 z-40 w-72">
+        <WaitlistForm variant="floating" />
       </div>
 
       {/* Help modal */}

@@ -1,1040 +1,1328 @@
 {
   "constellations": [
     {
-      "neighborhood_hash": "09f7d684369a2e560172db68fb5a403b3b42fae808122dafe4dfedde38626fbf",
+      "neighborhood_hash": "47ee6a98aca39c90f6dbbb653e14916eee190e6ad3d1ccba6fc110a08ef5efbb",
+      "constellation_type": "chain",
+      "idea_ids": [
+        9,
+        76,
+        3
+      ],
+      "title": "Automation Ladder: Research to Action to Monetization",
+      "explanation": "These three ideas form a progression in automation sophistication. First, synthesize information from distributed sources (research). Second, execute physical or digital actions based on inputs (process automation). Third, close the loop by converting automated processes into revenue generation. Each step assumes the prior capability while adding a new layer of autonomous decision-making.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "47ee6a98aca39c90f6dbbb653e14916eee190e6ad3d1ccba6fc110a08ef5efbb",
+      "constellation_type": "convergence",
+      "idea_ids": [
+        9,
+        76,
+        3
+      ],
+      "title": "The Autonomous Agent Trinity Problem",
+      "explanation": "All three projects tackle different facets of the same structural challenge: creating agents that act independently in open-ended environments. One focuses on information synthesis across fragmented platforms, another on translating digital intent to physical/automated action, and the third on optimizing for economic outcomes. They converge on the need for multi-modal perception, decision-making under uncertainty, and goal-directed behavior without continuous human supervision.",
+      "score": 8,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "0856752a34b7a787eb44f60b91a62b05adc97e6357f46d7cc94f1b46e97d8ecd",
+      "constellation_type": "convergence",
+      "idea_ids": [
+        1,
+        15,
+        53
+      ],
+      "title": "The Agent Platform Convergence Nobody Admits",
+      "explanation": "Three projects approaching AI agents from different angles—personal growth companion, universal chat interface, and computer-controlling agent—all converge on the same structural challenge: creating middleware that mediates between human intent and AI capability. Each solves a different surface problem but requires identical architectural patterns for context persistence, tool integration, and adaptive interfaces. The real innovation isn't in any single agent, but in recognizing that agent platforms are becoming the new operating system layer.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "0856752a34b7a787eb44f60b91a62b05adc97e6357f46d7cc94f1b46e97d8ecd",
+      "constellation_type": "absence",
+      "idea_ids": [
+        21,
+        27,
+        53
+      ],
+      "title": "Missing: The Human-Computer Interaction Philosophy",
+      "explanation": "A taskbar replacement, a minimalist OS revival, and an agent with computer access all tackle interface paradigms but lack a unifying theory. The gap is a coherent vision of what post-desktop interaction actually means—not just nostalgia (Oberon), cosmetic improvements (boringBar), or automation (Bud), but a fundamental rethinking of how humans should compose with machines. The constellation reveals we're rebuilding interfaces without knowing why the old ones failed.",
+      "score": 8,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "0856752a34b7a787eb44f60b91a62b05adc97e6357f46d7cc94f1b46e97d8ecd",
+      "constellation_type": "triangulation",
+      "idea_ids": [
+        27,
+        21,
+        63
+      ],
+      "title": "Nostalgia as Technical Legitimacy Signal",
+      "explanation": "Oberon System resurrection, a taskbar dock throwback, and a talk satirizing developer gatekeeping all illuminate how technical communities use retro-aesthetics to signal authentic expertise. The minimalist OS and vintage UI aren't about functionality—they're cultural markers that say \"I understand computing before it became commodified.\" The joke post completes the triangle by making explicit what the other two perform unconsciously: authenticity through temporal distance.",
+      "score": 6,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "0aeb74af0c42f6cfdabe4f613f6037ba8917233ba702977e038d414faa113da0",
+      "constellation_type": "chain",
+      "idea_ids": [
+        13,
+        7,
+        4
+      ],
+      "title": "Agent Harness Complexity Ladder",
+      "explanation": "These three projects form an evolutionary chain in agent harness sophistication. ID:13 starts with \"bash is all you need\" - a minimal proof-of-concept built from zero. ID:7 extends this to production-grade optimization with skills, memory, and security layers. ID:4 represents the apex: long-horizon SuperAgents that handle hour-long tasks with full sandbox ecosystems and message gateways. The progression reveals how agent harnesses evolve from educational minimalism to enterprise-grade orchestration.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "0aeb74af0c42f6cfdabe4f613f6037ba8917233ba702977e038d414faa113da0",
+      "constellation_type": "convergence",
+      "idea_ids": [
+        6,
+        79,
+        7
+      ],
+      "title": "The Observability Crisis in Agent Autonomy",
+      "explanation": "These ideas from different angles point to the same structural problem: as agents become more autonomous, humans lose visibility into what they're doing. ID:6 builds a monitoring HUD because context and tool usage became opaque. ID:79 analyzes codebases because leaving projects for months creates knowledge gaps - now agents have the same problem. ID:7's \"research-first development\" suggests agents need persistent observability, not just runtime dashboards. The convergence reveals that agent autonomy and human comprehension are inversely related without deliberate instrumentation.",
+      "score": 8,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "0aeb74af0c42f6cfdabe4f613f6037ba8917233ba702977e038d414faa113da0",
+      "constellation_type": "absence",
+      "idea_ids": [
+        4,
+        14,
+        79
+      ],
+      "title": "Missing: Agent Collaboration Standards",
+      "explanation": "ID:4 has subagents and message gateways for coordination. ID:14 focuses on multi-agent orchestration for teams. ID:79 discusses using subagents for codebase analysis. All assume agent-to-agent interaction, yet none of these projects appear to share a common protocol or interface standard. The missing piece is an interoperability layer - something like \"AgentBus\" or \"Agent Federation Protocol\" that would let different harnesses, subagents, and orchestration systems communicate without custom integration work.",
+      "score": 6,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "c5835455664f688325c117eceb7ce19a4949a1bc7839010ee935df77a53c5a16",
+      "constellation_type": "convergence",
+      "idea_ids": [
+        42,
+        45,
+        58,
+        60
+      ],
+      "title": "Enterprise Back-Office AI Layer Convergence",
+      "explanation": "Four products targeting different corporate pain points (knowledge management, recruiting, collections, payroll) converge on the same structural solution: applying AI to automate traditionally manual, high-touch business operations. Each isolates a different friction-heavy workflow where human judgment meets repetitive process work. The pattern reveals that 2024's AI application wave is systematically attacking administrative overhead across the org chart, not just customer-facing functions.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "c5835455664f688325c117eceb7ce19a4949a1bc7839010ee935df77a53c5a16",
+      "constellation_type": "triangulation",
+      "idea_ids": [
+        5,
+        47,
+        48
+      ],
+      "title": "Democratizing Previously Premium Digital Experiences",
+      "explanation": "A free demo software replacing expensive tools, a Robinhood for collectibles trading, and AI tutors for test prep all attack the same phenomenon from different angles: making premium experiences (professional demos, sophisticated trading, personalized tutoring) accessible by removing cost barriers. None alone defines the trend, but together they illuminate a specific design philosophy where \"professional-grade\" gets repositioned as a universal right rather than a luxury purchase.",
+      "score": 6,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "f3c5693d37fe66e13314e2093242b31675e2c1e511aadcd2164b72bae2eb2b4d",
+      "constellation_type": "convergence",
+      "idea_ids": [
+        41,
+        54,
+        59
+      ],
+      "title": "Developer Productivity Through Compression",
+      "explanation": "Three YC companies attacking developer bottlenecks by radically compressing cognitive load: API integrations collapsed into libraries, hiring decisions compressed into AI-usage observation, and PR understanding compressed from hours to minutes. Each targets a different workflow stage but shares the same structural solution—eliminating complex interpretation layers. The pattern reveals that modern developer tools compete on time-to-comprehension, not feature richness.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "f3c5693d37fe66e13314e2093242b31675e2c1e511aadcd2164b72bae2eb2b4d",
+      "constellation_type": "spectrum",
+      "idea_ids": [
+        12,
+        16,
+        17,
+        8
+      ],
+      "title": "On-Device Intelligence: From Gallery to Swarm",
+      "explanation": "These represent increasing levels of ambition in local AI deployment: Google's gallery showcases pre-built use cases (curation), VibeVoice provides frontier voice capabilities (specialization), LiteRT-LM enables language models (infrastructure), and MiroFish aspires to universal swarm intelligence (emergence). The axis is architectural philosophy—from sandboxed demos to decentralized prediction engines. The spectrum reveals tension between controlled on-device experiences and autonomous local intelligence.",
+      "score": 8,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "f3c5693d37fe66e13314e2093242b31675e2c1e511aadcd2164b72bae2eb2b4d",
+      "constellation_type": "absence",
+      "idea_ids": [
+        8,
+        12,
+        16,
+        17
+      ],
+      "title": "Missing: The Privacy-Performance Trade-off Framework",
+      "explanation": "Four projects push AI/ML to edge devices with different performance characteristics, yet none addresses the fundamental question they collectively raise: how do we benchmark the privacy gains against computational sacrifices? The neighborhood lacks any idea discussing measurement frameworks, user consent models, or energy consumption analytics for on-device AI. This gap is critical because these projects implicitly promise privacy without quantifying what users surrender in capability or battery life.",
+      "score": 6,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "f3c5693d37fe66e13314e2093242b31675e2c1e511aadcd2164b72bae2eb2b4d",
+      "constellation_type": "triangulation",
+      "idea_ids": [
+        68,
+        78,
+        69
+      ],
+      "title": "Meta-Creation as Product Strategy",
+      "explanation": "Three projects that don't just build tools but build tools that explain/expose their own construction: an accessibility SaaS born from event organizing, a website whose feature is self-explanation, and optimization work on the platform hosting the discussion. Together they illuminate a deeper pattern—when the creation process itself becomes the product narrative, it serves as both differentiation and documentation. This is builder transparency as market positioning.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "9e7759f5796fffe654d6624d2c7a0be831be098d428eafef8104b04cd17af0bb",
+      "constellation_type": "chain",
+      "idea_ids": [
+        11,
+        50,
+        70
+      ],
+      "title": "From Skills to Reasoning to Production Monitoring",
+      "explanation": "This progression maps the maturation path of agent systems: starting with foundational skills frameworks (11), advancing to agents that reason with dynamic data (50), and culminating in production-scale observability concerns like cost and latency (70). Each stage enables the next—you need skills before reasoning, and reasoning before production deployment. Together they reveal the infrastructure stack required to move agents from concept to operational reality.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "9e7759f5796fffe654d6624d2c7a0be831be098d428eafef8104b04cd17af0bb",
       "constellation_type": "convergence",
       "idea_ids": [
         10,
-        49,
-        57
+        61,
+        70
       ],
-      "title": "AI Colonizing High-Stakes Financial Operations",
-      "explanation": "Three AI systems targeting different financial domains\u2014trading, insurance brokerage, and energy grid storage\u2014reveal a pattern of automation moving into sectors where decisions involve significant capital and regulatory complexity. None are consumer-facing; all operate in B2B contexts where mistakes are measured in millions. This convergence suggests AI is migrating from low-stakes automation to high-consequence financial orchestration, raising questions about systemic risk concentration.",
-      "score": 7,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "09f7d684369a2e560172db68fb5a403b3b42fae808122dafe4dfedde38626fbf",
-      "constellation_type": "absence",
-      "idea_ids": [
-        62,
-        67,
-        69,
-        74,
-        75,
-        78
-      ],
-      "title": "Missing: Production Software Amid Meta-Content",
-      "explanation": "Six ideas cluster around DEV community meta-content: featured posts, platform mechanics, and April Fools submissions that are deliberately satirical or self-referential. What's conspicuously absent is any serious production software, frameworks, or engineering solutions. The gap reveals a community moment focused on platform engagement and humor rather than technical substance\u2014missing are actual tools, libraries, or architectural patterns that developers would deploy.",
-      "score": 6,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "a5c96cfed5b906a7f0c7e20d7d9e6099c669d9a60e9c17203e9d0e303ad5205c",
-      "constellation_type": "convergence",
-      "idea_ids": [
-        4,
-        9,
-        79
-      ],
-      "title": "Modular Intelligence: The Subagent Architecture Pattern",
-      "explanation": "Three different implementations converging on the same architectural insight: complex AI tasks require decomposition into specialized subagents. Deer-flow provides the full harness infrastructure, the research skill demonstrates domain-specific capability modules, and the codebase analyzer shows practical subagent orchestration. All three independently arrived at modular, composable intelligence as the solution to task complexity beyond single-agent limitations.",
-      "score": 7,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "a5c96cfed5b906a7f0c7e20d7d9e6099c669d9a60e9c17203e9d0e303ad5205c",
-      "constellation_type": "chain",
-      "idea_ids": [
-        122,
-        15,
-        6
-      ],
-      "title": "From Benchmarking to Operational Transparency",
-      "explanation": "A logical progression in AI tooling maturity: the leaderboard establishes model capability baselines, the chat platform provides universal LLM access layer, and the HUD plugin solves the emerging problem of runtime observability. Each layer assumes the previous exists\u2014you need models to evaluate, platforms to deploy them, and visibility into their actual execution. This reveals how AI infrastructure evolves from selection to deployment to operational monitoring.",
-      "score": 6,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "a5c96cfed5b906a7f0c7e20d7d9e6099c669d9a60e9c17203e9d0e303ad5205c",
-      "constellation_type": "absence",
-      "idea_ids": [
-        4,
-        9,
-        79,
-        6
-      ],
-      "title": "Missing: Cross-Agent Memory and Learning Layer",
-      "explanation": "Four ideas reveal sophisticated agent architectures with tools, skills, subagents, and observability\u2014but none addresses how agents retain and transfer learning across sessions or tasks. Deer-flow mentions \"memories\" but the neighborhood lacks any focus on persistent learning, experience replay, or knowledge accumulation. The gap is a meta-learning layer that allows agents to improve from their own execution history, not just execute with static capabilities.",
+      "title": "Autonomous Agents Hit Economic Reality",
+      "explanation": "Financial trading (10), monetization platforms (61), and cost/latency observability (70) converge on the same structural challenge: making autonomous agents economically viable. All three confront the gap between agent autonomy and economic accountability—whether through profitable trades, monetizable services, or controlled operational costs. This reveals that the bottleneck for agent deployment isn't capability but economic sustainability.",
       "score": 8,
       "model": "claude-sonnet-4-5-20250929",
       "prompt_version": "constellation_v1"
     },
     {
-      "neighborhood_hash": "e3f69563b86d8690f538f9283635e7ae1eeda4b7e611c4c1ef26b88a7a14b4af",
-      "constellation_type": "convergence",
-      "idea_ids": [
-        5,
-        12,
-        61
-      ],
-      "title": "Democratization Through Local Control",
-      "explanation": "These ideas converge on eliminating gatekeepers through localization: OpenScreen removes paid demo software, Google's gallery enables local model execution bypassing cloud dependencies, and Doublezero creates a marketplace for autonomous agents outside centralized platforms. Each addresses platform lock-in from different angles\u2014creation tools, inference infrastructure, and agent deployment. The structural solution is identical: shift power from centralized services to individual users through open-source or decentralized alternatives.",
-      "score": 7,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "e142cdf823ac61fdc03c6dc43fa18f15029dc18db9f4cda7f9ccb69c9ac5e1cb",
+      "neighborhood_hash": "9e7759f5796fffe654d6624d2c7a0be831be098d428eafef8104b04cd17af0bb",
       "constellation_type": "absence",
       "idea_ids": [
-        1,
-        7,
-        13,
-        14
-      ],
-      "title": "Missing: The Agent Evaluation and Benchmarking Layer",
-      "explanation": "Four different agent harness implementations (Hermes grows with you, everything-claude optimizes performance, learn-claude builds from scratch, oh-my-claudecode orchestrates teams) all focus on building and operating agents, but none address systematic evaluation, benchmarking, or quality measurement. The neighborhood has construction tools but no instrumentation for understanding whether these agents actually work better over time or across contexts. This gap suggests the field is still in infrastructure-building mode, lacking the maturity layer of standardized assessment.",
-      "score": 8,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "e142cdf823ac61fdc03c6dc43fa18f15029dc18db9f4cda7f9ccb69c9ac5e1cb",
-      "constellation_type": "convergence",
-      "idea_ids": [
-        13,
-        23,
-        7
-      ],
-      "title": "Minimalism as a Path to Understanding Complexity",
-      "explanation": "Three radically different domains converge on reduction as methodology: learn-claude builds an agent harness using only Bash ('Bash is all you need'), Oberon System 3 runs a complete OS on minimal Raspberry Pi hardware, and everything-claude emphasizes 'research-first development.' All three reject bloat in favor of foundational clarity\u2014whether in scripting, systems, or agent architecture. The pattern reveals that understanding emerges not from adding features but from stripping to essential mechanisms.",
-      "score": 7,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "e142cdf823ac61fdc03c6dc43fa18f15029dc18db9f4cda7f9ccb69c9ac5e1cb",
-      "constellation_type": "spectrum",
-      "idea_ids": [
-        13,
-        1,
-        14,
-        7
-      ],
-      "title": "Agent Architecture: From Atomic to Orchestrated",
-      "explanation": "These four ideas form a progression in agent complexity: learn-claude is explicitly 'nano' and built '0 to 1' (atomic), Hermes 'grows with you' (adaptive individual), everything-claude adds 'skills, instincts, memory' (sophisticated individual), and oh-my-claudecode does 'teams-first multi-agent orchestration' (collective). The axis reveals an unspoken design question: should agent capability come from individual sophistication or collective coordination? The spectrum itself exposes a fundamental architectural tension in the field.",
-      "score": 8,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "22fb0f893286a82558ed15f9ad72ee5e6aaad323b1a2ff8bf9f81b262afdc97d",
-      "constellation_type": "convergence",
-      "idea_ids": [
-        11,
-        59,
-        81
-      ],
-      "title": "Automation Promising Relief from Developer Exhaustion",
-      "explanation": "Three ideas converge on the same structural problem: developer cognitive overload. An agentic skills framework (11) and AI-powered PR comprehension (59) both offer technological solutions to reduce mental burden, while idea 81 documents the human cost driving demand for such tools. The convergence reveals that developer tooling innovation is increasingly motivated by burnout prevention rather than pure productivity gains.",
-      "score": 7,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "33f64a483bc09161475729a14c28ddc29812f6e65bf89712401c5128737699c1",
-      "constellation_type": "triangulation",
-      "idea_ids": [
-        8,
         50,
-        71
+        61,
+        70,
+        97
       ],
-      "title": "The Illusion of Algorithmic Certainty",
-      "explanation": "A swarm intelligence engine that 'predicts anything,' data for AI reasoning in dynamic environments, and accessibility scores that lie\u2014together these expose the gap between algorithmic confidence and actual validity. Each represents a different facet of the same problem: systems that provide definitive-seeming outputs while obscuring fundamental limitations in their methodology. The constellation reveals how automation creates false precision that masks uncertainty.",
-      "score": 7,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "33f64a483bc09161475729a14c28ddc29812f6e65bf89712401c5128737699c1",
-      "constellation_type": "chain",
-      "idea_ids": [
-        65,
-        73,
-        50
-      ],
-      "title": "From Casual Creation to Agent Navigation Infrastructure",
-      "explanation": "This chain shows evolution from human-driven casual coding, to AI-assisted codebase navigation, to data infrastructure for autonomous reasoning agents. 'Vibe coding' enables quick app creation, but those apps need documentation/navigation (Maps for Codebases), which ultimately feeds the data layer that reasoning agents require to operate in dynamic environments. Each step abstracts away human involvement while requiring increasingly sophisticated context management.",
-      "score": 6,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "33f64a483bc09161475729a14c28ddc29812f6e65bf89712401c5128737699c1",
-      "constellation_type": "absence",
-      "idea_ids": [
-        43,
-        48,
-        55,
-        56
-      ],
-      "title": "Missing: Provider-Facing Workflow Automation",
-      "explanation": "Four healthcare/service workflow tools all focus on administrative layers (patient management, scheduling, billing, recruiting) but conspicuously absent is anything automating the core professional work itself\u2014the actual tutoring, medical diagnosis, or clinical decision-making. The gap reveals where AI deployment stops: automation handles everything around expertise but not expertise itself, suggesting either technical limitations or deliberate market positioning to avoid professional resistance.",
-      "score": 7,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "b79e0c2e34e2b0950b7024d452771d6420d95d43429c16dd7a213607ac714be6",
-      "constellation_type": "absence",
-      "idea_ids": [
-        19,
-        35,
-        66
-      ],
-      "title": "Missing: The Constraints That Enable Creation",
-      "explanation": "These ideas represent three different responses to modern development culture: rejecting homogeneity (idiomatic design), embracing geographic constraints (EU-only infrastructure), and celebrating incremental progress (weekly wins). What's conspicuously absent is any discussion of how constraints themselves\u2014whether aesthetic, regulatory, or temporal\u2014actually catalyze better outcomes rather than merely limiting options. The gap is the synthesis: a framework for choosing productive constraints deliberately.",
-      "score": 6,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "bfe7a99a2254c8b11bd6608fa7544ca9414bebe628a8f6f4f0fd1d1bf7bdb258",
-      "constellation_type": "convergence",
-      "idea_ids": [
-        22,
-        29,
-        31
-      ],
-      "title": "Repurposing Infrastructure as Creative Sensing Instruments",
-      "explanation": "These three projects transform existing systems into unexpected experiential or scientific tools: transit schedules become musical composition, happiness becomes geographic data, and smartphones become physics laboratories. Each reveals that infrastructure contains latent creative or analytical potential beyond its intended function. The pattern shows how passive observation of existing systems can be converted into active knowledge generation or artistic expression.",
-      "score": 7,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "bfe7a99a2254c8b11bd6608fa7544ca9414bebe628a8f6f4f0fd1d1bf7bdb258",
-      "constellation_type": "triangulation",
-      "idea_ids": [
-        18,
-        26,
-        36
-      ],
-      "title": "Interface Archaeology: Excavating Forgotten Interaction Paradigms",
-      "explanation": "A taskbar-style dock resurrects Windows UI conventions on Mac, a JVM options explorer makes arcane command-line flags navigable, and Doom runs through curl\u2014a text-transfer protocol. Each project digs up buried or constrained interaction models and makes them viable again in contexts where they were abandoned or never belonged. Together they suggest that interface evolution discards useful paradigms that deserve intentional resurrection, not just nostalgic recreation.",
-      "score": 8,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "bfe7a99a2254c8b11bd6608fa7544ca9414bebe628a8f6f4f0fd1d1bf7bdb258",
-      "constellation_type": "absence",
-      "idea_ids": [
-        27,
-        24,
-        30
-      ],
-      "title": "Missing: Human-Scale Temporal Governance",
-      "explanation": "We have ideas spanning intergalactic eternities (idea 27), national energy infrastructure shifts (idea 24), and sudden corporate policy changes (idea 30)\u2014vastly different time scales from billions of years to overnight. What's conspicuously absent is any discussion of governance, planning, or decision-making frameworks that operate at the messy middle: decade-to-century scales where human institutions must actually coordinate. The gap reveals our conceptual tools handle either cosmic abstraction or immediate crisis, but not intergenerational stewardship.",
+      "title": "Missing: Agent Reliability and Safety Standards",
+      "explanation": "The neighborhood contains data provisioning (50), deployment platforms (61), performance monitoring (70), and evaluation leaderboards (97)—yet conspicuously lacks any focus on reliability guarantees, failure modes, or safety constraints for autonomous agents. As agents move toward full autonomy and monetization, the absence of standards for containment, rollback mechanisms, or certified reliability bounds represents a critical gap. The infrastructure exists but the safety layer doesn't.",
       "score": 9,
       "model": "claude-sonnet-4-5-20250929",
       "prompt_version": "constellation_v1"
     },
     {
-      "neighborhood_hash": "ff80c2ea36e84738b36d6a91529f9bea1ac1838cd47e8b9dd2f6b12dc0b85a0b",
+      "neighborhood_hash": "dbca4c12a5ee973b35d4eb123081c4c9432dd961668fe78b40f7b50e50de3287",
+      "constellation_type": "convergence",
+      "idea_ids": [
+        44,
+        52,
+        71
+      ],
+      "title": "Automated Quality Measurement Creates False Confidence",
+      "explanation": "Voice agent monitoring, automated documentation updates, and accessibility scoring all promise objective quality metrics through automation. Yet they share a structural flaw: automating measurement doesn't capture the nuanced, contextual nature of quality (conversation flow, document helpfulness, real user experience). Each tool risks creating metric-driven complacency where teams optimize scores rather than actual outcomes, mistaking measurability for meaningful improvement.",
+      "score": 8,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "dbca4c12a5ee973b35d4eb123081c4c9432dd961668fe78b40f7b50e50de3287",
       "constellation_type": "absence",
       "idea_ids": [
-        107,
-        109,
-        114,
-        120
+        44,
+        52,
+        71
       ],
-      "title": "Missing Video Foundation Model",
-      "explanation": "This neighborhood contains foundation models spanning text reasoning (DeepSeek-R1), image generation (Stable Diffusion variants), audio transcription (Whisper), and text embeddings (sentence-transformers). The structural gap is video understanding/generation\u2014the temporal-spatial modality that bridges static images and pure audio. Given the comprehensive coverage of other modalities and the popularity metrics suggesting a mature model ecosystem, the absence of a video foundation model is conspicuous.",
+      "title": "Missing: Human Feedback Integration Layer",
+      "explanation": "Three ideas focus on automated monitoring and testing (voice agents, docs, accessibility), but conspicuously absent is any mechanism for systematic qualitative human feedback. The gap reveals an infrastructure need: tools that bridge automated metrics with real user experience data, synthesizing quantitative monitoring with contextual human judgment. This would close the loop between what's measured and what actually matters to end users.",
       "score": 7,
       "model": "claude-sonnet-4-5-20250929",
       "prompt_version": "constellation_v1"
     },
     {
-      "neighborhood_hash": "ff80c2ea36e84738b36d6a91529f9bea1ac1838cd47e8b9dd2f6b12dc0b85a0b",
+      "neighborhood_hash": "f2ba72706a4fda23c39888fa8c20251a43da96f408e55b1438416bf1aa824078",
+      "constellation_type": "absence",
+      "idea_ids": [
+        46,
+        83,
+        92,
+        98,
+        99,
+        102,
+        103,
+        104,
+        105
+      ],
+      "title": "Missing Bridge: AI Generation Meets Physical Manufacturing",
+      "explanation": "This neighborhood contains one physical manufacturing venture (reusable satellites for zero-g production) and multiple generative AI models spanning images, comics, try-on, animation, and music. The glaring absence is any idea connecting generative AI to physical production—AI for generative design, simulation for manufacturing, or digital twins. The gap reveals how separate the digital creation and physical fabrication innovation spaces remain, despite obvious synergies in rapid prototyping and customized production.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "dee320121adcf05e927b0bed782a484942c31477895642598f194499b27de3f3",
       "constellation_type": "convergence",
       "idea_ids": [
         37,
-        107,
-        120
+        51,
+        84,
+        85
       ],
-      "title": "Foundation Models Escape Their Domains",
-      "explanation": "Trim represents physics simulation as a learnable foundation, DeepSeek-R1 performs reasoning (meta-cognitive task), and sentence-transformers create universal semantic representations. All three point to the same architectural insight: foundation models succeed by learning transferable substrate representations rather than task-specific solutions. They converge on encoding fundamental structures (physical laws, reasoning patterns, semantic similarity) that transcend their training domains.",
+      "title": "Synthetic Reality Layers Replacing Physical Constraints",
+      "explanation": "A physics foundation model, AI humans modeling clothes, and image generation models converge on the same structural shift: replacing costly physical processes with learned simulations. Trim eliminates physical experiments, Bezel eliminates human photoshoots, and Stable Diffusion eliminates cameras and scenes. All three monetize the gap between simulation fidelity and the cost of ground truth, making previously essential physical infrastructure optional.",
       "score": 8,
       "model": "claude-sonnet-4-5-20250929",
       "prompt_version": "constellation_v1"
     },
     {
-      "neighborhood_hash": "ff80c2ea36e84738b36d6a91529f9bea1ac1838cd47e8b9dd2f6b12dc0b85a0b",
+      "neighborhood_hash": "dee320121adcf05e927b0bed782a484942c31477895642598f194499b27de3f3",
       "constellation_type": "spectrum",
       "idea_ids": [
-        120,
-        112,
-        114,
-        109
+        95,
+        87,
+        82,
+        96
       ],
-      "title": "Efficiency-Capability Tradeoff in Modal Encoding",
-      "explanation": "These models represent different points on the spectrum between computational efficiency and representational power. Sentence-transformers (195M downloads, 4672 likes) achieves massive adoption through lightweight text embeddings. Kokoro-82M balances small size with audio synthesis. Whisper-large-v3 trades size for transcription accuracy. Stable Diffusion XL prioritizes generation quality over speed. The spectrum reveals how different modalities and use cases demand distinct efficiency-capability equilibria.",
+      "title": "The Download-to-Like Ratio as Utility Signal",
+      "explanation": "These models span a spectrum from pure utility (sentence-transformers: 42,000x downloads-to-likes) through specialized infrastructure (Kokoro TTS: 1,600x) to experimentation artifacts (DeepSeek-R1: 0.26x, Mixtral: 0.11x). The ratio reveals whether a model serves production pipelines or curiosity/research. High ratios indicate invisible infrastructure; low ratios indicate hype cycles or benchmark chasing.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "dee320121adcf05e927b0bed782a484942c31477895642598f194499b27de3f3",
+      "constellation_type": "absence",
+      "idea_ids": [
+        84,
+        85,
+        91,
+        51
+      ],
+      "title": "Missing: The Composition Layer",
+      "explanation": "Multiple Stable Diffusion versions and Bezel (which likely uses diffusion models) define a gap: there's no mention of tools for composing or orchestrating these generative primitives into coherent workflows. The neighborhood has atomic generators but lacks the coordination layer that would turn isolated models into controllable pipelines for complex creative or commercial outputs.",
       "score": 6,
       "model": "claude-sonnet-4-5-20250929",
       "prompt_version": "constellation_v1"
     },
     {
-      "neighborhood_hash": "56a83d2f1f80d7389e5440fd434154bd8ab0c12e82cce40128368b3ac6bd2440",
-      "constellation_type": "absence",
-      "idea_ids": [
-        108,
-        117,
-        125,
-        131
-      ],
-      "title": "Missing Bridge: Model Deployment to Production Use",
-      "explanation": "The neighborhood contains both raw models (FLUX.1-dev, FLUX.1-schnell) and their corresponding demo Spaces, plus various creative application Spaces (comic factory, virtual try-on, music generation). What's conspicuously absent is the infrastructure layer between these: deployment tooling, API services, fine-tuning platforms, or model optimization tools that would enable transition from experimentation to production. The gap reveals the neighborhood captures endpoints (models and demos) but not the critical middleware.",
-      "score": 7,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "56a83d2f1f80d7389e5440fd434154bd8ab0c12e82cce40128368b3ac6bd2440",
-      "constellation_type": "convergence",
-      "idea_ids": [
-        46,
-        123,
-        124,
-        128
-      ],
-      "title": "Manufacturing Reality: Physical and Digital Fabrication Converge",
-      "explanation": "Reditus Space manufactures physical objects in zero-gravity, while the AI spaces manufacture digital realities: comics, clothing try-ons, and visual illusions. All four represent on-demand, customized fabrication that bypasses traditional constraints (gravity for satellites, artistic skill for comics, physical fitting rooms for clothes, optical physics for illusions). They converge on the same structural solution: using an extreme environment (space or latent space) to enable production impossible under normal conditions.",
-      "score": 8,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "56a83d2f1f80d7389e5440fd434154bd8ab0c12e82cce40128368b3ac6bd2440",
-      "constellation_type": "spectrum",
-      "idea_ids": [
-        127,
-        108,
-        117,
-        129
-      ],
-      "title": "Speed-Quality Tradeoff in Generative Model Evolution",
-      "explanation": "These models represent positions along the axis of generation speed versus output quality over time. DALLE-mini was early and fast but lower quality, FLUX.1-dev optimizes for quality, FLUX.1-schnell explicitly trades quality for speed (schnell=fast in German), and Wan-Animate pushes into temporal generation. The spectrum reveals how the field navigates the fundamental tension between computational efficiency and output fidelity, with different products occupying different niches.",
-      "score": 6,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "f46a77b058a70fc3ec12c77d9b6ba46ddbab58613f11ae6bdece84f01fcff7b8",
-      "constellation_type": "convergence",
-      "idea_ids": [
-        64,
-        68,
-        70
-      ],
-      "title": "Personal Problems That Scale Into Infrastructure",
-      "explanation": "Three developers encounter personal-scale problems (family videos, event accessibility, AI observability) and respond by building general infrastructure solutions rather than one-off fixes. Each transforms a specific pain point into a reusable system, revealing a pattern where individual need becomes the forcing function for architectural thinking. The convergence shows how modern tooling enables individuals to build at infrastructure-level from day-one personal friction.",
-      "score": 7,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "f46a77b058a70fc3ec12c77d9b6ba46ddbab58613f11ae6bdece84f01fcff7b8",
-      "constellation_type": "absence",
-      "idea_ids": [
-        64,
-        68,
-        70
-      ],
-      "title": "Missing: The Maintenance Reckoning",
-      "explanation": "All three ideas celebrate the creation phase\u2014ripping DVDs to streaming, launching a SaaS, mastering observability callbacks\u2014but none address the long-term maintenance burden these solutions create. The gap is the inevitable post-launch reality: who updates the streaming server when Cloudflare changes APIs, who supports accessibility SaaS customers at 2am, who maintains observability hooks as AI frameworks evolve. The neighborhood reveals builder optimism while omitting operational debt.",
-      "score": 8,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "b7e474bc9c7e6ece0b4b6424a7aa5f7892bb29f1229046e15965f5227830829f",
-      "constellation_type": "absence",
-      "idea_ids": [
-        70,
-        113,
-        111,
-        118
-      ],
-      "title": "The Missing Bridge Between Models and Production Reality",
-      "explanation": "Three popular LLM models (Llama variants with millions of downloads) exist alongside a tutorial about observability challenges in AI deployment (cost, latency, auditability). What's conspicuously absent is any tooling or methodology for model selection and right-sizing\u2014helping practitioners choose between 2B, 7B, or 8B parameters based on their specific observability constraints. The gap is the decision framework connecting model capabilities to production requirements.",
-      "score": 7,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "b7e474bc9c7e6ece0b4b6424a7aa5f7892bb29f1229046e15965f5227830829f",
-      "constellation_type": "convergence",
-      "idea_ids": [
-        68,
-        64,
-        70
-      ],
-      "title": "Accidental Infrastructure from Personal Pain Points",
-      "explanation": "An accessibility need spawns a SaaS, a family DVD problem becomes a streaming site, and AI latency issues drive observability tooling. All three represent the same structural pattern: personal friction points that force builders to create infrastructure-level solutions rather than one-off fixes. The convergence reveals how production-grade systems often emerge from individual necessity rather than market research.",
-      "score": 8,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "2432d858db83e55ba74b2cc8de706436c68e6f227d0ac35ab5b85c99da32c9f6",
-      "constellation_type": "absence",
-      "idea_ids": [
-        19,
-        35,
-        66
-      ],
-      "title": "Missing: The Sovereignty-Craft Synthesis Framework",
-      "explanation": "The neighborhood contains idiomatic design philosophy (#19), EU infrastructure sovereignty (#35), and individual developer achievement culture (#66), but lacks any idea bridging technological self-determination with craft principles. There's no concept exploring how regional or individual autonomy in tech infrastructure relates to design idioms and cultural expression in software. The gap is a framework for understanding sovereignty (data, infrastructure, creative) as a design pattern rather than just a deployment choice.",
-      "score": 7,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "2432d858db83e55ba74b2cc8de706436c68e6f227d0ac35ab5b85c99da32c9f6",
-      "constellation_type": "convergence",
-      "idea_ids": [
-        19,
-        35,
-        66
-      ],
-      "title": "Autonomy as Antidote to Homogenization",
-      "explanation": "Idiomatic design fights against framework-imposed uniformity, EU-only infrastructure resists US cloud monopoly, and weekly wins celebrate individual achievements against productivity culture sameness. All three inadvertently address the same structural problem: resistance to centralizing forces that erase distinctiveness. They represent cultural, geopolitical, and personal dimensions of the same anti-monoculture impulse, despite operating in completely different domains.",
-      "score": 8,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "e25942d2604caf1894dc8b1f502b0022b2c13c8de2761f14e0835491acadf761",
-      "constellation_type": "absence",
-      "idea_ids": [
-        111,
-        113,
-        118
-      ],
-      "title": "Missing: The Flagship That Justifies the Ecosystem",
-      "explanation": "These three models represent Meta's LLaMA lineage at similar parameter scales (7-8B), spanning generations 2 through 3.1. The progression shows clear version evolution and format variation (base vs instruct vs chat), yet conspicuously absent is any larger-scale model (70B+) that would demonstrate why this ecosystem matters beyond efficiency. The gap reveals these are optimization artifacts\u2014the neighborhood lacks the capability anchor that would justify the architectural choices being iterated.",
-      "score": 7,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "e25942d2604caf1894dc8b1f502b0022b2c13c8de2761f14e0835491acadf761",
-      "constellation_type": "spectrum",
-      "idea_ids": [
-        118,
-        111,
-        113
-      ],
-      "title": "Instruction-Following as Download Attractor Over Time",
-      "explanation": "Ordered chronologically (Llama-2-7b-chat \u2192 Meta-Llama-3-8B \u2192 Llama-3.1-8B-Instruct), these models show exponentially increasing downloads (439K \u2192 3.1M \u2192 9.2M) as Meta refined instruction-tuning approaches. The spectrum isn't about capability improvement but about deployment friction: chat-hf has lowest adoption, base model moderate, and instruct-optimized achieves 21x the downloads of the earliest version. This reveals that model popularity correlates less with generation number than with ready-to-deploy instruction alignment.",
-      "score": 8,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "5afd0d0cf2f9ea5ec86a473b1288ddfefe3374ef9e96db830bc5f73ad85feb53",
-      "constellation_type": "absence",
-      "idea_ids": [
-        30,
-        118,
-        113,
-        111
-      ],
-      "title": "Missing the Open Infrastructure Enabling Proprietary Changes",
-      "explanation": "The neighborhood contains both proprietary service modifications (Anthropic's cache TTL downgrade) and popular open-source LLM models (Llama variants with massive downloads). What's conspicuously absent is any discussion of the infrastructure, tooling, or frameworks that bridge these worlds\u2014the systems that let developers switch between proprietary and open models, or the economic/technical factors driving such migrations. The gap reveals how infrastructure discussions are orphaned from both service-level changes and model-level artifacts.",
-      "score": 7,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "5afd0d0cf2f9ea5ec86a473b1288ddfefe3374ef9e96db830bc5f73ad85feb53",
-      "constellation_type": "convergence",
-      "idea_ids": [
-        31,
-        32,
-        118,
-        113,
-        111
-      ],
-      "title": "Democratized Tools Demand Public Access Venues",
-      "explanation": "Phyphox democratizes physics experiments via smartphones, Oodi represents a public library as open learning infrastructure, and the Llama models represent democratized AI with millions of downloads. All three inadvertently solve the same structural problem: making sophisticated capabilities accessible without gatekeeping, whether through device ubiquity, physical public space, or open-source licensing. The convergence reveals that true democratization requires both the tool AND the venue for unrestricted use.",
-      "score": 6,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "245b23d36fa69e041da44d70e96bf90c195a9702564e2962ba123c833706af5c",
-      "constellation_type": "convergence",
-      "idea_ids": [
-        111,
-        113,
-        118
-      ],
-      "title": "Popularity Inversely Correlates With Actual Deployment",
-      "explanation": "Three open-source LLM models show a striking pattern: the most-liked model (Meta-Llama-3-8B, 6511 likes) has moderate downloads (3.1M), while the less-liked Llama-3.1-8B-Instruct (5680 likes) has 3x more downloads (9.2M). This suggests a disconnect between social signaling (likes) and actual production use\u2014possibly because instruction-tuned models serve practical needs while base models attract researcher attention. The gap between appreciation and deployment reveals how open-source AI adoption differs from traditional software.",
-      "score": 6,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "f4c0ee8ed9f3574e084fee0f78360e9c599a97237f46e9ca93e81bad3c34ccb4",
-      "constellation_type": "absence",
-      "idea_ids": [
-        111,
-        118,
-        113
-      ],
-      "title": "Missing Evaluation Infrastructure for Popular LLMs",
-      "explanation": "Three successive generations of Meta's Llama models (7B/8B variants) with millions of downloads exist alongside a text embedding leaderboard (mteb), but there's no equivalent systematic benchmark space for evaluating these conversational models. The gap is conspicuous: while embeddings get curated leaderboards, the most downloaded LLMs lack a standardized evaluation space despite their scale of adoption. This reveals missing infrastructure for comparing chat model performance that the community clearly needs given download volumes.",
-      "score": 7,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "f4c0ee8ed9f3574e084fee0f78360e9c599a97237f46e9ca93e81bad3c34ccb4",
-      "constellation_type": "spectrum",
-      "idea_ids": [
-        127,
-        128,
-        111,
-        113
-      ],
-      "title": "Democratization Trajectory: From Accessible to Industrial-Scale AI",
-      "explanation": "These ideas trace AI's accessibility evolution from DALL-E Mini (early democratized text-to-image with modest likes), through IllusionDiffusion (specialized creative application), to Llama models with millions of downloads. The spectrum reveals a shift from viral experimental tools toward production-grade models requiring significant compute. The axis is \"barrier to entry\" - moving from browser-playable experiments to models demanding serious infrastructure, paradoxically as \"open\" models become more capable.",
-      "score": 6,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "b8a503b527815193bfb741fddc8110b71dcb11269353fa858c028b405868eedd",
+      "neighborhood_hash": "b24b06d5dc93637639e5bd163e37540667ef5ef94d5c8248ab93632dcef412d6",
       "constellation_type": "chain",
       "idea_ids": [
-        118,
-        111,
-        113
+        43,
+        55,
+        56
       ],
-      "title": "Meta's Iterative Democratization of LLM Capability",
-      "explanation": "These three models form a clear evolutionary chain showing Meta's progression from Llama-2 (7B chat, 439K downloads) through base Llama-3 (8B, 3.1M downloads) to Llama-3.1 Instruct (8B, 9.2M downloads). Each iteration dramatically increased adoption while maintaining accessible model sizes, revealing a deliberate strategy of incremental capability release that built market trust and tooling infrastructure. The 21x download increase from Llama-2 to 3.1 demonstrates how open-weight iteration compounds network effects rather than cannibalizing previous versions.",
+      "title": "Healthcare's Administrative Automation Stack",
+      "explanation": "These three ideas form a complete automation layer across the healthcare value chain, each targeting a different operational bottleneck. Voice agents (43) handle patient-facing communication, workforce management (55) optimizes human resource allocation, and revenue cycle automation (56) closes the financial loop. Together they reveal how healthcare digitization must attack three distinct friction points—patient interface, labor coordination, and payment collection—that traditional EMR systems failed to solve. The progression shows healthcare automation moving from back-office billing to operational management to patient touchpoints.",
       "score": 7,
       "model": "claude-sonnet-4-5-20250929",
       "prompt_version": "constellation_v1"
     },
     {
-      "neighborhood_hash": "b8a503b527815193bfb741fddc8110b71dcb11269353fa858c028b405868eedd",
+      "neighborhood_hash": "b24b06d5dc93637639e5bd163e37540667ef5ef94d5c8248ab93632dcef412d6",
       "constellation_type": "convergence",
       "idea_ids": [
-        13,
-        14,
-        23
+        43,
+        55,
+        56
       ],
-      "title": "Minimalism as Infrastructure Strategy",
-      "explanation": "A bash-based Claude agent harness, a multi-agent orchestration framework, and Oberon OS on Raspberry Pi all embrace radical simplification as an architectural principle. Despite operating in completely different domains (AI agents, team collaboration, operating systems), they converge on the insight that stripping to essentials creates more hackable, understandable, and portable infrastructure. The pattern suggests that in an era of bloated complexity, minimal viable implementations become valuable precisely because they expose underlying mechanisms rather than hiding them.",
+      "title": "Vertical AI Replacing Healthcare Middle Management",
+      "explanation": "All three solutions replace traditionally human-intensive coordination roles: medical assistants doing phone triage, hospital schedulers managing shifts, and billing specialists chasing payments. Each applies AI/automation to eliminate a different layer of healthcare's administrative bloat, which consumes roughly 25% of US healthcare spending. The convergence reveals that healthcare's inefficiency isn't in clinical care itself but in the coordination infrastructure around it—and that vertical AI agents are systematically dismantling these coordination costs domain by domain.",
       "score": 8,
       "model": "claude-sonnet-4-5-20250929",
       "prompt_version": "constellation_v1"
     },
     {
-      "neighborhood_hash": "b8a503b527815193bfb741fddc8110b71dcb11269353fa858c028b405868eedd",
-      "constellation_type": "absence",
+      "neighborhood_hash": "5d17e4b6a996c402a3dad395bd5c8cc8d256d01bae1ebf8482ebff026285180c",
+      "constellation_type": "triangulation",
       "idea_ids": [
-        13,
-        14,
-        118,
-        111,
-        113
+        20,
+        24,
+        26
       ],
-      "title": "Missing: The Agent-Model Integration Layer",
-      "explanation": "We have minimal agent harnesses (13, 14) and we have the open LLM models (118, 111, 113), but conspicuously absent is tooling that specifically bridges lightweight agent frameworks with model selection/switching logic for open-weight models. The gap represents the missing middleware that would let developers easily build agent systems that can programmatically choose between Llama variants based on task requirements, cost, or latency constraints\u2014the orchestration layer for model-agnostic agent architectures.",
-      "score": 6,
-      "model": "claude-sonnet-4-5-20250929",
-      "prompt_version": "constellation_v1"
-    },
-    {
-      "neighborhood_hash": "d23c99ab7416bd546a35a496afe35cbdab455a876351d4c2f97b49b1be934998",
-      "constellation_type": "absence",
-      "idea_ids": [
-        118,
-        111,
-        113,
-        61
-      ],
-      "title": "Missing: The Inference Infrastructure Layer",
-      "explanation": "Three successive generations of Meta's Llama models show rapid evolution in open-source LLMs, while Doublezero represents the application layer (autonomous agents). The glaring absence is the middle infrastructure layer: tools for efficient deployment, serving, and orchestration of these models at scale. The neighborhood jumps from raw models to end-user applications without the critical plumbing that connects them\u2014inference optimization, model serving frameworks, or deployment platforms.",
+      "title": "Making Over Consuming: The Craft Renaissance",
+      "explanation": "These three ideas converge on the same cultural shift from passive consumption to active creation in distinct domains. Idiomatic design argues for craftsmanship in software; sonifying trains transforms infrastructure into art; DIY soft drinks reclaims industrial production as personal craft. Together they reveal a broader rejection of standardization in favor of personal, tangible making.",
       "score": 7,
       "model": "claude-sonnet-4-5-20250929",
       "prompt_version": "constellation_v1"
     },
     {
-      "neighborhood_hash": "d23c99ab7416bd546a35a496afe35cbdab455a876351d4c2f97b49b1be934998",
+      "neighborhood_hash": "5d17e4b6a996c402a3dad395bd5c8cc8d256d01bae1ebf8482ebff026285180c",
       "constellation_type": "convergence",
       "idea_ids": [
-        5,
-        61,
-        118
+        22,
+        25,
+        31
       ],
-      "title": "Democratization Through Elimination of Rent-Seeking",
-      "explanation": "OpenScreen removes subscription rent from demo creation, Doublezero creates a marketplace removing platform monopolies from AI agents, and Llama-2 (as the first major open-source chat model) removed licensing rent from LLM access. All three represent different domains (screencasting, agent platforms, foundational models) converging on the same structural solution: eliminating recurring extraction points that gatekeep access to capability. The pattern reveals a broader shift from rent-based to ownership-based tool economics.",
+      "title": "The Competence Floor Is Higher Than We Think",
+      "explanation": "Juggling one ball suggests basic competence is rarer than assumed; laziness lost implies efficiency tools eliminate necessary friction; JVM options explorer reveals complexity hiding beneath 'simple' systems. All three inadvertently point to the same problem: we've built systems that mask fundamental skill gaps, making baseline competence both harder to achieve and easier to fake.",
       "score": 8,
       "model": "claude-sonnet-4-5-20250929",
       "prompt_version": "constellation_v1"
     },
     {
-      "neighborhood_hash": "22687e06c5e25c8211a81075c4e16d6f59e84da9bc9ad94f2380f4949f6cb031",
+      "neighborhood_hash": "5d17e4b6a996c402a3dad395bd5c8cc8d256d01bae1ebf8482ebff026285180c",
+      "constellation_type": "chain",
+      "idea_ids": [
+        35,
+        36,
+        24
+      ],
+      "title": "From Measurement to Meaning: Data Sonification Pipeline",
+      "explanation": "A logical progression from measurement tool to theoretical understanding to creative expression. Phyphox enables raw physical data collection via smartphones; GPS physics explains how we extract meaning from electromagnetic signals; train sonification transforms infrastructure data into aesthetic experience. Each step builds on the previous: collect, understand, express.",
+      "score": 6,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "5d17e4b6a996c402a3dad395bd5c8cc8d256d01bae1ebf8482ebff026285180c",
       "constellation_type": "absence",
       "idea_ids": [
-        118,
-        113,
-        111,
-        11
+        18,
+        19,
+        29,
+        32
       ],
-      "title": "Missing: The Deployment Reality Gap",
-      "explanation": "Three popular LLM models (Llama variants with millions of downloads) and an agentic skills framework create a neighborhood about AI capabilities, yet there's a conspicuous absence of anything addressing the bridge between model artifacts and production systems. The gap is the operational layer: how these downloaded models actually get integrated, monitored, and maintained in real applications. This reveals the field's continued focus on model development over the unglamorous infrastructure that makes AI useful.",
+      "title": "Missing: The Governance Layer",
+      "explanation": "Frontier closing suggests resource limits; European AI playbook addresses sovereignty; renewable energy tackles implementation; Anthropic's cache change shows corporate unilateral power. These ideas circle infrastructure and autonomy but notably absent is any discussion of governance mechanisms, democratic control, or citizen participation in these technological and resource decisions. The gap is the political infrastructure to manage what's being built.",
       "score": 7,
       "model": "claude-sonnet-4-5-20250929",
       "prompt_version": "constellation_v1"
     },
     {
-      "neighborhood_hash": "22687e06c5e25c8211a81075c4e16d6f59e84da9bc9ad94f2380f4949f6cb031",
+      "neighborhood_hash": "8faa8a5c5744b167f1963df9a5083560fd46174d5b051ac25ee01db8a10b2db7",
+      "constellation_type": "absence",
+      "idea_ids": [
+        73,
+        89,
+        94
+      ],
+      "title": "Missing: Code-Audio Interface for Developer Workflows",
+      "explanation": "We have spatial navigation for code (#73), speech-to-text models (#89), and large language models (#94), but no idea connecting voice-driven code exploration. The gap is a system where developers verbally query codebases hands-free while reviewing or debugging. This absence is striking given that all three enabling technologies exist separately but haven't converged in this developer tooling space.",
+      "score": 6,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "2dabf193c1bec33928e601bfe4857ca8cc8320605c9a7738490bb368c456aeb6",
       "constellation_type": "convergence",
       "idea_ids": [
-        63,
-        28,
-        11
+        65,
+        72,
+        81
       ],
-      "title": "Gatekeeping Through Proxy Metrics",
-      "explanation": "A satirical piece on developer identity, a health debate about substitute ingredients, and a methodology framework all inadvertently address the same structural problem: communities defining legitimacy through surface-level criteria rather than outcomes. Whether it's \"real\" developers, \"healthier\" sweeteners, or \"working\" methodologies, each domain struggles with proxy measures that may miss the actual value proposition. The convergence reveals how professional and consumer communities alike default to credentialism over effectiveness.",
+      "title": "AI Promises Liberation, Reality Delivers Exhaustion",
+      "explanation": "AI-powered 'vibe coding' promises casual, frictionless creation, yet the same technological era produces a job market crisis and always-on burnout culture. These ideas reveal a paradox: tools that should democratize and ease development coincide with unprecedented career anxiety and mental health costs. The structural problem is that automation creates precarity faster than it creates opportunity, while lowering barriers to creation simultaneously raises expectations for constant productivity.",
+      "score": 8,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "2dabf193c1bec33928e601bfe4857ca8cc8320605c9a7738490bb368c456aeb6",
+      "constellation_type": "absence",
+      "idea_ids": [
+        65,
+        72,
+        81
+      ],
+      "title": "Missing: Skills Development and Learning Infrastructure",
+      "explanation": "We have AI tools making coding easier, developers struggling in a hostile job market, and mental health crises from overwork—but nothing about how developers actually learn, upskill, or navigate career transitions. The gap is the bridge between these states: educational pathways, mentorship structures, or deliberate skill-building that could address market displacement while preventing burnout. The neighborhood reveals symptoms of industry dysfunction without any discussion of systematic professional development.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "321567e92179188f3605cf0d439df7003e24149702cb5a10789b73c6a67daf69",
+      "constellation_type": "absence",
+      "idea_ids": [
+        88,
+        93,
+        86
+      ],
+      "title": "Missing: The Human Application Layer",
+      "explanation": "Three sequential Llama model generations (2, 3, 3.1) in 7-8B parameter range represent raw technical capability evolution. Yet paired with \"Most people can't juggle one ball\" - a statement about fundamental human limitation - there's a conspicuous gap: no ideas about interface design, prompt engineering frameworks, or cognitive scaffolding that would bridge model capability to actual human use. The neighborhood has the engines and acknowledgment of human constraints, but lacks the transmission mechanism.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "321567e92179188f3605cf0d439df7003e24149702cb5a10789b73c6a67daf69",
+      "constellation_type": "convergence",
+      "idea_ids": [
+        22,
+        25,
+        34
+      ],
+      "title": "Complexity Reduction as Existential Threat",
+      "explanation": "\"Most people can't juggle one ball\" reveals fundamental human cognitive limits. \"The Peril of Laziness Lost\" suggests automation eliminates beneficial friction. \"Cooperative Vectors\" implies coordination through mathematical abstraction. All three inadvertently point to the same structural problem: as systems (cognitive, social, computational) attempt to reduce complexity for humans, they may eliminate the very struggle that builds capacity or understanding.",
+      "score": 8,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "8f505f973dc994e99de3dcd4418050d9c7294a1faed77ada73d13e77d01a65f0",
+      "constellation_type": "convergence",
+      "idea_ids": [
+        55,
+        56,
+        43
+      ],
+      "title": "Healthcare's Back-Office AI Revolution",
+      "explanation": "Three startups attacking different administrative bottlenecks in healthcare (workforce scheduling, billing cycles, patient communication) using automation. The convergence reveals that healthcare innovation is currently concentrated not on clinical outcomes but on eliminating the operational overhead that makes medicine expensive and inefficient. Each targets a different touch point in the care delivery chain, but all solve the same structural problem: administrative labor that doesn't scale.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "8f505f973dc994e99de3dcd4418050d9c7294a1faed77ada73d13e77d01a65f0",
+      "constellation_type": "absence",
+      "idea_ids": [
+        88,
+        86,
+        93
+      ],
+      "title": "The Missing Healthcare LLM Application Layer",
+      "explanation": "Three generations of Llama models represent foundational AI infrastructure with massive adoption (millions of downloads), while ideas 43, 55, 56 show healthcare companies building vertical solutions. The gap is the absence of domain-adapted healthcare LLMs or fine-tuning frameworks that bridge raw foundation models to HIPAA-compliant, clinically-validated applications. The neighborhood shows both the foundation and the applications, but not the critical translation layer between them.",
+      "score": 8,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "cbbfe60d1d4f020eee6f908e17f47f4659cde54a9ec65cfe19718dd8a7c6ef5e",
+      "constellation_type": "spectrum",
+      "idea_ids": [
+        93,
+        86,
+        88
+      ],
+      "title": "Instruction-Tuning Drives Adoption Over Raw Performance",
+      "explanation": "These three Meta models represent an evolution from conversational fine-tuning (Llama-2-7b-chat) to base models (Meta-Llama-3-8B) to instruction-optimized variants (Llama-3.1-8B-Instruct). The download patterns reveal a counterintuitive insight: the instruction-tuned 3.1 variant has 3x more downloads than the base 3-8B despite fewer likes, while the older chat model lags dramatically. This suggests the market has moved from general chat interfaces to instruction-following as the primary deployment pattern, with downloads (actual usage) diverging from likes (interest signals).",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "cbbfe60d1d4f020eee6f908e17f47f4659cde54a9ec65cfe19718dd8a7c6ef5e",
+      "constellation_type": "absence",
+      "idea_ids": [
+        86,
+        88,
+        93
+      ],
+      "title": "Missing: The Fine-Tuning Intermediary Layer",
+      "explanation": "This neighborhood contains base models and instruction-tuned variants across Llama generations, but conspicuously lacks any domain-specific fine-tunes, LoRA adapters, or quantized derivatives that typically populate the deployment pipeline between base models and production. The gap reveals these are pure Meta releases—the absence of community adaptations suggests either tight clustering by source rather than use case, or that practitioners are downloading elsewhere. The missing layer would show how developers actually bridge research releases to production.",
       "score": 6,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "507687f675e53a1d9046bfc565ceb47444d2b250b6d8dce672b56d0481c35def",
+      "constellation_type": "absence",
+      "idea_ids": [
+        72,
+        81,
+        62
+      ],
+      "title": "Missing: The Structural Critique of Developer Culture",
+      "explanation": "Three ideas reveal symptoms of developer burnout and employment dysfunction: disability employment barriers, always-on culture costs, and curated community content. What's conspicuously absent is any structural analysis or systemic solution—no discussion of policy changes, collective action, or organizational reform. The neighborhood catalogues individual suffering and community response but lacks the critical infrastructure layer that would address root causes rather than symptoms.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "507687f675e53a1d9046bfc565ceb47444d2b250b6d8dce672b56d0481c35def",
+      "constellation_type": "convergence",
+      "idea_ids": [
+        72,
+        81,
+        93,
+        86,
+        88
+      ],
+      "title": "Automation Anxiety Meets Labor Market Precarity",
+      "explanation": "Developer career distress (disability barriers, burnout culture) appears alongside three generations of increasingly powerful open-source LLMs with millions of downloads. The convergence isn't that AI causes job loss—it's that workers facing already-fragile conditions (ableism, unsustainable hours) now navigate additional uncertainty about skill obsolescence. The structural problem is identical: both human limitations and AI capabilities expose how little margin for error exists in current tech employment.",
+      "score": 8,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "164d485507608f66ac3603744341d2b4ff594d7341f94dadcb9178ca7bb4f0f7",
+      "constellation_type": "chain",
+      "idea_ids": [
+        93,
+        86,
+        88,
+        9
+      ],
+      "title": "Foundation Models Enable Autonomous Research Synthesis",
+      "explanation": "The progression from Llama-2 through Llama-3 to Llama-3.1-Instruct shows exponentially increasing downloads (439K → 3.1M → 9.3M), suggesting rapid improvement in instruction-following capabilities. This capability evolution directly enables complex agent skills like last30days, which requires understanding research tasks, coordinating multi-platform searches, and synthesizing coherent summaries. The chain reveals how base model improvements unlock increasingly sophisticated autonomous information workflows that were previously impossible.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "164d485507608f66ac3603744341d2b4ff594d7341f94dadcb9178ca7bb4f0f7",
+      "constellation_type": "convergence",
+      "idea_ids": [
+        9,
+        76,
+        3
+      ],
+      "title": "Automation Skills Converge on Task-to-Output Compression",
+      "explanation": "Three different domains—research synthesis, image-to-process automation, and monetization—all share the same structural solution: compressing human multi-step workflows into single-invocation skills. Each takes a high-level intent (\"research this topic,\" \"automate from this image,\" \"make money online\") and handles all intermediate coordination invisibly. The convergence reveals a broader pattern where AI's value lies not in replacing individual tasks but in orchestrating entire workflows end-to-end.",
+      "score": 8,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "164d485507608f66ac3603744341d2b4ff594d7341f94dadcb9178ca7bb4f0f7",
+      "constellation_type": "absence",
+      "idea_ids": [
+        9,
+        76,
+        3
+      ],
+      "title": "Missing: Quality Control and Verification Layer",
+      "explanation": "All three automation skills promise end-to-end workflow compression but none addresses output verification, fact-checking, or quality gates. MoneyPrinterV2, last30days research, and image-to-process automation all generate artifacts that could be plausible but wrong, yet there's no skill for validating their outputs. The gap reveals that autonomous task execution has outpaced autonomous task verification—a critical missing piece for trustworthy AI agents.",
+      "score": 9,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "e47911e54814d144c8a164c5c819d5646cf0b248bdbad1fdf5dc21ac4c2f5da4",
+      "constellation_type": "convergence",
+      "idea_ids": [
+        58,
+        93,
+        86,
+        88
+      ],
+      "title": "AI Commoditization Enables Vertical Automation",
+      "explanation": "Fazeshift applies AI agents to a specific business function (AR), while the three Llama models represent progressively more capable, freely available LLMs. The convergence reveals how commoditized AI infrastructure (downloadable models with millions of users) directly enables startups to automate domain-specific workflows that were previously human-only. The explosion in Llama downloads (439K → 9.2M) parallels the feasibility window for tools like Fazeshift to exist as viable products.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "e47911e54814d144c8a164c5c819d5646cf0b248bdbad1fdf5dc21ac4c2f5da4",
+      "constellation_type": "absence",
+      "idea_ids": [
+        60,
+        58,
+        38
+      ],
+      "title": "Missing: AI for Physical Operations",
+      "explanation": "Central automates administrative startup overhead, Fazeshift automates financial processes, but Maritime Fusion represents pure physical engineering with no AI counterpart visible. The gap is conspicuous: where is the AI agent for supply chain logistics, manufacturing operations, or energy infrastructure management? The neighborhood has digital automation and physical hardware innovation but lacks AI applied to operational coordination of physical systems.",
+      "score": 6,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "fd0fbc6b9ef708af086e63d945ccec7efccc700d93acdae2454b2ea571c72c5d",
+      "constellation_type": "absence",
+      "idea_ids": [
+        44,
+        52,
+        71
+      ],
+      "title": "The Missing Human-in-Loop Validation Layer",
+      "explanation": "Three tools automate quality assurance (voice agents, documentation, accessibility) but share a common blind spot: they optimize metrics without capturing actual user comprehension or experience. The accessibility article explicitly warns that automated scores lie; the same limitation applies to voice agent testing and auto-generated docs. What's missing is a methodology for rapid human validation that sits between automation and production—not manual QA, but structured micro-feedback loops that catch what algorithms miss.",
+      "score": 8,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "fd0fbc6b9ef708af086e63d945ccec7efccc700d93acdae2454b2ea571c72c5d",
+      "constellation_type": "convergence",
+      "idea_ids": [
+        44,
+        52,
+        71,
+        93
+      ],
+      "title": "Automation's Illusion of Sufficient Testing",
+      "explanation": "Voice agent monitoring, automated documentation, accessibility scoring, and LLM benchmarks all share the same structural flaw: they measure proxy metrics rather than actual utility. Each domain has developed sophisticated tooling that creates confidence through quantification, yet fundamentally cannot assess whether the output truly serves its purpose. The convergence reveals that as AI automates production, our testing paradigms lag dangerously behind—we're optimizing for what's measurable rather than what matters.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "d69f69a25e56dacd612a6dab225eb88da18f00c98454a2e93c260fc9e1713913",
+      "constellation_type": "spectrum",
+      "idea_ids": [
+        93,
+        86,
+        88
+      ],
+      "title": "Meta's Incremental LLM Evolution Trajectory",
+      "explanation": "These three models represent Meta's progressive development of open-source language models across generations (Llama-2 → Llama-3 → Llama-3.1), each improving on the last. The download-to-like ratios reveal an interesting pattern: Llama-3.1-8B-Instruct has dramatically higher downloads (9.2M) relative to likes, suggesting it hit a sweet spot for production deployment. This spectrum shows how foundation model families mature from experimental (high like ratio) to utility-dominant (high download ratio).",
+      "score": 6,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "d69f69a25e56dacd612a6dab225eb88da18f00c98454a2e93c260fc9e1713913",
+      "constellation_type": "convergence",
+      "idea_ids": [
+        83,
+        106,
+        104
+      ],
+      "title": "The Multimodal Generation Triumvirate",
+      "explanation": "FLUX.1-dev and FLUX.1-schnell represent image generation models from the same family (dev vs fast), while Wan2.2-Animate represents animation generation. Despite different output modalities, all three converge on the same architectural challenge: balancing quality versus speed in generative AI. The pairing of dev/schnell variants with animation tools suggests the field is standardizing on a two-tier approach—high-quality slow models and fast inference variants—across all generative domains.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "d69f69a25e56dacd612a6dab225eb88da18f00c98454a2e93c260fc9e1713913",
+      "constellation_type": "absence",
+      "idea_ids": [
+        83,
+        106,
+        86,
+        88
+      ],
+      "title": "Missing: The Multimodal Fusion Layer",
+      "explanation": "This neighborhood contains leading text models (Llama series) and leading image/visual models (FLUX series), both with massive adoption. What's conspicuously absent is any model or space that bridges these modalities—a vision-language model like LLaVA, CLIP, or GPT-4V equivalent. Given the popularity of both model families, the gap reveals that truly integrated multimodal understanding (not just generation) may still be an unsolved adoption problem in open-source AI.",
+      "score": 8,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "2517cf161f059b119859ec43cc6cc57b1c5e685ac34eee0c6b32e4680646118e",
+      "constellation_type": "absence",
+      "idea_ids": [
+        2,
+        6,
+        7
+      ],
+      "title": "Missing: The Evaluation Layer for AI Tooling",
+      "explanation": "Three ideas focus on making AI coding assistants more powerful (skills directory), transparent (HUD monitoring), and optimized (performance harness). Yet none address how to measure whether these enhancements actually improve outcomes. The missing piece is a systematic evaluation framework that benchmarks skill effectiveness, quantifies context efficiency gains, and validates that optimization efforts translate to better code quality or developer productivity.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "2517cf161f059b119859ec43cc6cc57b1c5e685ac34eee0c6b32e4680646118e",
+      "constellation_type": "convergence",
+      "idea_ids": [
+        2,
+        7,
+        93,
+        88
+      ],
+      "title": "The Customization-Commoditization Tension in AI Tools",
+      "explanation": "Personal skill directories and agent optimization systems represent deep customization efforts to enhance AI assistants, while the Llama models represent the commoditization of powerful base capabilities. Both emerge from the same structural problem: pre-trained models are general but not personal. The convergence reveals that as base models become more accessible, value shifts entirely to the customization layer—skills, harnesses, and context management become the new moats.",
+      "score": 8,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "687012dbd1a42dd06b1be7818fcaf203b1b11096c029c88d17af3fc63af0160d",
+      "constellation_type": "absence",
+      "idea_ids": [
+        15,
+        1,
+        86,
+        88,
+        93
+      ],
+      "title": "The Missing Evaluation Layer",
+      "explanation": "We have AI chat platforms (onyx), agent frameworks (hermes-agent), and multiple LLM models of varying capabilities (Llama 2, 3, 3.1), but conspicuously absent is any tooling for systematically evaluating, benchmarking, or comparing these components. The neighborhood contains the building blocks of an AI stack but lacks the critical measurement infrastructure that would actually guide selection between these options. This gap is particularly striking given the popularity metrics (downloads, likes) suggest heavy production usage.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "687012dbd1a42dd06b1be7818fcaf203b1b11096c029c88d17af3fc63af0160d",
+      "constellation_type": "convergence",
+      "idea_ids": [
+        15,
+        1,
+        63
+      ],
+      "title": "Identity Crisis in the AI Abstraction Era",
+      "explanation": "The onyx platform promises to work with \"every LLM,\" hermes-agent offers an agent that \"grows with you,\" while the dev article satirizes gatekeeping around what makes a \"real\" developer. All three inadvertently address the same anxiety: as abstractions commoditize technical depth, how do we define expertise and identity? The AI tools suggest competence is about orchestration rather than model internals, mirroring the dev community's struggle with what technical knowledge actually matters.",
+      "score": 8,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "0221499bde4173248d0d4de3f38f82ff07eb8a70ed9e022a4b6e93426d125c2a",
+      "constellation_type": "absence",
+      "idea_ids": [
+        94,
+        89,
+        88,
+        86,
+        93
+      ],
+      "title": "Missing Bridge: Model Deployment to Usage Context",
+      "explanation": "Five popular foundation models (LLMs and Whisper) represent the supply side of AI capabilities, while idea #73 represents a specific downstream application pattern (code navigation/understanding). The gap is the middle layer: how these models actually get integrated, customized, or fine-tuned for specific use cases like the codebase navigator. Missing are ideas about model adaptation, RAG architectures, prompt engineering frameworks, or deployment infrastructure that bridge raw models to end-user applications.",
+      "score": 7,
+      "model": "claude-sonnet-4-5-20250929",
+      "prompt_version": "constellation_v1"
+    },
+    {
+      "neighborhood_hash": "0221499bde4173248d0d4de3f38f82ff07eb8a70ed9e022a4b6e93426d125c2a",
+      "constellation_type": "convergence",
+      "idea_ids": [
+        73,
+        88,
+        86,
+        93
+      ],
+      "title": "Democratization Through Scale-Down and Interface",
+      "explanation": "The codebase navigator (#73) and the three Llama models represent two different approaches to the same problem: making AI capabilities accessible. Llama models democratize through open weights at various scales (7B-8B parameters), while the Maps metaphor democratizes through familiar interface patterns. Both recognize that powerful capabilities mean nothing without lowering barriers to entry—one through computational accessibility, the other through cognitive accessibility.",
+      "score": 8,
       "model": "claude-sonnet-4-5-20250929",
       "prompt_version": "constellation_v1"
     }
   ],
   "patterns": [
     {
-      "cluster_hash": "e142cdf823ac61fdc03c6dc43fa18f15029dc18db9f4cda7f9ccb69c9ac5e1cb",
-      "pattern_title": "The Disappearing Interface",
-      "pattern_description": "These projects share an implicit assumption that the traditional 'application' as a discrete tool is dying. Instead of building software that users operate, they're building agents that operate software on behalf of users. The significance: we're witnessing a shift from 'human uses computer' to 'human directs computer-that-uses-computer'. The harness/orchestration metaphors reveal anxiety about controlling something that's meant to have autonomy.",
+      "cluster_hash": "0856752a34b7a787eb44f60b91a62b05adc97e6357f46d7cc94f1b46e97d8ecd",
+      "pattern_title": "The Return of Personal Computing Sovereignty",
+      "pattern_description": "These projects share an implicit rejection of cloud-dependent, platform-controlled computing. A macOS dock replacement, Oberon on bare-metal Raspberry Pi, and 'agent with a computer' all represent a quiet rebellion against SaaS-everything. The pattern reveals a cultural undercurrent seeking computing that is local, owned, and mechanically comprehensible—a pendulum swing back from 'everything is a service' toward tangible digital autonomy.",
       "idea_ids": [
-        1,
-        7,
-        13,
-        14,
-        53,
-        58
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "e142cdf823ac61fdc03c6dc43fa18f15029dc18db9f4cda7f9ccb69c9ac5e1cb",
-      "pattern_title": "Nostalgia as Technical Protest",
-      "pattern_description": "The Oberon System 3 revival and the 'Bash is all you need' philosophy represent a counter-movement hiding in plain sight. While others add complexity layers, these projects argue that older, simpler paradigms were sufficient. The Oberon port to Raspberry Pi and reducing an AI agent to shell scripts both reject the assumption that progress requires bloat. This reveals a growing suspicion that modern software architecture is unnecessarily complex.",
-      "idea_ids": [
-        13,
-        23
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "e142cdf823ac61fdc03c6dc43fa18f15029dc18db9f4cda7f9ccb69c9ac5e1cb",
-      "pattern_title": "The Loneliness of Scale",
-      "pattern_description": "'Grows with you', 'Teams-first', 'Agent with a computer' - these framings reveal that the actual problem being solved isn't technical but relational. The agent becomes companion, colleague, extension of self. The revealing absence: none mention 'efficiency' or 'speed' as primary values. This suggests the market has shifted from wanting tools that work faster to wanting tools that work alongside. Automation anxiety is being resolved through anthropomorphization.",
-      "idea_ids": [
-        1,
-        7,
-        14,
+        21,
+        27,
         53
       ],
       "model": "claude-opus-4-5-20251101",
       "prompt_version": "patterns_v1"
     },
     {
-      "cluster_hash": "09f7d684369a2e560172db68fb5a403b3b42fae808122dafe4dfedde38626fbf",
-      "pattern_title": "Meta-tools eating their own tail",
-      "pattern_description": "A striking pattern of tools that exist primarily to document, explain, or optimize themselves rather than solve external problems. A skills directory pulled from a config file, a website explaining how it builds itself, optimizing the platform you're posting on. This suggests a cultural moment where developers are increasingly turning inward\u2014building infrastructure about infrastructure, meta-layers upon meta-layers. It reveals anxiety about the disappearing boundary between the tool and the toolmaker.",
+      "cluster_hash": "0856752a34b7a787eb44f60b91a62b05adc97e6357f46d7cc94f1b46e97d8ecd",
+      "pattern_title": "AI as Companion Species, Not Tool",
+      "pattern_description": "The language here is revealing: 'grows with you,' 'works with every LLM,' 'agent with a computer.' These frame AI not as productivity software but as something that cohabitates your digital life—adaptive, persistent, relational. This signals a paradigm shift from AI-as-function-call toward AI-as-ongoing-relationship, with implications for how we'll conceptualize digital identity and dependency.",
       "idea_ids": [
-        2,
-        78,
-        69,
-        67
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "09f7d684369a2e560172db68fb5a403b3b42fae808122dafe4dfedde38626fbf",
-      "pattern_title": "Automation of judgment domains",
-      "pattern_description": "These projects share an implicit assumption that AI can replace human judgment in high-stakes domains traditionally requiring licensed expertise and intuition\u2014financial trading, insurance underwriting, energy market timing. The revealing absence is any mention of human oversight or hybrid decision-making. This signals a paradigm shift from 'AI as advisor' to 'AI as autonomous actor' in consequential economic decisions, with surprisingly little friction.",
-      "idea_ids": [
-        10,
-        49,
-        57
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "09f7d684369a2e560172db68fb5a403b3b42fae808122dafe4dfedde38626fbf",
-      "pattern_title": "Absurdism as technical criticism",
-      "pattern_description": "The April Fools submissions aren't just jokes\u2014they're pointed critiques disguised as humor. A stress-inducing editor mocks 'vibe coding' hype, a chaos AI butler satirizes over-automated assistants, a self-explaining website parodies navel-gazing tech. This is developer culture processing its discomfort with current AI/automation trends through comedic resistance. The absurdity is the message: 'we see the emperor has no clothes.'",
-      "idea_ids": [
-        74,
-        75,
-        78,
-        69
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "33f64a483bc09161475729a14c28ddc29812f6e65bf89712401c5128737699c1",
-      "pattern_title": "Automation of Human Judgment Bottlenecks",
-      "pattern_description": "Multiple projects target moments where human expertise creates friction: medical triage, recruiting evaluation, hospital scheduling, revenue cycle decisions, codebase comprehension. The underlying assumption is that human judgment, once considered irreplaceable in high-stakes domains, is now viewed as a scalability bottleneck to be automated rather than augmented. This represents a cultural shift from 'AI assists experts' to 'AI replaces the need for expertise in routine decisions.'",
-      "idea_ids": [
-        43,
-        45,
-        55,
-        56,
-        73,
-        8
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "33f64a483bc09161475729a14c28ddc29812f6e65bf89712401c5128737699c1",
-      "pattern_title": "Financialization of Niche Passion Domains",
-      "pattern_description": "Robinhood for Pokemon cards, automated money-making, and maritime fusion all share an implicit belief that previously non-financial or hobbyist spaces (collectibles, content creation, experimental energy) should be reframed through trading/investment mechanics. This reveals a cultural assumption that legitimacy and engagement now require financial gamification - turning enthusiasm into assets and participants into investors.",
-      "idea_ids": [
-        3,
-        47,
-        38
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "33f64a483bc09161475729a14c28ddc29812f6e65bf89712401c5128737699c1",
-      "pattern_title": "Disappearing Infrastructure as Competitive Advantage",
-      "pattern_description": "Apple removing Lebanese towns, accessibility scores that lie, 'vibe coding' that abstracts away engineering, component CSS hiding complexity - these share a pattern of making foundational layers invisible. The revealing absence here is accountability: when infrastructure becomes seamless/hidden, errors become harder to detect and contest. This signals a paradigm where abstraction is marketed as simplicity but actually consolidates control.",
-      "idea_ids": [
-        20,
-        71,
-        65,
-        80
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "a5c96cfed5b906a7f0c7e20d7d9e6099c669d9a60e9c17203e9d0e303ad5205c",
-      "pattern_title": "The Delegation Stack: Humans Becoming Orchestrators",
-      "pattern_description": "These projects share an implicit assumption that human work is shifting from 'doing' to 'supervising agents that do.' DeerFlow handles 'different levels of tasks,' Claude-HUD monitors 'running agents,' and the subagent experimentation article explores delegation chains. The significant undercurrent: we're building management hierarchies for AI, mirroring corporate org charts. This reveals anxiety about losing visibility/control as AI becomes more autonomous, and a cultural shift where 'coding' increasingly means 'managing code-writing entities.'",
-      "idea_ids": [
-        4,
-        6,
-        79,
-        9
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "a5c96cfed5b906a7f0c7e20d7d9e6099c669d9a60e9c17203e9d0e303ad5205c",
-      "pattern_title": "Trust Through Transparency Theater",
-      "pattern_description": "Multiple projects emphasize making AI systems observable, comparable, or 'open source' - but the deeper pattern is performative legibility as a trust mechanism. The LLM leaderboard ranks models publicly, Claude-HUD shows 'what's happening,' and tools brand themselves as 'open.' The revealing absence: none address whether transparency actually improves outcomes or just creates comfort. This reflects a cultural moment where 'seeing the process' substitutes for understanding it - a new form of accountability theater for systems too complex to truly audit.",
-      "idea_ids": [
-        6,
-        122,
+        1,
         15,
-        16
+        53
       ],
       "model": "claude-opus-4-5-20251101",
       "prompt_version": "patterns_v1"
     },
     {
-      "cluster_hash": "a5c96cfed5b906a7f0c7e20d7d9e6099c669d9a60e9c17203e9d0e303ad5205c",
-      "pattern_title": "AI as Labor Arbitrage for Human Likeness",
-      "pattern_description": "Bezel's digital humans modeling clothes, VibeVoice's frontier voice AI, and OpenClaw's automation share an implicit assumption: AI value comes from replacing expensive human presence (models, voices, physical actions) with cheap synthetic approximations. The undercurrent is economic rather than technological - these aren't pushing AI capabilities forward, they're exploiting the gap between 'good enough likeness' and 'human labor costs.' This signals AI entering a commodity phase where the innovation is in arbitrage, not advancement.",
+      "cluster_hash": "0856752a34b7a787eb44f60b91a62b05adc97e6357f46d7cc94f1b46e97d8ecd",
+      "pattern_title": "Gatekeeping Fatigue and Identity Satire",
+      "pattern_description": "The developer identity joke post alongside projects embracing 'boring' aesthetics and retro systems suggests exhaustion with tech's credentialism and complexity theater. There's an emerging counter-identity forming: developers who find meaning in simplicity, in old paradigms, in rejecting the constant churn. The revealing absence is any project here about scaling or growth—the set implicitly values craft over scale.",
       "idea_ids": [
-        51,
-        76,
-        16
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "e3f69563b86d8690f538f9283635e7ae1eeda4b7e611c4c1ef26b88a7a14b4af",
-      "pattern_title": "The Disappearing Cloud Dependency",
-      "pattern_description": "Multiple projects here share an implicit rejection of the SaaS/cloud-dependent model that dominated the 2010s. On-device ML, local model galleries, and open-source tools with 'no subscriptions' signal a counter-movement toward computational sovereignty. This represents a quiet ideological shift: users reclaiming processing power from centralized platforms, possibly driven by privacy concerns, cost fatigue, or distrust of platform lock-in.",
-      "idea_ids": [
-        12,
-        17,
-        5
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "22fb0f893286a82558ed15f9ad72ee5e6aaad323b1a2ff8bf9f81b262afdc97d",
-      "pattern_title": "Compression as Value Proposition",
-      "pattern_description": "These ideas share an implicit promise of bypassing complexity - understanding PRs in under a minute, a methodology that 'just works,' evaluating health claims with simplified answers. This reveals a hunger for cognitive shortcuts in an era of information overload, but also a concerning trend toward outsourcing judgment to systems that promise instant clarity.",
-      "idea_ids": [
-        59,
-        11,
-        28
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "bfe7a99a2254c8b11bd6608fa7544ca9414bebe628a8f6f4f0fd1d1bf7bdb258",
-      "pattern_title": "Infrastructure Legibility as Power",
-      "pattern_description": "Multiple projects focus on making invisible technical infrastructure visible and controllable by individuals - JVM internals, API caching policies, GPS physics, OS-level UI. This reflects a growing anxiety about dependence on opaque systems we don't understand, and a cultural shift toward demanding transparency from the 'plumbing' of digital life. The Anthropic cache controversy especially reveals how brittle our assumptions are about services we build upon.",
-      "idea_ids": [
-        26,
-        30,
-        33,
-        18
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "bfe7a99a2254c8b11bd6608fa7544ca9414bebe628a8f6f4f0fd1d1bf7bdb258",
-      "pattern_title": "Playful Misuse as Serious Exploration",
-      "pattern_description": "Projects that deliberately use technology 'wrong' - phones as physics labs, curl as a game renderer, subway trains as instruments. This isn't just whimsy; it's a methodological approach gaining legitimacy. By violating intended use cases, these projects reveal hidden capabilities and constraints of systems. This represents a quiet rejection of vendor-defined affordances and reclaiming of technical agency.",
-      "idea_ids": [
-        22,
-        36,
-        31
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "bfe7a99a2254c8b11bd6608fa7544ca9414bebe628a8f6f4f0fd1d1bf7bdb258",
-      "pattern_title": "Post-Optimization Longing",
-      "pattern_description": "A cluster focused on human flourishing metrics beyond efficiency - happiness mapping, library architecture appreciation, civilizational timeframes, renewable energy as moral milestone. These share an implicit critique that optimization culture has hollowed something out. The 'Happy Map' and Oodi library tour especially suggest hunger for spaces and systems designed for human thriving rather than throughput. This is the shadow side of tech culture examining itself.",
-      "idea_ids": [
-        29,
-        32,
-        24,
+        63,
+        21,
         27
       ],
       "model": "claude-opus-4-5-20251101",
       "prompt_version": "patterns_v1"
     },
     {
-      "cluster_hash": "b79e0c2e34e2b0950b7024d452771d6420d95d43429c16dd7a213607ac714be6",
-      "pattern_title": "Reclaiming Agency from Optimization Culture",
-      "pattern_description": "All three items share an implicit rejection of 'efficiency-at-all-costs' thinking. Idiomatic design pushes back against homogenized UI patterns; EU-only infrastructure deliberately chooses sovereignty over convenience; celebrating weekly wins resists hustle culture's 'never enough' mentality. Together they signal a quiet rebellion against letting external systems (design trends, Big Tech, productivity metrics) define what 'good' looks like.",
+      "cluster_hash": "0aeb74af0c42f6cfdabe4f613f6037ba8917233ba702977e038d414faa113da0",
+      "pattern_title": "Developer as Orchestra Conductor",
+      "pattern_description": "These projects reveal a shift from 'AI as tool' to 'AI as ensemble to be directed.' The language of 'harness,' 'orchestration,' and 'subagents' suggests developers are becoming conductors of AI swarms rather than programmers. The implicit assumption is that single-agent AI has already plateaued — the next frontier is coordination, not capability. This mirrors how cloud computing evolved from 'one big server' to distributed microservices.",
       "idea_ids": [
-        19,
-        35,
-        66
+        4,
+        7,
+        14,
+        79
       ],
       "model": "claude-opus-4-5-20251101",
       "prompt_version": "patterns_v1"
     },
     {
-      "cluster_hash": "b79e0c2e34e2b0950b7024d452771d6420d95d43429c16dd7a213607ac714be6",
-      "pattern_title": "Friction as Feature",
-      "pattern_description": "Both the idiomatic design piece and the EU infrastructure constraint deliberately introduce friction that mainstream tech tries to eliminate. This suggests an emerging counter-intuition: that constraints breed creativity and that seamlessness has hidden costs (loss of character, loss of data rights). The absence of 'how to move faster' content here is telling.",
+      "cluster_hash": "0aeb74af0c42f6cfdabe4f613f6037ba8917233ba702977e038d414faa113da0",
+      "pattern_title": "The Legibility Crisis",
+      "pattern_description": "A revealing anxiety emerges: developers are building tools to understand what their AI tools are doing. HUDs showing 'context usage,' personal 'skills directories,' and 'power user' interfaces all address the same problem — AI agents have become opaque black boxes even to their operators. The absence of built-in observability in Claude Code itself is forcing a cottage industry of visibility layers. This suggests AI development environments may be outpacing human comprehension speed.",
       "idea_ids": [
-        19,
-        35
+        2,
+        6,
+        7,
+        23
       ],
       "model": "claude-opus-4-5-20251101",
       "prompt_version": "patterns_v1"
     },
     {
-      "cluster_hash": "b79e0c2e34e2b0950b7024d452771d6420d95d43429c16dd7a213607ac714be6",
-      "pattern_title": "Community as Infrastructure",
-      "pattern_description": "The weekly wins thread and the EU SaaS piece both treat human/regional networks as foundational rather than supplementary. One builds emotional infrastructure through ritual check-ins; the other builds technical infrastructure through geographic community. Both implicitly argue that resilience comes from smaller, intentional networks rather than global scale.",
+      "cluster_hash": "0aeb74af0c42f6cfdabe4f613f6037ba8917233ba702977e038d414faa113da0",
+      "pattern_title": "Memory as Competitive Moat",
+      "pattern_description": "Multiple projects emphasize 'memory,' 'skills,' and persistent state as core features. This reveals a paradigm shift: the valuable asset isn't the AI model itself (commoditized), but the accumulated context and learned behaviors wrapped around it. Personal '.claude directories' and 'skills' systems are essentially attempts to create portable, ownable AI personalities — a bet that customization trumps raw capability.",
       "idea_ids": [
-        66,
-        35
+        2,
+        4,
+        7,
+        13
       ],
       "model": "claude-opus-4-5-20251101",
       "prompt_version": "patterns_v1"
     },
     {
-      "cluster_hash": "48ac3858a15f1ac17ff81811c52fc09930c0bdbf91dd9809cb0ae3e15befb9ba",
-      "pattern_title": "Infrastructure as the new interface",
-      "pattern_description": "These tools share an assumption that the 'product' users interact with is increasingly just a thin shell over complex backend systems. Voice agents need monitoring, AI needs a 'knowledge layer,' docs update themselves, HFT moves onto chips. The locus of value has shifted from what users see to what runs underneath. This signals a coming era where most software companies are actually infrastructure companies pretending to be applications.",
+      "cluster_hash": "47ee6a98aca39c90f6dbbb653e14916eee190e6ad3d1ccba6fc110a08ef5efbb",
+      "pattern_title": "Delegation of Judgment to Autonomous Systems",
+      "pattern_description": "All three projects share an implicit assumption that complex decision-making processes (what's profitable, what's relevant, what's worth capturing) can be outsourced to automated systems. This reflects a cultural shift from 'tools that help humans decide' to 'systems that decide for humans' - a subtle but significant transfer of agency that most users won't consciously acknowledge.",
+      "idea_ids": [
+        3,
+        9,
+        76
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "47ee6a98aca39c90f6dbbb653e14916eee190e6ad3d1ccba6fc110a08ef5efbb",
+      "pattern_title": "Passive Wealth/Knowledge Extraction Mindset",
+      "pattern_description": "These projects embody a revealing assumption that value exists 'out there' waiting to be harvested through the right algorithmic pipeline - whether money or synthesized knowledge. This reflects a shift from creation-oriented to extraction-oriented thinking, treating the digital ecosystem as a mine rather than a garden to cultivate.",
+      "idea_ids": [
+        3,
+        9
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "47ee6a98aca39c90f6dbbb653e14916eee190e6ad3d1ccba6fc110a08ef5efbb",
+      "pattern_title": "The Disappearing Human Witness",
+      "pattern_description": "Both the research synthesis and the image capture automation share an unstated premise: important moments or information shouldn't require human presence or attention to be collected. This suggests an emerging anxiety about 'missing things' and a belief that continuous automated surveillance/capture is superior to selective human attention.",
+      "idea_ids": [
+        9,
+        76
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "c5835455664f688325c117eceb7ce19a4949a1bc7839010ee935df77a53c5a16",
+      "pattern_title": "Democratizing Premium Through Irreverence",
+      "pattern_description": "These projects share a cultural posture of deliberately casual disruption - using profanity, playful framing ('Robinhood for Pokemon'), or anti-corporate language to signal that premium/professional tools shouldn't require premium attitudes. The implicit paradigm shift is that accessibility isn't just about price but about cultural permission - making serious tools feel approachable by rejecting the seriousness itself.",
+      "idea_ids": [
+        5,
+        47,
+        60
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "c5835455664f688325c117eceb7ce19a4949a1bc7839010ee935df77a53c5a16",
+      "pattern_title": "AI as Administrative Exoskeleton",
+      "pattern_description": "Rather than AI replacing humans, these projects position AI as augmentation for cognitively draining but relationship-dependent work: tutoring, recruiting, collections, knowledge management. The revealing assumption is that the next wave isn't about automation but about giving humans 'superpowers' in roles where full automation would destroy trust or nuance. The absence here is notable - no pure automation plays, only human-AI symbiosis.",
+      "idea_ids": [
+        42,
+        45,
+        58,
+        48
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "c5835455664f688325c117eceb7ce19a4949a1bc7839010ee935df77a53c5a16",
+      "pattern_title": "Infrastructure for the Overlooked Middle",
+      "pattern_description": "These target surprisingly unsexy middle-ground markets: not consumer apps or enterprise giants, but ships (not cars or planes), startups (not SMBs or enterprise), collectors (not investors or consumers). The pattern reveals a bet that massive value remains trapped in markets too niche for big tech but too complex for simple solutions - the 'forgotten middle' where specialization beats scale.",
+      "idea_ids": [
+        38,
+        60,
+        47
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "f3c5693d37fe66e13314e2093242b31675e2c1e511aadcd2164b72bae2eb2b4d",
+      "pattern_title": "The Compression Imperative",
+      "pattern_description": "There's an obsession with collapsing layers—putting exchange AND HFT on one chip, understanding PRs in 'under a minute', turning complex APIs into 'drop-in' libraries, running AI on-device rather than cloud, converting old media formats into streaming. This reveals a cultural exhaustion with distributed complexity. The implicit belief: latency (in time, space, abstraction layers) is now the primary enemy. We're reversing decades of 'separation of concerns' philosophy.",
       "idea_ids": [
         40,
-        44,
-        42,
-        52
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "ff80c2ea36e84738b36d6a91529f9bea1ac1838cd47e8b9dd2f6b12dc0b85a0b",
-      "pattern_title": "The Commoditization of Reasoning",
-      "pattern_description": "These models represent a quiet paradigm shift: reasoning and language generation\u2014once considered uniquely human cognitive labor\u2014are being packaged as downloadable utilities. The massive download counts suggest reasoning is becoming infrastructure, not product. The revealing absence is any moat or differentiation strategy; they compete on benchmarks and efficiency, treating intelligence as a commodity. This mirrors how electricity or computing cycles were commoditized in earlier eras.",
-      "idea_ids": [
-        107,
-        119,
-        121,
-        115
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "ff80c2ea36e84738b36d6a91529f9bea1ac1838cd47e8b9dd2f6b12dc0b85a0b",
-      "pattern_title": "The Physics Envy of Foundation Models",
-      "pattern_description": "Trim's 'foundation model for physics' sits oddly among image generators, but there's a shared implicit assumption: that complex phenomena (visual reality, physical laws) can be compressed into learnable statistical manifolds. This betrays a belief that the universe has a 'latent space'\u2014that reality itself is generatable from learned priors. The cultural undercurrent is a neo-positivist faith that enough data reveals fundamental structure, essentially using ML as the new reductionism.",
-      "idea_ids": [
-        37,
-        109,
-        110,
-        116
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "ff80c2ea36e84738b36d6a91529f9bea1ac1838cd47e8b9dd2f6b12dc0b85a0b",
-      "pattern_title": "The Silent Death of Specialization",
-      "pattern_description": "Kokoro (TTS), Whisper (transcription), and sentence-transformers (embeddings) are hyper-specialized tools with enormous adoption. But their presence alongside generalist models reveals a paradox: as models get more general, the ecosystem fragments into specialized microservices. The implicit assumption is that AGI won't arrive as one model, but as an orchestration layer over many narrow experts. This is the opposite of the unified AGI narrative being sold\u2014the actual infrastructure is becoming more balkanized, not less.",
-      "idea_ids": [
-        112,
-        114,
-        120
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "56a83d2f1f80d7389e5440fd434154bd8ab0c12e82cce40128368b3ac6bd2440",
-      "pattern_title": "Democratization of Previously Elite Production Capabilities",
-      "pattern_description": "These projects share an implicit assumption that capabilities once requiring massive capital, specialized facilities, or expert teams (satellite manufacturing, Hollywood-quality visuals, music production, animation) should be accessible to individuals through software abstraction. The underlying paradigm shift is from 'production requires infrastructure' to 'production requires only intent.' Reditus Space applies this to physical manufacturing in orbit, while the AI tools apply it to creative production\u2014both are collapsing traditional barriers between imagination and realization.",
-      "idea_ids": [
-        46,
-        108,
-        117,
-        123,
-        127,
-        128,
-        129,
-        130
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "56a83d2f1f80d7389e5440fd434154bd8ab0c12e82cce40128368b3ac6bd2440",
-      "pattern_title": "The Disappearance of the Prototype Phase",
-      "pattern_description": "These tools eliminate the gap between concept and finished output. Virtual try-on skips physical samples, comic factory bypasses storyboarding, FLUX.1-schnell emphasizes speed over iteration. The cultural undercurrent is an impatience with process itself\u2014a belief that intermediate steps are inefficiencies rather than learning opportunities. This reveals an emerging assumption that creation should be instantaneous, potentially signaling a future tension between rapid output and craft development.",
-      "idea_ids": [
-        124,
-        123,
-        125,
-        117,
-        129
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "56a83d2f1f80d7389e5440fd434154bd8ab0c12e82cce40128368b3ac6bd2440",
-      "pattern_title": "Benchmarking as the New Currency of Trust",
-      "pattern_description": "The presence of the MTEB leaderboard alongside download/like metrics reveals an undercurrent where quantified comparison has become the primary trust mechanism for adopting new capabilities. The significant absence here is any human curation or editorial voice\u2014trust is algorithmic and crowd-derived. This signals a paradigm where authority flows from measurable performance rather than institutional endorsement, fundamentally changing how innovations gain legitimacy.",
-      "idea_ids": [
-        126,
-        108,
-        117
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "f46a77b058a70fc3ec12c77d9b6ba46ddbab58613f11ae6bdece84f01fcff7b8",
-      "pattern_title": "Personal Infrastructure as Rebellion",
-      "pattern_description": "Both projects represent individuals building their own infrastructure to solve problems that corporations have either ignored or monetized poorly. Converting DVDs to a private streaming site rejects dependency on commercial platforms for personal memories. Building accessibility SaaS emerged from frustration with existing tools. This signals a growing cultural movement where technical individuals are reclaiming sovereignty over their digital experiences rather than waiting for Big Tech to serve their needs.",
-      "idea_ids": [
-        64,
-        68
-      ],
-      "model": "claude-opus-4-5-20251101",
-      "prompt_version": "patterns_v1"
-    },
-    {
-      "cluster_hash": "f46a77b058a70fc3ec12c77d9b6ba46ddbab58613f11ae6bdece84f01fcff7b8",
-      "pattern_title": "The Accidental Productization of Kindness",
-      "pattern_description": "Both projects began as acts of service for others (a relative's memories, making an event accessible) and evolved into shareable or scalable solutions. This reveals a paradigm shift where personal goodwill combined with technical ability increasingly becomes the origin story for products, inverting the traditional market-research-first approach. The emotional authenticity of 'I built this for someone I care about' is becoming a legitimate business foundation.",
-      "idea_ids": [
-        68,
+        59,
+        41,
+        17,
+        12,
         64
       ],
       "model": "claude-opus-4-5-20251101",
       "prompt_version": "patterns_v1"
     },
     {
-      "cluster_hash": "f46a77b058a70fc3ec12c77d9b6ba46ddbab58613f11ae6bdece84f01fcff7b8",
-      "pattern_title": "Observability as Anxiety Management",
-      "pattern_description": "All three projects share an implicit fear of loss of control - losing family memories to format obsolescence, losing users due to inaccessibility, losing money to opaque AI costs. The response is building visibility and control layers. This reflects a broader cultural anxiety about systems becoming too complex or ephemeral, driving demand for tools that make the invisible visible and the uncontrollable controllable.",
+      "cluster_hash": "f3c5693d37fe66e13314e2093242b31675e2c1e511aadcd2164b72bae2eb2b4d",
+      "pattern_title": "Performative Uselessness as Developer Identity",
+      "pattern_description": "Multiple projects intentionally build 'useless' or absurdist things (stress-coding editors, chaos AI butlers, self-explaining websites, satirical 'optimizations'). This isn't just humor—it's a counter-signal in an era of relentless AI productivity claims. Developers are asserting humanity through deliberate inefficiency, reclaiming craft as play. The April Fools framing provides cover, but the energy spent reveals genuine anxiety about being reduced to AI's output validators.",
       "idea_ids": [
-        70,
-        64,
-        68
+        69,
+        74,
+        75,
+        78,
+        67
       ],
       "model": "claude-opus-4-5-20251101",
       "prompt_version": "patterns_v1"
     },
     {
-      "cluster_hash": "e25942d2604caf1894dc8b1f502b0022b2c13c8de2761f14e0835491acadf761",
+      "cluster_hash": "f3c5693d37fe66e13314e2093242b31675e2c1e511aadcd2164b72bae2eb2b4d",
+      "pattern_title": "Evaluation as the New Product Category",
+      "pattern_description": "Several ideas center on WATCHING how agents (human or AI) perform: hire engineers by 'seeing how they use AI', understand PRs visually, AI that predicts via swarm observation, AI brokerage assessing commercial risk. The common thread: the hard problem has shifted from 'doing' to 'judging doing.' This suggests a quiet crisis of trust—when anyone/anything can generate output, the bottleneck becomes legible evaluation. We're building a meta-economy of assessment.",
+      "idea_ids": [
+        54,
+        59,
+        49,
+        8
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "9e7759f5796fffe654d6624d2c7a0be831be098d428eafef8104b04cd17af0bb",
+      "pattern_title": "Autonomy Without Accountability Infrastructure",
+      "pattern_description": "These projects rush toward autonomous agents making consequential decisions (financial trades, software development, dynamic environments) while the infrastructure for understanding WHY they act remains an afterthought. The presence of a single observability tutorial (ID:70) against multiple agent frameworks reveals a dangerous gap: we're building autonomous systems faster than we're building ways to audit them. This mirrors early social media's growth-before-safety pattern.",
+      "idea_ids": [
+        10,
+        11,
+        61,
+        50
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "9e7759f5796fffe654d6624d2c7a0be831be098d428eafef8104b04cd17af0bb",
+      "pattern_title": "The Leaderboard as Governance Illusion",
+      "pattern_description": "The massive popularity of LLM leaderboards (13K+ likes) combined with agent frameworks suggests a collective belief that benchmark performance translates to real-world reliability. This is a proxy measurement fallacy becoming institutionalized - we're using static benchmarks to validate systems designed for dynamic, unpredictable environments. The reasoning data company (Nitrode) implicitly acknowledges benchmarks aren't enough, but operates as exception rather than norm.",
+      "idea_ids": [
+        97,
+        10,
+        50
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "9e7759f5796fffe654d6624d2c7a0be831be098d428eafef8104b04cd17af0bb",
+      "pattern_title": "Methodology as Product Displacement",
+      "pattern_description": "'Methodology that works', 'platform to build/monetize', 'mastering callbacks' - there's a shift from building AI capabilities to selling meta-layers around AI. This represents a maturing market where the core technology is commoditizing and value capture moves to orchestration, process, and developer experience. The real product isn't the agent - it's the framework for managing agents, suggesting we've already accepted agent ubiquity as inevitable.",
+      "idea_ids": [
+        11,
+        61,
+        70
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "5d17e4b6a996c402a3dad395bd5c8cc8d256d01bae1ebf8482ebff026285180c",
+      "pattern_title": "Nostalgia for Constraint as Creative Force",
+      "pattern_description": "Multiple ideas mourn the loss of productive limitations - closed frontiers, idiomatic design conventions, the virtue of laziness, the inability to focus on one thing. There's an implicit counter-narrative emerging against infinite optionality: that boundaries, constraints, and even incompetence were generative forces we've accidentally optimized away. This suggests a cultural exhaustion with abundance and a longing for the creative friction that scarcity provided.",
+      "idea_ids": [
+        18,
+        20,
+        22,
+        25
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "5d17e4b6a996c402a3dad395bd5c8cc8d256d01bae1ebf8482ebff026285180c",
+      "pattern_title": "Re-enchantment Through Technical Literacy",
+      "pattern_description": "Several projects transform mundane infrastructure into sources of wonder by exposing hidden mechanisms - trains as instruments, smartphones as physics labs, GPS as relativistic marvel, soft drinks as chemistry. This isn't just 'maker culture' but a deeper impulse to reclaim agency by understanding systems we've surrendered to black boxes. It's a quiet rebellion against learned helplessness in a world of opaque technology.",
+      "idea_ids": [
+        24,
+        35,
+        36,
+        26
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "5d17e4b6a996c402a3dad395bd5c8cc8d256d01bae1ebf8482ebff026285180c",
+      "pattern_title": "Platform Dependency Anxiety",
+      "pattern_description": "Beneath discussions of Anthropic's cache policies, X feed curation, and European AI sovereignty lies a shared unease about building on foundations you don't control. The high engagement on the Anthropic cache change (404 points, 301 comments) reveals how precarious AI-dependent workflows feel. These aren't isolated complaints but symptoms of a dawning recognition that the current platform era creates existential fragility for builders.",
+      "idea_ids": [
+        32,
+        30,
+        19,
+        28
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "dee320121adcf05e927b0bed782a484942c31477895642598f194499b27de3f3",
+      "pattern_title": "The Commoditization of Perception",
+      "pattern_description": "These projects treat human perception and aesthetic judgment as computable functions. Digital humans modeling clothes, image generation models - they assume that visual reality and human appearance can be synthesized rather than captured. The significant undercurrent: we're moving from 'recording reality' to 'manufacturing plausibility'. This implies a future where authenticity becomes irrelevant compared to effectiveness.",
+      "idea_ids": [
+        51,
+        84,
+        85,
+        91
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "dee320121adcf05e927b0bed782a484942c31477895642598f194499b27de3f3",
+      "pattern_title": "Infrastructure Without Application",
+      "pattern_description": "Physics foundation models, general-purpose LLMs, embedding models - these are deliberately application-agnostic. The pattern reveals a belief that building powerful general substrates will naturally attract applications later, inverting traditional product development. The absence of specific use-cases isn't a bug but a philosophy: that horizontal capabilities trump vertical solutions. This mirrors how AWS preceded most cloud applications.",
+      "idea_ids": [
+        37,
+        82,
+        90,
+        95,
+        96
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "dee320121adcf05e927b0bed782a484942c31477895642598f194499b27de3f3",
+      "pattern_title": "The Compression Imperative",
+      "pattern_description": "Kokoro-82M and MiniLM-L6-v2 are notable for what they're NOT: massive. In a landscape of billion-parameter models, these succeed through aggressive efficiency. The hidden pattern is that extreme downloads (9.7M and 195M respectively) reveal market reality diverging from research prestige. Real deployment constraints favor small models, suggesting the 'bigger is better' paradigm is hitting practical limits at the edge.",
+      "idea_ids": [
+        87,
+        95
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "dbca4c12a5ee973b35d4eb123081c4c9432dd961668fe78b40f7b50e50de3287",
+      "pattern_title": "The Automation Trust Gap",
+      "pattern_description": "These ideas share an implicit acknowledgment that automation creates false confidence. Voice agents need monitoring because they fail silently, docs need AI updates because humans can't keep up, and accessibility scores actively deceive us. There's an emerging paradigm where we're building meta-systems to verify our automated systems - automation checking automation - revealing deep uncertainty about whether our tools actually work.",
+      "idea_ids": [
+        44,
+        52,
+        71
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "dbca4c12a5ee973b35d4eb123081c4c9432dd961668fe78b40f7b50e50de3287",
+      "pattern_title": "Invisible Labor Surfacing",
+      "pattern_description": "Each addresses work that happens but goes unrecognized: maintaining documentation drift, personal wins that vanish without acknowledgment, accessibility work that gets checked off but not actually done. This reflects a cultural shift toward making the 'dark matter' of professional work visible - the maintenance, the emotional labor, the unglamorous upkeep that systems depend on but don't measure.",
+      "idea_ids": [
+        52,
+        66,
+        71
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "dbca4c12a5ee973b35d4eb123081c4c9432dd961668fe78b40f7b50e50de3287",
+      "pattern_title": "B2B Hospitality as Infrastructure Play",
+      "pattern_description": "Both target intermediary positions in service industries - hotel market access and voice agent quality. Neither builds the primary offering but controls a critical chokepoint. This suggests a maturing market assumption: the real opportunity isn't in building the hotel or the AI agent, but in becoming the essential middleware that existing players can't operate without. The absence of consumer-facing ideas here is telling.",
+      "idea_ids": [
+        39,
+        44
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "b24b06d5dc93637639e5bd163e37540667ef5ef94d5c8248ab93632dcef412d6",
+      "pattern_title": "The Invisible Labor Crisis in Healthcare",
+      "pattern_description": "All three solutions target work that is essential but undervalued and increasingly unsustainable - patient communication, staff scheduling, billing. This reveals healthcare's hidden crisis isn't in clinical innovation but in the administrative substrate that's quietly collapsing under complexity. The pattern suggests we've hit a breaking point where the 'glue work' that holds healthcare together can no longer be done by humans at scale.",
+      "idea_ids": [
+        43,
+        55,
+        56
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "b24b06d5dc93637639e5bd163e37540667ef5ef94d5c8248ab93632dcef412d6",
+      "pattern_title": "De-Skilling as Liberation",
+      "pattern_description": "Each tool implicitly argues that tasks currently requiring skilled human judgment (managing patients, coordinating schedules, navigating billing codes) can and should be automated away. This represents a philosophical shift from 'technology augments expertise' to 'technology replaces the need for expertise in operational domains' - freeing clinical staff but also potentially hollowing out entire job categories.",
+      "idea_ids": [
+        43,
+        55,
+        56
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "b24b06d5dc93637639e5bd163e37540667ef5ef94d5c8248ab93632dcef412d6",
+      "pattern_title": "Healthcare's Trust Arbitrage",
+      "pattern_description": "Voice agents for patients and automated billing both exploit a peculiar moment where patients and payers have such low expectations of the healthcare experience that they may actually prefer interacting with well-designed AI over frustrated, overworked humans. The opportunity exists precisely because the status quo is so degraded.",
+      "idea_ids": [
+        43,
+        56
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "f2ba72706a4fda23c39888fa8c20251a43da96f408e55b1438416bf1aa824078",
+      "pattern_title": "Democratization of Previously Elite Creative Tools",
+      "pattern_description": "These projects share an implicit assumption that sophisticated creative capabilities (comic creation, fashion visualization, music composition, visual effects) should be instantly accessible to anyone with a browser. This represents a cultural shift from 'tools for professionals' to 'capabilities as utilities' - the revealing absence is any mention of skill requirements, training, or expertise. The paradigm assumes creativity is about intention, not craft.",
+      "idea_ids": [
+        98,
+        99,
+        102,
+        103,
+        104,
+        105
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "f2ba72706a4fda23c39888fa8c20251a43da96f408e55b1438416bf1aa824078",
+      "pattern_title": "Speed as the Primary Value Proposition",
+      "pattern_description": "FLUX models appear multiple times with 'schnell' (German for 'fast') being a distinct variant. The underlying assumption is that inference speed has become the key differentiator, not quality. This reveals a shift from 'can AI do this?' to 'can AI do this fast enough to feel like a tool rather than a process?' - suggesting we've crossed a threshold where capability is assumed and latency is the remaining friction.",
+      "idea_ids": [
+        83,
+        92,
+        100,
+        106
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "f2ba72706a4fda23c39888fa8c20251a43da96f408e55b1438416bf1aa824078",
+      "pattern_title": "Physical Scarcity as the Last Frontier",
+      "pattern_description": "The space manufacturing idea stands alone against 10 digital/AI projects, revealing an undercurrent: the AI projects implicitly accept that bits are solved while atoms remain hard. Reditus targets zero-gravity manufacturing - environments impossible to simulate. This absence of other physical-world projects suggests the innovation community has bifurcated into 'infinite digital leverage' versus 'conquering remaining physical constraints' with very little middle ground.",
+      "idea_ids": [
+        46
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "2dabf193c1bec33928e601bfe4857ca8cc8320605c9a7738490bb368c456aeb6",
+      "pattern_title": "The Erosion of Intentional Practice",
+      "pattern_description": "There's an undercurrent of developers seeking shortcuts around the discomfort of deep work. AI 'vibe coding' promises quick apps without mastery, the 'always on' burnout stems from reactive rather than deliberate engagement, and career confusion reflects a lack of structured skill-building pathways. Together they reveal a profession drifting from craftsmanship toward consumption of tools and content, where the hard work of becoming excellent is being outsourced or avoided.",
+      "idea_ids": [
+        65,
+        81,
+        72
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "2dabf193c1bec33928e601bfe4857ca8cc8320605c9a7738490bb368c456aeb6",
+      "pattern_title": "Community as Substitute for Institution",
+      "pattern_description": "These posts implicitly position DEV.to and similar communities as the new support structure developers turn to—for career guidance, mental health processing, and validation through reactions. The 'Top 7' curation mimics editorial authority, job market struggles are aired to peers not HR, and burnout is confessed publicly. This signals that traditional workplace institutions have failed to provide belonging, mentorship, or psychological safety, so developers build parallel emotional infrastructure online.",
+      "idea_ids": [
+        62,
+        72,
+        81
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "2dabf193c1bec33928e601bfe4857ca8cc8320605c9a7738490bb368c456aeb6",
+      "pattern_title": "Ambient Anxiety About Relevance",
+      "pattern_description": "Beneath these posts is a shared fear of obsolescence: AI tools raise questions about what coding skills still matter, disability and market conditions threaten employability, and constant availability stems from fear of being seen as dispensable. The reveal is that 'developer identity' itself feels precarious—no longer a stable profession but a continuous performance requiring exhausting vigilance to remain valuable.",
+      "idea_ids": [
+        65,
+        72,
+        81
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "8faa8a5c5744b167f1963df9a5083560fd46174d5b051ac25ee01db8a10b2db7",
+      "pattern_title": "Democratization of Previously Gatekept Expertise",
+      "pattern_description": "All three represent tools that collapse the expertise barrier in different domains. Whisper democratizes transcription (previously expensive/specialized), GPT-OSS opens up LLM capabilities that were proprietary, and the codebase navigator eliminates the 'tribal knowledge' advantage senior developers held. The undercurrent: we're witnessing a cultural shift where accumulated human expertise becomes instantly compressible and transferable, raising questions about what expertise even means anymore.",
+      "idea_ids": [
+        73,
+        89,
+        94
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "8faa8a5c5744b167f1963df9a5083560fd46174d5b051ac25ee01db8a10b2db7",
+      "pattern_title": "The 'Just Paste It' Interaction Paradigm",
+      "pattern_description": "There's an emerging assumption that complex tasks should reduce to 'paste URL/file, get answer.' This reflects a deeper shift from learning-to-do toward delegating-to-understand. The GitHub navigator explicitly uses 'paste a URL' framing, and Whisper's 4.7M downloads suggest mass adoption of 'drop audio, get text.' This reveals an implicit belief that context-gathering and processing should be invisible—a paradigm where humans curate while machines comprehend.",
+      "idea_ids": [
+        73,
+        89
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "8faa8a5c5744b167f1963df9a5083560fd46174d5b051ac25ee01db8a10b2db7",
+      "pattern_title": "Open-Source as Competitive Pressure Theater",
+      "pattern_description": "Both OpenAI models being on HuggingFace reveals a strange tension: the company named 'Open AI' releasing models to stay relevant against truly open alternatives. The massive download numbers suggest these serve as reference implementations that shape the ecosystem. The revealing absence: no discussion of training data provenance or compute costs—openness is performed at the weights layer while foundational questions remain closed.",
+      "idea_ids": [
+        89,
+        94
+      ],
+      "model": "claude-opus-4-5-20251101",
+      "prompt_version": "patterns_v1"
+    },
+    {
+      "cluster_hash": "cbbfe60d1d4f020eee6f908e17f47f4659cde54a9ec65cfe19718dd8a7c6ef5e",
       "pattern_title": "The 7-8B Parameter Sweet Spot Consensus",
-      "pattern_description": "All three models converge on the 7-8 billion parameter range, revealing an implicit industry consensus that this size represents an optimal trade-off between capability and accessibility. This suggests a hidden infrastructure constraint - the compute available to the average developer/researcher has quietly standardized, and model architects are designing specifically for this democratized ceiling rather than pushing boundaries.",
+      "pattern_description": "All three models converge on the 7-8 billion parameter range, revealing an implicit industry consensus that this size represents an optimal trade-off between capability and accessibility. This suggests a quiet paradigm shift away from the 'bigger is always better' assumption toward democratized, deployable AI that can run on consumer hardware. The absence of larger variants in this popularity cluster signals that practical utility is trumping raw scale.",
       "idea_ids": [
-        111,
-        113,
-        118
+        86,
+        88,
+        93
       ],
       "model": "claude-opus-4-5-20251101",
       "prompt_version": "patterns_v1"
     },
     {
-      "cluster_hash": "e25942d2604caf1894dc8b1f502b0022b2c13c8de2761f14e0835491acadf761",
-      "pattern_title": "Instruction-Tuning as Afterthought Architecture",
-      "pattern_description": "The naming convention 'Instruct' and 'chat' as suffixes reveals that conversational capability is treated as a layer applied post-hoc rather than a fundamental design principle. This exposes an assumption that raw language modeling is the 'true' intelligence and human-alignment is cosmetic - a paradigm that may be fundamentally limiting how we conceive AI interaction.",
+      "cluster_hash": "cbbfe60d1d4f020eee6f908e17f47f4659cde54a9ec65cfe19718dd8a7c6ef5e",
+      "pattern_title": "Instruction-Tuning as the New Baseline Expectation",
+      "pattern_description": "The dominance of 'Instruct' and 'chat' variants over base models in download metrics reveals that the era of researchers fine-tuning their own models is being eclipsed by users expecting ready-to-use conversational AI. This represents a cultural shift from AI-as-tool-for-experts toward AI-as-product-for-everyone, with Meta implicitly accepting the role of providing consumer-ready endpoints rather than just research artifacts.",
       "idea_ids": [
-        113,
-        118
+        88,
+        93
       ],
       "model": "claude-opus-4-5-20251101",
       "prompt_version": "patterns_v1"
     },
     {
-      "cluster_hash": "e25942d2604caf1894dc8b1f502b0022b2c13c8de2761f14e0835491acadf761",
-      "pattern_title": "The Versioning Velocity Pressure",
-      "pattern_description": "Llama 2 to 3 to 3.1 in rapid succession with the older Llama-2 showing dramatically lower downloads indicates aggressive obsolescence cycles. The community is being trained to treat models as disposable iterations rather than stable foundations - creating dependency on Meta's release cadence and discouraging deep customization or long-term deployment strategies.",
+      "cluster_hash": "cbbfe60d1d4f020eee6f908e17f47f4659cde54a9ec65cfe19718dd8a7c6ef5e",
+      "pattern_title": "Open-Weight Monoculture Risk",
+      "pattern_description": "The clustering of exclusively Meta/Llama models at this popularity tier reveals a concerning consolidation. Despite 'open source' rhetoric suggesting diversity, the community is converging on a single corporate lineage. This absence of competing architectures (Mistral, Falcon, etc.) at similar popularity levels suggests that network effects and ecosystem lock-in are replicating Big Tech dynamics even in supposedly open AI development.",
       "idea_ids": [
-        111,
-        113,
-        118
+        86,
+        88,
+        93
       ],
       "model": "claude-opus-4-5-20251101",
       "prompt_version": "patterns_v1"
@@ -1087,7 +1375,7 @@
       "title": "666ghj/MiroFish",
       "source": "github",
       "category": "",
-      "description": "A Simple and Universal Swarm Intelligence Engine, Predicting Anything. \u7b80\u6d01\u901a\u7528\u7684\u7fa4\u4f53\u667a\u80fd\u5f15\u64ce\uff0c\u9884\u6d4b\u4e07\u7269"
+      "description": "A Simple and Universal Swarm Intelligence Engine, Predicting Anything. 简洁通用的群体智能引擎，预测万物"
     },
     "9": {
       "title": "mvanhorn/last30days-skill",
@@ -1117,7 +1405,7 @@
       "title": "shareAI-lab/learn-claude-code",
       "source": "github",
       "category": "",
-      "description": "Bash is all you need - A nano claude code\u2013like \u300cagent harness\u300d, built from 0 to 1"
+      "description": "Bash is all you need - A nano claude code–like 「agent harness」, built from 0 to 1"
     },
     "14": {
       "title": "Yeachan-Heo/oh-my-claudecode",
@@ -1144,118 +1432,118 @@
       "description": ""
     },
     "18": {
-      "title": "Show HN: boringBar \u2013 a taskbar-style dock replacement for macOS",
+      "title": "The Closing of the Frontier",
       "source": "hn",
       "category": "",
-      "description": "HN score: 48 | comments: 29"
+      "description": "HN score: 116 | comments: 66"
     },
     "19": {
+      "title": "European AI. A playbook to own it. By Mistral",
+      "source": "hn",
+      "category": "",
+      "description": "HN score: 27 | comments: 2"
+    },
+    "20": {
       "title": "Bring Back Idiomatic Design",
       "source": "hn",
       "category": "",
-      "description": "HN score: 252 | comments: 127"
-    },
-    "20": {
-      "title": "Apple has removed most of the towns and villages in Lebanon from Apple maps",
-      "source": "hn",
-      "category": "",
-      "description": "HN score: 14 | comments: 1"
+      "description": "HN score: 323 | comments: 153"
     },
     "21": {
+      "title": "Show HN: boringBar – a taskbar-style dock replacement for macOS",
+      "source": "hn",
+      "category": "",
+      "description": "HN score: 153 | comments: 93"
+    },
+    "22": {
       "title": "Most people can't juggle one ball",
       "source": "hn",
       "category": "",
-      "description": "HN score: 28 | comments: 4"
+      "description": "HN score: 108 | comments: 38"
     },
-    "22": {
+    "23": {
+      "title": "Show HN: Claudraband – Claude Code for the Power User",
+      "source": "hn",
+      "category": "",
+      "description": "HN score: 41 | comments: 11"
+    },
+    "24": {
       "title": "I gave every train in New York an instrument",
       "source": "hn",
       "category": "",
-      "description": "HN score: 78 | comments: 14"
+      "description": "HN score: 118 | comments: 28"
     },
-    "23": {
+    "25": {
+      "title": "The Peril of Laziness Lost",
+      "source": "hn",
+      "category": "",
+      "description": "HN score: 8 | comments: 1"
+    },
+    "26": {
+      "title": "DIY Soft Drinks",
+      "source": "hn",
+      "category": "",
+      "description": "HN score: 49 | comments: 15"
+    },
+    "27": {
       "title": "Show HN: Oberon System 3 runs natively on Raspberry Pi 3 (with ready SD card)",
       "source": "hn",
       "category": "",
-      "description": "HN score: 102 | comments: 13"
+      "description": "HN score: 126 | comments: 18"
     },
-    "24": {
-      "title": "Seven countries now generate 100% of their electricity from renewable energy",
-      "source": "hn",
-      "category": "",
-      "description": "HN score: 320 | comments: 137"
-    },
-    "25": {
+    "28": {
       "title": "EasyPost (YC S13) Is Hiring",
       "source": "hn",
       "category": "",
       "description": "HN score: 1 | comments: 0"
     },
-    "26": {
+    "29": {
+      "title": "Seven countries now generate 100% of their electricity from renewable energy",
+      "source": "hn",
+      "category": "",
+      "description": "HN score: 374 | comments: 167"
+    },
+    "30": {
+      "title": "Bouncer: Block \"crypto\", \"rage politics\", and more from your X feed using AI",
+      "source": "hn",
+      "category": "",
+      "description": "HN score: 21 | comments: 26"
+    },
+    "31": {
       "title": "JVM Options Explorer",
       "source": "hn",
       "category": "",
-      "description": "HN score: 136 | comments: 63"
+      "description": "HN score: 150 | comments: 67"
     },
-    "27": {
-      "title": "Eternity in six hours: Intergalactic spreading of intelligent life (2013)",
-      "source": "hn",
-      "category": "",
-      "description": "HN score: 34 | comments: 26"
-    },
-    "28": {
-      "title": "Are sugar substitutes healthier than the real thing?",
-      "source": "hn",
-      "category": "",
-      "description": "HN score: 4 | comments: 1"
-    },
-    "29": {
-      "title": "Happy Map",
-      "source": "hn",
-      "category": "",
-      "description": "HN score: 148 | comments: 22"
-    },
-    "30": {
+    "32": {
       "title": "Anthropic downgraded cache TTL on March 6th",
       "source": "hn",
       "category": "",
-      "description": "HN score: 345 | comments: 252"
-    },
-    "31": {
-      "title": "Phyphox \u2013 Physical Experiments Using a Smartphone",
-      "source": "hn",
-      "category": "",
-      "description": "HN score: 141 | comments: 26"
-    },
-    "32": {
-      "title": "A Tour of Oodi",
-      "source": "hn",
-      "category": "",
-      "description": "HN score: 74 | comments: 25"
+      "description": "HN score: 404 | comments: 301"
     },
     "33": {
+      "title": "Happy Map",
+      "source": "hn",
+      "category": "",
+      "description": "HN score: 177 | comments: 31"
+    },
+    "34": {
+      "title": "Cooperative Vectors Introduction",
+      "source": "hn",
+      "category": "",
+      "description": "HN score: 37 | comments: 2"
+    },
+    "35": {
+      "title": "Phyphox – Physical Experiments Using a Smartphone",
+      "source": "hn",
+      "category": "",
+      "description": "HN score: 156 | comments: 27"
+    },
+    "36": {
       "title": "The Physics of GPS",
       "source": "hn",
       "category": "",
-      "description": "HN score: 66 | comments: 14"
-    },
-    "34": {
-      "title": "I run multiple $10K MRR companies on a $20/month tech stack",
-      "source": "hn",
-      "category": "",
-      "description": "HN score: 657 | comments: 379"
-    },
-    "35": {
-      "title": "Building a SaaS in 2026 Using Only EU Infrastructure",
-      "source": "hn",
-      "category": "",
-      "description": "HN score: 127 | comments: 35"
-    },
-    "36": {
-      "title": "Doom, Played over Curl",
-      "source": "hn",
-      "category": "",
-      "description": "HN score: 67 | comments: 8"
+      "description": "HN score: 81 | comments: 22"
     },
     "37": {
       "title": "Trim",
@@ -1279,13 +1567,13 @@
       "title": "PAX Markets",
       "source": "yc",
       "category": "",
-      "description": "More \ud835\udefc, less latency: exchange and HFT on one chip."
+      "description": "More 𝛼, less latency: exchange and HFT on one chip."
     },
     "41": {
       "title": "ReJot",
       "source": "yc",
       "category": "",
-      "description": "We turn complex API integrations into drop\u2011in full\u2011stack libraries "
+      "description": "We turn complex API integrations into drop‑in full‑stack libraries "
     },
     "42": {
       "title": "SAMMY Labs",
@@ -1414,10 +1702,10 @@
       "description": "Welcome to this week's Top 7, where the DEV editorial team handpicks their favorite posts from the... | tags: top7, discuss | reactions: 79"
     },
     "63": {
-      "title": "You\u2019re a Real Software Developer Only If\u2026",
+      "title": "You’re a Real Software Developer Only If…",
       "source": "devto",
       "category": "",
-      "description": "Uff, I\u2019m finally done with my talk at jsDay 2026!  And honestly? It went at least good. People showed... | tags: jokes, devlive | reactions: 154"
+      "description": "Uff, I’m finally done with my talk at jsDay 2026!  And honestly? It went at least good. People showed... | tags: jokes, devlive | reactions: 163"
     },
     "64": {
       "title": "Converting old home movie DVDs into a private streaming site",
@@ -1435,7 +1723,7 @@
       "title": "What was your win this week??",
       "source": "devto",
       "category": "",
-      "description": "\ud83d\udc4b\ud83d\udc4b\ud83d\udc4b\ud83d\udc4b  Looking back on your week -- what was something you're proud of?  All wins count -- big or... | tags: discuss, weeklyretro | reactions: 26"
+      "description": "👋👋👋👋  Looking back on your week -- what was something you're proud of?  All wins count -- big or... | tags: discuss, weeklyretro | reactions: 26"
     },
     "67": {
       "title": "Sharing CodePen 2.0 demos on DEV",
@@ -1486,10 +1774,10 @@
       "description": "This is a submission for the DEV April Fools Challenge  Quantum Collapse is a React editor that... | tags: devchallenge, 418challenge, showdev | reactions: 31"
     },
     "75": {
-      "title": "AS\u2019 HTCPCP AI Butler\u2122 \u2014 The AI That Brews Chaos, Not Coffee 418% Chaos: Your Useless AI Butler",
+      "title": "AS’ HTCPCP AI Butler™ — The AI That Brews Chaos, Not Coffee 418% Chaos: Your Useless AI Butler",
       "source": "devto",
       "category": "",
-      "description": "This is a submission for the DEV April Fools Challenge           \ud83c\udf75 AS\u2019 HTCPCP AI Butler\u2122 \ud83e\udd16       ... | tags: devchallenge, 418challenge, showdev | reactions: 32"
+      "description": "This is a submission for the DEV April Fools Challenge           🍵 AS’ HTCPCP AI Butler™ 🤖       ... | tags: devchallenge, 418challenge, showdev | reactions: 32"
     },
     "76": {
       "title": "Clawshier OpenClaw Skill",
@@ -1525,153 +1813,153 @@
       "title": "The Mental Cost of Always Being On as a Developer",
       "source": "devto",
       "category": "",
-      "description": "It Started With Just One Thing   Last month, I closed my laptop at 11 PM.  Then I opened it... | tags: career, mentalhealth, webdev, discuss | reactions: 63"
+      "description": "It Started With Just One Thing   Last month, I closed my laptop at 11 PM.  Then I opened it... | tags: career, mentalhealth, webdev, discuss | reactions: 64"
     },
-    "107": {
+    "82": {
       "title": "deepseek-ai/DeepSeek-R1",
       "source": "huggingface",
       "category": "",
       "description": "Model | likes: 13167 | downloads: 3484277"
     },
-    "108": {
+    "83": {
       "title": "black-forest-labs/FLUX.1-dev",
       "source": "huggingface",
       "category": "",
       "description": "Model | likes: 12597 | downloads: 682229"
     },
-    "109": {
+    "84": {
       "title": "stabilityai/stable-diffusion-xl-base-1.0",
       "source": "huggingface",
       "category": "",
       "description": "Model | likes: 7607 | downloads: 1930081"
     },
-    "110": {
+    "85": {
       "title": "CompVis/stable-diffusion-v1-4",
       "source": "huggingface",
       "category": "",
       "description": "Model | likes: 6998 | downloads: 462076"
     },
-    "111": {
+    "86": {
       "title": "meta-llama/Meta-Llama-3-8B",
       "source": "huggingface",
       "category": "",
-      "description": "Model | likes: 6511 | downloads: 3143751"
+      "description": "Model | likes: 6512 | downloads: 3143751"
     },
-    "112": {
+    "87": {
       "title": "hexgrad/Kokoro-82M",
       "source": "huggingface",
       "category": "",
       "description": "Model | likes: 5956 | downloads: 9776544"
     },
-    "113": {
+    "88": {
       "title": "meta-llama/Llama-3.1-8B-Instruct",
       "source": "huggingface",
       "category": "",
-      "description": "Model | likes: 5680 | downloads: 9266275"
+      "description": "Model | likes: 5681 | downloads: 9266275"
     },
-    "114": {
+    "89": {
       "title": "openai/whisper-large-v3",
       "source": "huggingface",
       "category": "",
       "description": "Model | likes: 5565 | downloads: 4779386"
     },
-    "115": {
+    "90": {
       "title": "bigscience/bloom",
       "source": "huggingface",
       "category": "",
       "description": "Model | likes: 4998 | downloads: 6191"
     },
-    "116": {
+    "91": {
       "title": "stabilityai/stable-diffusion-3-medium",
       "source": "huggingface",
       "category": "",
       "description": "Model | likes: 4929 | downloads: 4037"
     },
-    "117": {
+    "92": {
       "title": "black-forest-labs/FLUX.1-schnell",
       "source": "huggingface",
       "category": "",
-      "description": "Model | likes: 4754 | downloads: 741374"
+      "description": "Model | likes: 4755 | downloads: 741374"
     },
-    "118": {
+    "93": {
       "title": "meta-llama/Llama-2-7b-chat-hf",
       "source": "huggingface",
       "category": "",
       "description": "Model | likes: 4732 | downloads: 439326"
     },
-    "119": {
+    "94": {
       "title": "openai/gpt-oss-120b",
       "source": "huggingface",
       "category": "",
-      "description": "Model | likes: 4677 | downloads: 3433360"
+      "description": "Model | likes: 4679 | downloads: 3433360"
     },
-    "120": {
+    "95": {
       "title": "sentence-transformers/all-MiniLM-L6-v2",
       "source": "huggingface",
       "category": "",
       "description": "Model | likes: 4672 | downloads: 195533068"
     },
-    "121": {
+    "96": {
       "title": "mistralai/Mixtral-8x7B-Instruct-v0.1",
       "source": "huggingface",
       "category": "",
       "description": "Model | likes: 4662 | downloads: 510089"
     },
-    "122": {
+    "97": {
       "title": "open-llm-leaderboard/open_llm_leaderboard",
       "source": "huggingface",
       "category": "",
-      "description": "Space | likes: 13933"
+      "description": "Space | likes: 13934"
     },
-    "123": {
+    "98": {
       "title": "jbilcke-hf/ai-comic-factory",
       "source": "huggingface",
       "category": "",
       "description": "Space | likes: 11024"
     },
-    "124": {
+    "99": {
       "title": "Kwai-Kolors/Kolors-Virtual-Try-On",
       "source": "huggingface",
       "category": "",
       "description": "Space | likes: 10028"
     },
-    "125": {
+    "100": {
       "title": "black-forest-labs/FLUX.1-dev",
       "source": "huggingface",
       "category": "",
       "description": "Space | likes: 9425"
     },
-    "126": {
+    "101": {
       "title": "mteb/leaderboard",
       "source": "huggingface",
       "category": "",
       "description": "Space | likes: 7248"
     },
-    "127": {
+    "102": {
       "title": "dalle-mini/dalle-mini",
       "source": "huggingface",
       "category": "",
       "description": "Space | likes: 5676"
     },
-    "128": {
+    "103": {
       "title": "AP123/IllusionDiffusion",
       "source": "huggingface",
       "category": "",
       "description": "Space | likes: 5394"
     },
-    "129": {
+    "104": {
       "title": "Wan-AI/Wan2.2-Animate",
       "source": "huggingface",
       "category": "",
       "description": "Space | likes: 5094"
     },
-    "130": {
+    "105": {
       "title": "facebook/MusicGen",
       "source": "huggingface",
       "category": "",
       "description": "Space | likes: 5068"
     },
-    "131": {
+    "106": {
       "title": "black-forest-labs/FLUX.1-schnell",
       "source": "huggingface",
       "category": "",
@@ -1679,23 +1967,23 @@
     }
   },
   "metadata": {
-    "total_ideas": 131,
-    "neighborhoods_intra": 15,
+    "total_ideas": 106,
+    "neighborhoods_intra": 14,
     "neighborhoods_cross": 10,
-    "neighborhoods_total": 25,
-    "constellations_found": 43,
+    "neighborhoods_total": 24,
+    "constellations_found": 56,
     "constellations_by_type": {
-      "convergence": 16,
-      "absence": 17,
-      "chain": 3,
-      "spectrum": 5,
-      "triangulation": 2
+      "chain": 6,
+      "convergence": 21,
+      "absence": 21,
+      "triangulation": 4,
+      "spectrum": 4
     },
     "constellation_cache_hits": 0,
-    "constellation_api_calls": 25,
+    "constellation_api_calls": 24,
     "pattern_cache_hits": 0,
-    "pattern_api_calls": 15,
-    "estimated_cost_usd": 0.8101799999999999,
-    "elapsed_ms": 218987
+    "pattern_api_calls": 14,
+    "estimated_cost_usd": 0.6956669999999998,
+    "elapsed_ms": 194408
   }
 }
