@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { PipelineData } from "@/lib/types";
+import { SOURCE_EMOJI } from "@/lib/types";
 import WaitlistForm from "@/components/WaitlistForm";
 
 const sources = [
@@ -36,11 +37,11 @@ export default async function Home() {
     <main className="relative">
       {/* Hero */}
       <section className="flex flex-col px-6 pb-24 pt-8">
-        <div className="pb-6">
+        <nav className="pb-6" aria-label="Main navigation">
           <Link href="/" className="text-lg font-bold tracking-tight text-white">
             Constellate
           </Link>
-        </div>
+        </nav>
 
         <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center text-center">
           <h1 className="text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
@@ -56,11 +57,12 @@ export default async function Home() {
 
           <Link
             href="/constellation-map"
-            className="mt-10 rounded-lg px-6 py-3 text-sm font-semibold transition-colors"
+            className="mt-10 rounded-lg px-8 py-3.5 text-sm font-semibold transition-all hover:brightness-110"
             style={{
-              background: "rgba(142,220,230,0.15)",
-              color: "#8EDCE6",
-              border: "1px solid rgba(142,220,230,0.25)",
+              background: "rgba(142,220,230,0.35)",
+              color: "#ffffff",
+              border: "1px solid rgba(142,220,230,0.5)",
+              boxShadow: "0 0 24px rgba(142,220,230,0.15)",
             }}
           >
             Explore the constellation map &rarr;
@@ -120,12 +122,13 @@ export default async function Home() {
                         return (
                           <span
                             key={id}
-                            className="rounded-md px-2.5 py-1 text-xs text-white/70"
+                            className="rounded-md px-2.5 py-1.5 text-xs text-white/80 transition-colors hover:text-white hover:bg-white/[0.08] hover:border-white/20 flex items-center gap-1.5"
                             style={{
-                              background: "rgba(255,255,255,0.04)",
-                              border: "1px solid rgba(255,255,255,0.08)",
+                              background: "rgba(255,255,255,0.05)",
+                              border: "1px solid rgba(255,255,255,0.1)",
                             }}
                           >
+                            <span className="text-[11px]">{SOURCE_EMOJI[idea.source] || "\uD83D\uDCCC"}</span>
                             {idea.title}
                           </span>
                         );
@@ -150,7 +153,7 @@ export default async function Home() {
                   border: "1px solid rgba(142,220,230,0.25)",
                 }}
               >
-                See all {data?.metadata.constellations_found} constellations &rarr;
+                See all {data?.metadata.constellations_found}{" "}constellations &rarr;
               </Link>
             </div>
           </div>

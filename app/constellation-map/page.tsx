@@ -66,11 +66,13 @@ export default function ConstellationMapPage() {
   const [viewMode, setViewMode] = useState<"graph" | "cards">("graph");
   const [sortOrder, setSortOrder] = useState<"score-desc" | "score-asc" | "type" | "alpha">("score-desc");
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
+  const [ctaDismissed, setCtaDismissed] = useState(false);
   const graphRef = useRef<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
 
   useEffect(() => {
     const saved = localStorage.getItem("constellate_view_mode");
     if (saved === "graph" || saved === "cards") setViewMode(saved);
+    if (localStorage.getItem("constellate_cta_dismissed") === "1") setCtaDismissed(true);
   }, []);
 
   useEffect(() => {
@@ -233,26 +235,30 @@ export default function ConstellationMapPage() {
     <div className={`fixed inset-0 ${viewMode === "graph" ? "overflow-hidden" : "overflow-auto"}`} style={{ background: "#0a0e1a" }} onMouseMove={viewMode === "graph" ? (e) => setTooltipPos({ x: e.clientX, y: e.clientY }) : undefined}>
 
       {/* Header */}
-      <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between h-14 px-6" style={{ background: "rgba(10,14,26,0.82)", borderBottom: "1px solid rgba(255,255,255,0.06)", backdropFilter: "blur(16px)" }}>
-        <div className="flex items-center gap-2">
+      <header className="fixed top-0 left-0 right-0 z-50 flex flex-wrap items-center justify-between gap-2 min-h-[56px] px-4 sm:px-6 py-2" style={{ background: "rgba(10,14,26,0.82)", borderBottom: "1px solid rgba(255,255,255,0.06)", backdropFilter: "blur(16px)" }}>
+        <nav className="flex items-center gap-2" aria-label="Breadcrumb">
           <Link href="/" className="text-white font-bold text-sm hover:text-white/80 transition-colors">Constellate</Link>
           <span className="text-white/25 text-xs">&middot;</span>
-          <span className="text-white/50 text-xs font-mono">Constellation Map</span>
-        </div>
-        <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 max-w-2xl items-center gap-3 text-center">
+          <h1 className="text-white/50 text-xs font-mono">Constellation Map</h1>
+        </nav>
+        <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 max-w-2xl items-center gap-3 text-center">
           <p className="text-white/50 text-[11px] font-mono leading-tight pointer-events-none">
-            {filteredData.nodes.length} constellations from {data.metadata.total_ideas} ideas &middot; {Object.keys(TYPE_COLORS).length} types &middot; Click any node to explore
+            {filteredData.nodes.length} constellations from {data.metadata.total_ideas} ideas &middot; {Object.keys(TYPE_COLORS).length} types
           </p>
-          <button onClick={() => setShowHelp(true)} className="text-white/60 hover:text-[#8EDCE6] text-xs font-mono whitespace-nowrap transition-colors flex items-center gap-1.5 px-2 py-1 rounded-md hover:bg-white/5">
+          <button onClick={() => setShowHelp(true)} className="text-white/60 hover:text-[#8EDCE6] text-xs font-mono whitespace-nowrap transition-colors flex items-center gap-1.5 px-2 py-1 rounded-md hover:bg-white/5" aria-label="Learn about constellation types">
             <span className="text-sm">&#9432;</span> What am I looking at?
           </button>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Mobile help button */}
+          <button onClick={() => setShowHelp(true)} className="lg:hidden text-white/50 hover:text-[#8EDCE6] text-xs transition-colors px-1.5 py-1 rounded-md hover:bg-white/5" aria-label="Learn about constellation types">
+            <span className="text-sm">&#9432;</span>
+          </button>
           {/* View toggle */}
           <div className="flex rounded-md overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.1)" }}>
             <button
               onClick={() => setViewMode("graph")}
-              className="px-3 py-1.5 text-xs font-mono transition-colors flex items-center gap-1.5"
+              className="px-2.5 sm:px-3 py-1.5 text-xs font-mono transition-colors flex items-center gap-1.5"
               style={{
                 background: viewMode === "graph" ? "rgba(142,220,230,0.2)" : "transparent",
                 color: viewMode === "graph" ? "#8EDCE6" : "rgba(255,255,255,0.5)",
@@ -260,11 +266,11 @@ export default function ConstellationMapPage() {
               aria-label="Switch to graph view"
             >
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="3" cy="3" r="1.5" fill="currentColor"/><circle cx="11" cy="5" r="1.5" fill="currentColor"/><circle cx="5" cy="11" r="1.5" fill="currentColor"/><line x1="3" y1="3" x2="11" y2="5" stroke="currentColor" strokeWidth="0.8"/><line x1="3" y1="3" x2="5" y2="11" stroke="currentColor" strokeWidth="0.8"/></svg>
-              Graph
+              <span className="hidden sm:inline">Graph</span>
             </button>
             <button
               onClick={() => setViewMode("cards")}
-              className="px-3 py-1.5 text-xs font-mono transition-colors flex items-center gap-1.5"
+              className="px-2.5 sm:px-3 py-1.5 text-xs font-mono transition-colors flex items-center gap-1.5"
               style={{
                 background: viewMode === "cards" ? "rgba(142,220,230,0.2)" : "transparent",
                 color: viewMode === "cards" ? "#8EDCE6" : "rgba(255,255,255,0.5)",
@@ -273,14 +279,14 @@ export default function ConstellationMapPage() {
               aria-label="Switch to card view"
             >
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1"/><rect x="8" y="1" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1"/><rect x="1" y="8" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1"/><rect x="8" y="8" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1"/></svg>
-              Cards
+              <span className="hidden sm:inline">Cards</span>
             </button>
           </div>
           <Link href="/" className="hidden sm:inline-flex text-white/50 hover:text-white/80 text-xs transition-colors">
-            &larr; Back to landing
+            &larr; Back
           </Link>
         </div>
-      </div>
+      </header>
 
       {/* ═══ GRAPH VIEW ═══ */}
       {viewMode === "graph" && (
@@ -371,26 +377,25 @@ export default function ConstellationMapPage() {
       {viewMode === "cards" && (
         <div className="absolute inset-0 top-14 overflow-y-auto px-4 pb-32 sm:px-6 lg:px-8" style={{ background: "#0a0e1a" }}>
           {/* Toolbar */}
-          <div className="sticky top-0 z-20 flex flex-wrap items-center justify-between gap-3 py-4" style={{ background: "#0a0e1a" }}>
-            <div className="flex flex-wrap items-center gap-3">
+          <div className="sticky top-0 z-20 flex flex-col gap-3 py-4" style={{ background: "#0a0e1a" }}>
+            <div className="flex flex-wrap items-center gap-2">
               <span className="text-xs font-mono text-white/40">
                 Showing {sortedCards.length} of {graphNodes.length} constellations
               </span>
-              {/* Inline filters for cards */}
               <div className="flex flex-wrap gap-1.5">
                 {Object.entries(TYPE_COLORS).map(([type, color]) => (
-                  <button key={type} onClick={() => toggleType(type)} className="flex items-center gap-1 px-2 py-0.5 rounded text-[11px] transition-colors" style={{ background: activeTypes.has(type) ? `${color}20` : "transparent", color: activeTypes.has(type) ? color : "rgba(255,255,255,0.35)", border: `1px solid ${activeTypes.has(type) ? `${color}40` : "rgba(255,255,255,0.08)"}` }}>
+                  <button key={type} onClick={() => toggleType(type)} className="flex items-center gap-1 px-2 py-0.5 rounded text-[11px] transition-colors" style={{ background: activeTypes.has(type) ? `${color}20` : "transparent", color: activeTypes.has(type) ? color : "rgba(255,255,255,0.35)", border: `1px solid ${activeTypes.has(type) ? `${color}40` : "rgba(255,255,255,0.08)"}` }} aria-label={`Filter ${TYPE_LABELS[type]}`}>
                     <span className="w-2 h-2 rounded-full" style={{ background: color, opacity: activeTypes.has(type) ? 1 : 0.3 }} />
                     {TYPE_LABELS[type]}
                   </button>
                 ))}
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <input type="text" placeholder="Search..." value={searchText} onChange={(e) => setSearchText(e.target.value)} className="w-40 px-3 py-1.5 text-xs rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/30 outline-none focus:border-white/25" />
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+              <input type="text" placeholder="Search..." value={searchText} onChange={(e) => setSearchText(e.target.value)} className="w-full sm:w-40 px-3 py-1.5 text-xs rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/30 outline-none focus:border-white/25" aria-label="Search constellations" />
               <div className="flex items-center gap-1.5">
-                <span className="text-xs text-white/30 font-mono">Score &ge; {minScore}</span>
-                <input type="range" min={6} max={10} value={minScore} onChange={(e) => setMinScore(Number(e.target.value))} className="w-20 accent-white/60" />
+                <label htmlFor="score-slider-cards" className="text-xs text-white/30 font-mono">Score &ge; {minScore}</label>
+                <input id="score-slider-cards" type="range" min={6} max={10} value={minScore} onChange={(e) => setMinScore(Number(e.target.value))} className="w-20 accent-white/60" aria-label="Minimum score filter" />
               </div>
               <select
                 value={sortOrder}
@@ -487,7 +492,7 @@ export default function ConstellationMapPage() {
       {viewMode === "graph" && (
         <div className="fixed top-[60px] left-4 bottom-20 w-80 z-40 overflow-y-auto rounded-xl p-4 flex flex-col gap-4" style={{ background: "rgba(10,14,26,0.85)", border: "1px solid rgba(255,255,255,0.08)", backdropFilter: "blur(16px)" }}>
           <div>
-            <h3 className="text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Filters</h3>
+            <h2 className="text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Filters</h2>
             <div className="flex flex-wrap gap-2 mb-3">
               {Object.entries(TYPE_COLORS).map(([type, color]) => (
                 <label key={type} className="flex items-center gap-1.5 cursor-pointer text-xs">
@@ -498,13 +503,13 @@ export default function ConstellationMapPage() {
               ))}
             </div>
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs text-white/40 font-mono">Score &ge; {minScore}</span>
-              <input type="range" min={6} max={10} value={minScore} onChange={(e) => setMinScore(Number(e.target.value))} className="flex-1 accent-white/60" />
+              <label htmlFor="score-slider-graph" className="text-xs text-white/40 font-mono">Score &ge; {minScore}</label>
+              <input id="score-slider-graph" type="range" min={6} max={10} value={minScore} onChange={(e) => setMinScore(Number(e.target.value))} className="flex-1 accent-white/60" aria-label="Minimum score filter" />
             </div>
             <input type="text" placeholder="Search by title..." value={searchText} onChange={(e) => setSearchText(e.target.value)} className="w-full px-3 py-1.5 text-xs rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/30 outline-none focus:border-white/25" />
           </div>
           <div>
-            <h3 className="text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Hub Ideas <span className="text-white/25">(in 3+ constellations)</span></h3>
+            <h2 className="text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Hub Ideas <span className="text-white/25">(in 3+ constellations)</span></h2>
             <div className="flex flex-col gap-1">
               {hubIdeas.map((hub) => (
                 <button key={hub.id} onClick={() => { setHighlightedHub(highlightedHub?.id === hub.id ? null : hub); setSelectedNode(null); }} className="text-left px-2 py-1.5 rounded-lg transition-colors text-xs" style={{ background: highlightedHub?.id === hub.id ? "rgba(255,255,255,0.1)" : "transparent" }}>
@@ -518,9 +523,21 @@ export default function ConstellationMapPage() {
       )}
 
       {/* Floating waitlist CTA */}
-      <div className="fixed bottom-20 right-4 z-40 w-72">
-        <WaitlistForm variant="floating" />
-      </div>
+      {!ctaDismissed && (
+        <div className="hidden sm:block fixed bottom-20 right-4 z-40 w-72">
+          <div className="relative">
+            <button
+              onClick={() => { setCtaDismissed(true); localStorage.setItem("constellate_cta_dismissed", "1"); }}
+              className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-white/40 hover:text-white/70 text-xs transition-colors z-10"
+              style={{ background: "rgba(10,14,26,0.9)", border: "1px solid rgba(255,255,255,0.15)" }}
+              aria-label="Dismiss waitlist popup"
+            >
+              &times;
+            </button>
+            <WaitlistForm variant="floating" />
+          </div>
+        </div>
+      )}
 
       {/* Help modal */}
       {showHelp && (
