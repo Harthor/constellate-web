@@ -6,10 +6,11 @@ const sources = [
   "arXiv",
   "Y Combinator",
   "Product Hunt",
-  "Reddit",
   "GitHub Trending",
   "Hugging Face",
   "Dev.to",
+  "BetaList",
+  "Papers With Code",
 ];
 
 async function getData(): Promise<PipelineData | null> {
@@ -47,7 +48,7 @@ export default async function Home() {
 
           <p className="mt-6 max-w-xl text-base leading-relaxed text-white/75 sm:text-lg">
             Constellate watches Hacker News, arXiv, Y Combinator, Product Hunt,
-            Reddit, GitHub, Hugging Face and Dev.to. Every week, it surfaces
+            GitHub, Hugging Face, Dev.to and more. Every week, it surfaces
             constellations: groups of ideas that together reveal patterns no
             single source names out loud.
           </p>

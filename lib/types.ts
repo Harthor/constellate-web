@@ -78,10 +78,8 @@ export const SOURCE_EMOJI: Record<string, string> = {
   arxiv: "\uD83D\uDCC4",
   producthunt: "\uD83D\uDE80",
   yc: "\uD83D\uDFE0",
-  reddit: "\uD83E\uDD16",
   devto: "\u270D\uFE0F",
   huggingface: "\uD83E\uDD17",
   betalist: "\uD83C\uDF1F",
-  indiehackers: "\uD83D\uDCA1",
   paperswithcode: "\uD83D\uDCDA",
 };
