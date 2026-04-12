@@ -63,7 +63,19 @@ export default function ConstellationMapPage() {
   const [minScore, setMinScore] = useState(6);
   const [searchText, setSearchText] = useState("");
   const [showHelp, setShowHelp] = useState(false);
+  const [viewMode, setViewMode] = useState<"graph" | "cards">("graph");
+  const [sortOrder, setSortOrder] = useState<"score-desc" | "score-asc" | "type" | "alpha">("score-desc");
+  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
   const graphRef = useRef<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
+
+  useEffect(() => {
+    const saved = localStorage.getItem("constellate_view_mode");
+    if (saved === "graph" || saved === "cards") setViewMode(saved);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("constellate_view_mode", viewMode);
+  }, [viewMode]);
 
   useEffect(() => {
     fetch("/data.json")
@@ -147,6 +159,18 @@ export default function ConstellationMapPage() {
 
   const hubIdeaIdSet = useMemo(() => new Set(hubIdeas.map((h) => h.id)), [hubIdeas]);
 
+  // Sorted cards for card view
+  const sortedCards = useMemo(() => {
+    const cards = [...filteredData.nodes];
+    switch (sortOrder) {
+      case "score-desc": return cards.sort((a, b) => b.score - a.score);
+      case "score-asc": return cards.sort((a, b) => a.score - b.score);
+      case "type": return cards.sort((a, b) => a.type.localeCompare(b.type) || b.score - a.score);
+      case "alpha": return cards.sort((a, b) => a.title.localeCompare(b.title));
+      default: return cards;
+    }
+  }, [filteredData.nodes, sortOrder]);
+
   // Canvas renderers
   const nodeCanvasObject = useCallback(
     (node: any, ctx: CanvasRenderingContext2D, globalScale: number) => { // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -206,7 +230,7 @@ export default function ConstellationMapPage() {
   if (!data) return null;
 
   return (
-    <div className="fixed inset-0 overflow-hidden" style={{ background: "#0a0e1a" }} onMouseMove={(e) => setTooltipPos({ x: e.clientX, y: e.clientY })}>
+    <div className={`fixed inset-0 ${viewMode === "graph" ? "overflow-hidden" : "overflow-auto"}`} style={{ background: "#0a0e1a" }} onMouseMove={viewMode === "graph" ? (e) => setTooltipPos({ x: e.clientX, y: e.clientY }) : undefined}>
 
       {/* Header */}
       <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between h-14 px-6" style={{ background: "rgba(10,14,26,0.82)", borderBottom: "1px solid rgba(255,255,255,0.06)", backdropFilter: "blur(16px)" }}>
@@ -223,123 +247,275 @@ export default function ConstellationMapPage() {
             <span className="text-sm">&#9432;</span> What am I looking at?
           </button>
         </div>
-        <Link href="/" className="hidden sm:inline-flex text-white/50 hover:text-white/80 text-xs transition-colors">
-          &larr; Back to landing
-        </Link>
+        <div className="flex items-center gap-3">
+          {/* View toggle */}
+          <div className="flex rounded-md overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.1)" }}>
+            <button
+              onClick={() => setViewMode("graph")}
+              className="px-3 py-1.5 text-xs font-mono transition-colors flex items-center gap-1.5"
+              style={{
+                background: viewMode === "graph" ? "rgba(142,220,230,0.2)" : "transparent",
+                color: viewMode === "graph" ? "#8EDCE6" : "rgba(255,255,255,0.5)",
+              }}
+              aria-label="Switch to graph view"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="3" cy="3" r="1.5" fill="currentColor"/><circle cx="11" cy="5" r="1.5" fill="currentColor"/><circle cx="5" cy="11" r="1.5" fill="currentColor"/><line x1="3" y1="3" x2="11" y2="5" stroke="currentColor" strokeWidth="0.8"/><line x1="3" y1="3" x2="5" y2="11" stroke="currentColor" strokeWidth="0.8"/></svg>
+              Graph
+            </button>
+            <button
+              onClick={() => setViewMode("cards")}
+              className="px-3 py-1.5 text-xs font-mono transition-colors flex items-center gap-1.5"
+              style={{
+                background: viewMode === "cards" ? "rgba(142,220,230,0.2)" : "transparent",
+                color: viewMode === "cards" ? "#8EDCE6" : "rgba(255,255,255,0.5)",
+                borderLeft: "1px solid rgba(255,255,255,0.1)",
+              }}
+              aria-label="Switch to card view"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1"/><rect x="8" y="1" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1"/><rect x="1" y="8" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1"/><rect x="8" y="8" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1"/></svg>
+              Cards
+            </button>
+          </div>
+          <Link href="/" className="hidden sm:inline-flex text-white/50 hover:text-white/80 text-xs transition-colors">
+            &larr; Back to landing
+          </Link>
+        </div>
       </div>
 
-      {/* Graph */}
-      <ForceGraph2D
-        ref={graphRef}
-        graphData={filteredData}
-        nodeId="id"
-        nodeCanvasObject={nodeCanvasObject}
-        nodePointerAreaPaint={(node: any, color: string, ctx: CanvasRenderingContext2D) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-          const radius = 6 + ((node as GraphNode).score - 6) * 2;
-          ctx.beginPath(); ctx.arc(node.x, node.y, radius + 4, 0, Math.PI * 2);
-          ctx.fillStyle = color; ctx.fill();
-        }}
-        linkCanvasObject={linkCanvasObject}
-        onNodeHover={(node: any) => setHoveredNode(node ? (node as GraphNode) : null)} // eslint-disable-line @typescript-eslint/no-explicit-any
-        onNodeClick={(node: any) => { setSelectedNode(node as GraphNode); setHighlightedHub(null); }} // eslint-disable-line @typescript-eslint/no-explicit-any
-        onBackgroundClick={() => { setSelectedNode(null); setHighlightedHub(null); }}
-        backgroundColor="#0a0e1a"
-        width={typeof window !== "undefined" ? window.innerWidth : 1200}
-        height={typeof window !== "undefined" ? window.innerHeight : 800}
-        cooldownTicks={100}
-      />
+      {/* ═══ GRAPH VIEW ═══ */}
+      {viewMode === "graph" && (
+        <>
+          <ForceGraph2D
+            ref={graphRef}
+            graphData={filteredData}
+            nodeId="id"
+            nodeCanvasObject={nodeCanvasObject}
+            nodePointerAreaPaint={(node: any, color: string, ctx: CanvasRenderingContext2D) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+              const radius = 6 + ((node as GraphNode).score - 6) * 2;
+              ctx.beginPath(); ctx.arc(node.x, node.y, radius + 4, 0, Math.PI * 2);
+              ctx.fillStyle = color; ctx.fill();
+            }}
+            linkCanvasObject={linkCanvasObject}
+            onNodeHover={(node: any) => setHoveredNode(node ? (node as GraphNode) : null)} // eslint-disable-line @typescript-eslint/no-explicit-any
+            onNodeClick={(node: any) => { setSelectedNode(node as GraphNode); setHighlightedHub(null); }} // eslint-disable-line @typescript-eslint/no-explicit-any
+            onBackgroundClick={() => { setSelectedNode(null); setHighlightedHub(null); }}
+            backgroundColor="#0a0e1a"
+            width={typeof window !== "undefined" ? window.innerWidth : 1200}
+            height={typeof window !== "undefined" ? window.innerHeight : 800}
+            cooldownTicks={100}
+          />
 
-      {/* Tooltip */}
-      {hoveredNode && (
-        <div className="fixed z-50 pointer-events-none px-3 py-2 rounded-lg text-xs font-mono" style={{ left: tooltipPos.x + 14, top: tooltipPos.y - 10, background: "rgba(10,14,26,0.92)", border: "1px solid rgba(255,255,255,0.15)", backdropFilter: "blur(12px)", maxWidth: 300 }}>
-          <div className="font-semibold mb-1 text-white">{hoveredNode.title}</div>
-          <div className="flex gap-3 text-white/60">
-            <span style={{ color: TYPE_COLORS[hoveredNode.type] }}>{TYPE_LABELS[hoveredNode.type]}</span>
-            <span>Score {hoveredNode.score}</span>
-            <span>{hoveredNode.idea_ids.length} ideas</span>
+          {/* Tooltip */}
+          {hoveredNode && (
+            <div className="fixed z-50 pointer-events-none px-3 py-2 rounded-lg text-xs font-mono" style={{ left: tooltipPos.x + 14, top: tooltipPos.y - 10, background: "rgba(10,14,26,0.92)", border: "1px solid rgba(255,255,255,0.15)", backdropFilter: "blur(12px)", maxWidth: 300 }}>
+              <div className="font-semibold mb-1 text-white">{hoveredNode.title}</div>
+              <div className="flex gap-3 text-white/60">
+                <span style={{ color: TYPE_COLORS[hoveredNode.type] }}>{TYPE_LABELS[hoveredNode.type]}</span>
+                <span>Score {hoveredNode.score}</span>
+                <span>{hoveredNode.idea_ids.length} ideas</span>
+              </div>
+            </div>
+          )}
+
+          {/* Right panel — detail */}
+          {selectedNode && (
+            <div className="fixed top-[60px] right-4 bottom-20 w-96 z-40 overflow-y-auto rounded-xl p-5 flex flex-col gap-4" style={{ background: "rgba(10,14,26,0.9)", border: "1px solid rgba(255,255,255,0.08)", backdropFilter: "blur(16px)" }}>
+              <button onClick={() => setSelectedNode(null)} className="absolute top-3 right-3 text-white/30 hover:text-white/60 text-lg">&times;</button>
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-0.5 rounded text-xs font-mono font-semibold" style={{ background: TYPE_COLORS[selectedNode.type], color: "#0a0e1a" }}>{TYPE_LABELS[selectedNode.type]}</span>
+                <span className="text-white/50 text-xs font-mono">Score {selectedNode.score}</span>
+              </div>
+              <p className="text-white/50 text-[12px] italic leading-snug -mt-2">{TYPE_SHORT[selectedNode.type]}</p>
+              <h2 className="text-white text-base font-semibold leading-snug">{selectedNode.title}</h2>
+              <p className="text-white/60 text-xs leading-relaxed">{selectedNode.explanation}</p>
+              <div>
+                <h4 className="text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Ideas ({selectedNode.idea_ids.length})</h4>
+                <div className="flex flex-col gap-1.5">
+                  {selectedNode.idea_ids.map((ideaId) => {
+                    const idea = data.ideas[ideaId];
+                    if (!idea) return null;
+                    const isHub = hubIdeaIdSet.has(ideaId);
+                    return (
+                      <div key={ideaId} className="flex items-start gap-2 px-2 py-1.5 rounded-lg hover:bg-white/5 transition-colors">
+                        <span className="text-sm flex-shrink-0 mt-0.5">{SOURCE_EMOJI[idea.source] || "\uD83D\uDCCC"}</span>
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs text-white/80 leading-tight">{idea.title}{isHub && <span className="ml-1.5 text-yellow-400" title="Hub idea: appears in 3+ constellations">&#11088;</span>}</div>
+                          <div className="text-[10px] text-white/30">{idea.source}</div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Legend */}
+          <div className="fixed top-[60px] z-30 flex gap-3 px-4 py-2 rounded-lg" style={{ right: selectedNode ? "26rem" : "1rem", background: "rgba(10,14,26,0.8)", border: "1px solid rgba(255,255,255,0.06)", transition: "right 0.2s" }}>
+            {Object.entries(TYPE_COLORS).map(([type, color]) => (
+              <div key={type} className="flex items-center gap-1.5 text-xs">
+                <span className="w-2.5 h-2.5 rounded-full" style={{ background: color }} />
+                <span className="text-white/50">{TYPE_LABELS[type]}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Bottom stats */}
+          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 px-6 py-2.5 rounded-full text-xs font-mono text-white/40 text-center" style={{ background: "rgba(10,14,26,0.8)", border: "1px solid rgba(255,255,255,0.06)" }}>
+            {filteredData.nodes.length} constellations &middot; {Object.keys(TYPE_COLORS).length} types &middot; {filteredData.links.length} edges &middot; {hubIdeas.length} hub ideas
+          </div>
+        </>
+      )}
+
+      {/* ═══ CARDS VIEW ═══ */}
+      {viewMode === "cards" && (
+        <div className="absolute inset-0 top-14 overflow-y-auto px-4 pb-32 sm:px-6 lg:px-8" style={{ background: "#0a0e1a" }}>
+          {/* Toolbar */}
+          <div className="sticky top-0 z-20 flex flex-wrap items-center justify-between gap-3 py-4" style={{ background: "#0a0e1a" }}>
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="text-xs font-mono text-white/40">
+                Showing {sortedCards.length} of {graphNodes.length} constellations
+              </span>
+              {/* Inline filters for cards */}
+              <div className="flex flex-wrap gap-1.5">
+                {Object.entries(TYPE_COLORS).map(([type, color]) => (
+                  <button key={type} onClick={() => toggleType(type)} className="flex items-center gap-1 px-2 py-0.5 rounded text-[11px] transition-colors" style={{ background: activeTypes.has(type) ? `${color}20` : "transparent", color: activeTypes.has(type) ? color : "rgba(255,255,255,0.35)", border: `1px solid ${activeTypes.has(type) ? `${color}40` : "rgba(255,255,255,0.08)"}` }}>
+                    <span className="w-2 h-2 rounded-full" style={{ background: color, opacity: activeTypes.has(type) ? 1 : 0.3 }} />
+                    {TYPE_LABELS[type]}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <input type="text" placeholder="Search..." value={searchText} onChange={(e) => setSearchText(e.target.value)} className="w-40 px-3 py-1.5 text-xs rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/30 outline-none focus:border-white/25" />
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs text-white/30 font-mono">Score &ge; {minScore}</span>
+                <input type="range" min={6} max={10} value={minScore} onChange={(e) => setMinScore(Number(e.target.value))} className="w-20 accent-white/60" />
+              </div>
+              <select
+                value={sortOrder}
+                onChange={(e) => setSortOrder(e.target.value as typeof sortOrder)}
+                className="px-2 py-1.5 text-xs rounded-lg bg-white/5 border border-white/10 text-white/70 outline-none cursor-pointer"
+                aria-label="Sort order"
+              >
+                <option value="score-desc">Score (high to low)</option>
+                <option value="score-asc">Score (low to high)</option>
+                <option value="type">Type</option>
+                <option value="alpha">Alphabetical</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Card grid */}
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {sortedCards.map((node) => {
+              const isExpanded = expandedCards.has(node.id);
+              return (
+                <article
+                  key={node.id}
+                  className="rounded-xl p-5 flex flex-col gap-3 transition-all duration-200 hover:border-[#8EDCE6]/30"
+                  style={{
+                    background: "rgba(255,255,255,0.02)",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+                  }}
+                >
+                  {/* Badge + score */}
+                  <div className="flex items-center justify-between">
+                    <span className="px-2 py-0.5 rounded text-xs font-mono font-semibold" style={{ background: TYPE_COLORS[node.type], color: "#0a0e1a" }}>
+                      {TYPE_LABELS[node.type]}
+                    </span>
+                    <span className="text-white/50 text-xs font-mono">Score {node.score}/10</span>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-white text-[15px] font-semibold leading-snug line-clamp-2">
+                    {node.title}
+                  </h3>
+
+                  {/* Explanation */}
+                  <div>
+                    <p className={`text-white/70 text-[13px] leading-relaxed ${isExpanded ? "" : "line-clamp-4"}`}>
+                      {node.explanation}
+                    </p>
+                    {node.explanation.length > 200 && (
+                      <button
+                        onClick={() => setExpandedCards((prev) => {
+                          const next = new Set(prev);
+                          if (next.has(node.id)) next.delete(node.id); else next.add(node.id);
+                          return next;
+                        })}
+                        className="text-[#8EDCE6] text-xs mt-1 hover:underline"
+                      >
+                        {isExpanded ? "Show less" : "Read more"}
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Ideas */}
+                  <div className="border-t border-white/[0.06] pt-3 flex flex-col gap-1.5">
+                    {node.idea_ids.map((ideaId) => {
+                      const idea = data.ideas[ideaId];
+                      if (!idea) return null;
+                      const isHub = hubIdeaIdSet.has(ideaId);
+                      return (
+                        <a
+                          key={ideaId}
+                          href={idea.source.startsWith("http") ? idea.source : undefined}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-start gap-2 px-2 py-1 rounded-md hover:bg-white/5 transition-colors"
+                        >
+                          <span className="text-xs flex-shrink-0 mt-0.5">{SOURCE_EMOJI[idea.source] || "\uD83D\uDCCC"}</span>
+                          <span className="text-xs text-white/70 leading-tight">
+                            {idea.title}
+                            {isHub && <span className="ml-1 text-yellow-400" title="Hub idea: appears in 3+ constellations">&#11088;</span>}
+                            <span className="ml-1.5 text-white/30">{idea.source}</span>
+                          </span>
+                        </a>
+                      );
+                    })}
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       )}
 
-      {/* Left panel */}
-      <div className="fixed top-[60px] left-4 bottom-20 w-80 z-40 overflow-y-auto rounded-xl p-4 flex flex-col gap-4" style={{ background: "rgba(10,14,26,0.85)", border: "1px solid rgba(255,255,255,0.08)", backdropFilter: "blur(16px)" }}>
-        <div>
-          <h3 className="text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Filters</h3>
-          <div className="flex flex-wrap gap-2 mb-3">
-            {Object.entries(TYPE_COLORS).map(([type, color]) => (
-              <label key={type} className="flex items-center gap-1.5 cursor-pointer text-xs">
-                <input type="checkbox" checked={activeTypes.has(type)} onChange={() => toggleType(type)} className="sr-only" />
-                <span className="w-3 h-3 rounded-sm border" style={{ background: activeTypes.has(type) ? color : "transparent", borderColor: color }} />
-                <span className="text-white/70" style={{ color: activeTypes.has(type) ? color : undefined }}>{TYPE_LABELS[type]}</span>
-              </label>
-            ))}
-          </div>
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-xs text-white/40 font-mono">Score &ge; {minScore}</span>
-            <input type="range" min={6} max={10} value={minScore} onChange={(e) => setMinScore(Number(e.target.value))} className="flex-1 accent-white/60" />
-          </div>
-          <input type="text" placeholder="Search by title..." value={searchText} onChange={(e) => setSearchText(e.target.value)} className="w-full px-3 py-1.5 text-xs rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/30 outline-none focus:border-white/25" />
-        </div>
-        <div>
-          <h3 className="text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Hub Ideas <span className="text-white/25">(in 3+ constellations)</span></h3>
-          <div className="flex flex-col gap-1">
-            {hubIdeas.map((hub) => (
-              <button key={hub.id} onClick={() => { setHighlightedHub(highlightedHub?.id === hub.id ? null : hub); setSelectedNode(null); }} className="text-left px-2 py-1.5 rounded-lg transition-colors text-xs" style={{ background: highlightedHub?.id === hub.id ? "rgba(255,255,255,0.1)" : "transparent" }}>
-                <div className="text-white/80 leading-tight">{SOURCE_EMOJI[hub.source] || "\uD83D\uDCCC"} {truncate(hub.title, 50)}</div>
-                <div className="text-white/35 mt-0.5">{hub.source} &middot; in {hub.count} constellations</div>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Right panel — detail */}
-      {selectedNode && (
-        <div className="fixed top-[60px] right-4 bottom-20 w-96 z-40 overflow-y-auto rounded-xl p-5 flex flex-col gap-4" style={{ background: "rgba(10,14,26,0.9)", border: "1px solid rgba(255,255,255,0.08)", backdropFilter: "blur(16px)" }}>
-          <button onClick={() => setSelectedNode(null)} className="absolute top-3 right-3 text-white/30 hover:text-white/60 text-lg">&times;</button>
-          <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 rounded text-xs font-mono font-semibold" style={{ background: TYPE_COLORS[selectedNode.type], color: "#0a0e1a" }}>{TYPE_LABELS[selectedNode.type]}</span>
-            <span className="text-white/50 text-xs font-mono">Score {selectedNode.score}</span>
-          </div>
-          <p className="text-white/50 text-[12px] italic leading-snug -mt-2">{TYPE_SHORT[selectedNode.type]}</p>
-          <h2 className="text-white text-base font-semibold leading-snug">{selectedNode.title}</h2>
-          <p className="text-white/60 text-xs leading-relaxed">{selectedNode.explanation}</p>
+      {/* ═══ SHARED: Left panel (graph view only) ═══ */}
+      {viewMode === "graph" && (
+        <div className="fixed top-[60px] left-4 bottom-20 w-80 z-40 overflow-y-auto rounded-xl p-4 flex flex-col gap-4" style={{ background: "rgba(10,14,26,0.85)", border: "1px solid rgba(255,255,255,0.08)", backdropFilter: "blur(16px)" }}>
           <div>
-            <h4 className="text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Ideas ({selectedNode.idea_ids.length})</h4>
-            <div className="flex flex-col gap-1.5">
-              {selectedNode.idea_ids.map((ideaId) => {
-                const idea = data.ideas[ideaId];
-                if (!idea) return null;
-                const isHub = hubIdeaIdSet.has(ideaId);
-                return (
-                  <div key={ideaId} className="flex items-start gap-2 px-2 py-1.5 rounded-lg hover:bg-white/5 transition-colors">
-                    <span className="text-sm flex-shrink-0 mt-0.5">{SOURCE_EMOJI[idea.source] || "\uD83D\uDCCC"}</span>
-                    <div className="min-w-0 flex-1">
-                      <div className="text-xs text-white/80 leading-tight">{idea.title}{isHub && <span className="ml-1.5 text-yellow-400" title="Hub idea: appears in 3+ constellations">&#11088;</span>}</div>
-                      <div className="text-[10px] text-white/30">{idea.source}</div>
-                    </div>
-                  </div>
-                );
-              })}
+            <h3 className="text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Filters</h3>
+            <div className="flex flex-wrap gap-2 mb-3">
+              {Object.entries(TYPE_COLORS).map(([type, color]) => (
+                <label key={type} className="flex items-center gap-1.5 cursor-pointer text-xs">
+                  <input type="checkbox" checked={activeTypes.has(type)} onChange={() => toggleType(type)} className="sr-only" />
+                  <span className="w-3 h-3 rounded-sm border" style={{ background: activeTypes.has(type) ? color : "transparent", borderColor: color }} />
+                  <span className="text-white/70" style={{ color: activeTypes.has(type) ? color : undefined }}>{TYPE_LABELS[type]}</span>
+                </label>
+              ))}
+            </div>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-xs text-white/40 font-mono">Score &ge; {minScore}</span>
+              <input type="range" min={6} max={10} value={minScore} onChange={(e) => setMinScore(Number(e.target.value))} className="flex-1 accent-white/60" />
+            </div>
+            <input type="text" placeholder="Search by title..." value={searchText} onChange={(e) => setSearchText(e.target.value)} className="w-full px-3 py-1.5 text-xs rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/30 outline-none focus:border-white/25" />
+          </div>
+          <div>
+            <h3 className="text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Hub Ideas <span className="text-white/25">(in 3+ constellations)</span></h3>
+            <div className="flex flex-col gap-1">
+              {hubIdeas.map((hub) => (
+                <button key={hub.id} onClick={() => { setHighlightedHub(highlightedHub?.id === hub.id ? null : hub); setSelectedNode(null); }} className="text-left px-2 py-1.5 rounded-lg transition-colors text-xs" style={{ background: highlightedHub?.id === hub.id ? "rgba(255,255,255,0.1)" : "transparent" }}>
+                  <div className="text-white/80 leading-tight">{SOURCE_EMOJI[hub.source] || "\uD83D\uDCCC"} {truncate(hub.title, 50)}</div>
+                  <div className="text-white/35 mt-0.5">{hub.source} &middot; in {hub.count} constellations</div>
+                </button>
+              ))}
             </div>
           </div>
         </div>
       )}
-
-      {/* Legend */}
-      <div className="fixed top-[60px] z-30 flex gap-3 px-4 py-2 rounded-lg" style={{ right: selectedNode ? "26rem" : "1rem", background: "rgba(10,14,26,0.8)", border: "1px solid rgba(255,255,255,0.06)", transition: "right 0.2s" }}>
-        {Object.entries(TYPE_COLORS).map(([type, color]) => (
-          <div key={type} className="flex items-center gap-1.5 text-xs">
-            <span className="w-2.5 h-2.5 rounded-full" style={{ background: color }} />
-            <span className="text-white/50">{TYPE_LABELS[type]}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* Bottom stats */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 px-6 py-2.5 rounded-full text-xs font-mono text-white/40 text-center" style={{ background: "rgba(10,14,26,0.8)", border: "1px solid rgba(255,255,255,0.06)" }}>
-        {filteredData.nodes.length} constellations &middot; {Object.keys(TYPE_COLORS).length} types &middot; {filteredData.links.length} edges &middot; {hubIdeas.length} hub ideas
-      </div>
 
       {/* Floating waitlist CTA */}
       <div className="fixed bottom-20 right-4 z-40 w-72">
