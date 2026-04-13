@@ -351,15 +351,24 @@ export default function ConstellationMapPage() {
                     const idea = data.ideas[ideaId];
                     if (!idea) return null;
                     const isHub = hubIdeaIdSet.has(ideaId);
-                    return (
-                      <div key={ideaId} className="flex items-start gap-2 px-2 py-1.5 rounded-lg hover:bg-white/5 transition-colors">
-                        <span className="text-sm flex-shrink-0 mt-0.5">{SOURCE_EMOJI[idea.source] || "\uD83D\uDCCC"}</span>
-                        <div className="min-w-0 flex-1">
-                          <div className="text-xs text-white/80 leading-tight">{idea.title}{isHub && <span className="ml-1.5 text-yellow-400" title="Hub idea: appears in 3+ constellations">&#11088;</span>}</div>
-                          <div className="text-[10px] text-white/30">{idea.source}</div>
+                    return idea.url ? (
+                        <a key={ideaId} href={idea.url} target="_blank" rel="noopener noreferrer" className="flex items-start gap-2 px-2 py-1.5 rounded-lg hover:bg-white/5 transition-colors group cursor-pointer">
+                          <span className="text-sm flex-shrink-0 mt-0.5">{SOURCE_EMOJI[idea.source] || "\uD83D\uDCCC"}</span>
+                          <div className="min-w-0 flex-1">
+                            <div className="text-xs text-white/80 leading-tight group-hover:text-[#8EDCE6] transition-colors">{idea.title}{isHub && <span className="ml-1.5 text-yellow-400" title="Hub idea: appears in 3+ constellations">&#11088;</span>}</div>
+                            <div className="text-[10px] text-white/30">{idea.source}</div>
+                          </div>
+                        </a>
+                    ) : (
+                        <div key={ideaId} className="flex items-start gap-2 px-2 py-1.5 rounded-lg hover:bg-white/5 transition-colors">
+                          <span className="text-sm flex-shrink-0 mt-0.5">{SOURCE_EMOJI[idea.source] || "\uD83D\uDCCC"}</span>
+                          <div className="min-w-0 flex-1">
+                            <div className="text-xs text-white/80 leading-tight">{idea.title}{isHub && <span className="ml-1.5 text-yellow-400" title="Hub idea: appears in 3+ constellations">&#11088;</span>}</div>
+                            <div className="text-[10px] text-white/30">{idea.source}</div>
+                          </div>
                         </div>
-                      </div>
-                    );
+                      )
+                    ;
                   })}
                 </div>
               </div>
@@ -473,21 +482,33 @@ export default function ConstellationMapPage() {
                       const idea = data.ideas[ideaId];
                       if (!idea) return null;
                       const isHub = hubIdeaIdSet.has(ideaId);
-                      return (
-                        <a
-                          key={ideaId}
-                          href={idea.source.startsWith("http") ? idea.source : undefined}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-start gap-2 px-2 py-1 rounded-md hover:bg-white/5 transition-colors"
-                        >
-                          <span className="text-xs flex-shrink-0 mt-0.5">{SOURCE_EMOJI[idea.source] || "\uD83D\uDCCC"}</span>
-                          <span className="text-xs text-white/70 leading-tight">
-                            {idea.title}
-                            {isHub && <span className="ml-1 text-yellow-400" title="Hub idea: appears in 3+ constellations">&#11088;</span>}
-                            <span className="ml-1.5 text-white/30">{idea.source}</span>
-                          </span>
-                        </a>
+                      return idea.url ? (
+                          <a
+                            key={ideaId}
+                            href={idea.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-start gap-2 px-2 py-1 rounded-md hover:bg-white/5 transition-colors group cursor-pointer"
+                          >
+                            <span className="text-xs flex-shrink-0 mt-0.5">{SOURCE_EMOJI[idea.source] || "\uD83D\uDCCC"}</span>
+                            <span className="text-xs text-white/70 leading-tight group-hover:text-[#8EDCE6] transition-colors">
+                              {idea.title}
+                              {isHub && <span className="ml-1 text-yellow-400" title="Hub idea: appears in 3+ constellations">&#11088;</span>}
+                              <span className="ml-1.5 text-white/30">{idea.source}</span>
+                            </span>
+                          </a>
+                      ) : (
+                          <div
+                            key={ideaId}
+                            className="flex items-start gap-2 px-2 py-1 rounded-md hover:bg-white/5 transition-colors"
+                          >
+                            <span className="text-xs flex-shrink-0 mt-0.5">{SOURCE_EMOJI[idea.source] || "\uD83D\uDCCC"}</span>
+                            <span className="text-xs text-white/70 leading-tight">
+                              {idea.title}
+                              {isHub && <span className="ml-1 text-yellow-400" title="Hub idea: appears in 3+ constellations">&#11088;</span>}
+                              <span className="ml-1.5 text-white/30">{idea.source}</span>
+                            </span>
+                          </div>
                       );
                     })}
                   </div>

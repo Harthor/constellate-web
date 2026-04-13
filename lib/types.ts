@@ -22,6 +22,7 @@ export interface EmergentPattern {
 }
 
 export interface IdeaRef {
+  url: string;
   title: string;
   source: string;
   category: string;
