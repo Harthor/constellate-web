@@ -39,14 +39,16 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${jetbrainsMono.variable} dark`}
     >
-      <body className="min-h-screen antialiased">
+      <head>
         <Script
           src="https://plausible.io/js/pa-Ot3gS09DJFN7Q-FHHFqmA.js"
-          strategy="afterInteractive"
+          strategy="beforeInteractive"
         />
-        <Script id="plausible-init" strategy="afterInteractive">
+        <Script id="plausible-init" strategy="beforeInteractive">
           {`window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)};plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init();`}
         </Script>
+      </head>
+      <body className="min-h-screen antialiased">
         {children}
       </body>
     </html>
