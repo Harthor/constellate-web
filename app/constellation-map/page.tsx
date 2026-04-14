@@ -89,7 +89,24 @@ export default function ConstellationMapPage() {
   useEffect(() => {
     const fg = graphRef.current;
     if (!fg || !data || viewMode !== "graph") return;
-    fg.d3Force("charge")?.strength(-120);
+    // Adaptive charge: high-degree nodes repel more to break dense clusters
+    // Compute degree from raw constellation data (shared idea overlap)
+    const degreeMap = new Map<string, number>();
+    const consts = data.constellations;
+    for (let i = 0; i < consts.length; i++) {
+      const setA = new Set(consts[i].idea_ids);
+      for (let j = i + 1; j < consts.length; j++) {
+        if (consts[j].idea_ids.some(id => setA.has(id))) {
+          const nI = `c_${i}`, nJ = `c_${j}`;
+          degreeMap.set(nI, (degreeMap.get(nI) || 0) + 1);
+          degreeMap.set(nJ, (degreeMap.get(nJ) || 0) + 1);
+        }
+      }
+    }
+    fg.d3Force("charge")?.strength((node: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+      const degree = degreeMap.get(node.id) || 0;
+      return -60 - degree * 15;
+    });
     fg.d3Force("link")?.distance(110);
     fg.d3ReheatSimulation();
     const timer = setTimeout(() => { fg.zoomToFit(400, 45); }, 2500);
