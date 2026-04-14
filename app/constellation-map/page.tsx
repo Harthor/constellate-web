@@ -68,6 +68,8 @@ export default function ConstellationMapPage() {
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
   const [ctaDismissed, setCtaDismissed] = useState(false);
   const graphRef = useRef<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
+  const drawnLabelsRef = useRef<Array<{ x: number; y: number; w: number; h: number }>>([]);
+  const lastFrameRef = useRef(0);
 
   useEffect(() => {
     const saved = localStorage.getItem("constellate_view_mode");
@@ -90,7 +92,6 @@ export default function ConstellationMapPage() {
     const fg = graphRef.current;
     if (!fg || !data || viewMode !== "graph") return;
     // Adaptive charge: high-degree nodes repel more to break dense clusters
-    // Compute degree from raw constellation data (shared idea overlap)
     const degreeMap = new Map<string, number>();
     const consts = data.constellations;
     for (let i = 0; i < consts.length; i++) {
@@ -108,6 +109,11 @@ export default function ConstellationMapPage() {
       return -60 - degree * 15;
     });
     fg.d3Force("link")?.distance(110);
+    // Collision force: minimum distance between node centers
+    // Access forceCollide from the same d3 bundle react-force-graph uses
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const d3 = require("d3-force-3d");
+    fg.d3Force("collide", d3.forceCollide().radius(35).strength(0.8).iterations(3));
     fg.d3ReheatSimulation();
     const timer = setTimeout(() => { fg.zoomToFit(400, 45); }, 2500);
     return () => clearTimeout(timer);
@@ -217,6 +223,13 @@ export default function ConstellationMapPage() {
       ctx.beginPath(); ctx.arc(n.x!, n.y!, radius, 0, Math.PI * 2);
       ctx.fillStyle = color; ctx.fill();
 
+      // Reset occlusion tracking each frame (first node drawn clears it)
+      const frameId = Math.round(performance.now() / 16);
+      if (frameId !== lastFrameRef.current) {
+        lastFrameRef.current = frameId;
+        drawnLabelsRef.current = [];
+      }
+
       // Show labels progressively based on zoom level
       const isHovered = hoveredNode?.id === n.id;
       const showLabel = isHovered ||
@@ -228,7 +241,6 @@ export default function ConstellationMapPage() {
         const fontSize = Math.max(3.5, 11 / globalScale);
         ctx.font = `${fontSize}px Inter, sans-serif`;
         ctx.textAlign = "center"; ctx.textBaseline = "top";
-        // Background pill behind label
         const metrics = ctx.measureText(label);
         const padX = 4 / globalScale;
         const padY = 2 / globalScale;
@@ -237,6 +249,20 @@ export default function ConstellationMapPage() {
         const bgY = textY - padY;
         const bgW = metrics.width + padX * 2;
         const bgH = fontSize + padY * 2;
+
+        // Occlusion check: skip if overlapping a previously drawn label (hovered always draws)
+        if (!isHovered) {
+          const overlaps = drawnLabelsRef.current.some(r =>
+            bgX < r.x + r.w && bgX + bgW > r.x && bgY < r.y + r.h && bgY + bgH > r.y
+          );
+          if (overlaps) {
+            ctx.globalAlpha = 1;
+            return;
+          }
+        }
+        drawnLabelsRef.current.push({ x: bgX, y: bgY, w: bgW, h: bgH });
+
+        // Background pill
         const bgRadius = 3 / globalScale;
         ctx.beginPath();
         ctx.roundRect(bgX, bgY, bgW, bgH, bgRadius);
