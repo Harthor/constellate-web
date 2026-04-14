@@ -90,7 +90,7 @@ export default function ConstellationMapPage() {
     const fg = graphRef.current;
     if (!fg || !data || viewMode !== "graph") return;
     fg.d3Force("charge")?.strength(-120);
-    fg.d3Force("link")?.distance(60);
+    fg.d3Force("link")?.distance(110);
     fg.d3ReheatSimulation();
     const timer = setTimeout(() => { fg.zoomToFit(400, 45); }, 2500);
     return () => clearTimeout(timer);
