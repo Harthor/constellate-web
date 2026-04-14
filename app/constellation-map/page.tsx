@@ -85,6 +85,17 @@ export default function ConstellationMapPage() {
       .then((d: PipelineData) => { setData(d); setLoading(false); });
   }, []);
 
+  // Configure d3 forces for better spacing and auto-fit after settle
+  useEffect(() => {
+    const fg = graphRef.current;
+    if (!fg || !data || viewMode !== "graph") return;
+    fg.d3Force("charge")?.strength(-120);
+    fg.d3Force("link")?.distance(60);
+    fg.d3ReheatSimulation();
+    const timer = setTimeout(() => { fg.zoomToFit(400, 45); }, 2500);
+    return () => clearTimeout(timer);
+  }, [data, viewMode]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const toggleType = useCallback((type: string) => {
     setActiveTypes((prev) => {
       const next = new Set(prev);
@@ -189,26 +200,35 @@ export default function ConstellationMapPage() {
       ctx.beginPath(); ctx.arc(n.x!, n.y!, radius, 0, Math.PI * 2);
       ctx.fillStyle = color; ctx.fill();
 
-      // Show labels progressively based on zoom level:
-      // score 9-10: always visible (zoom > 0.4)
-      // score 7-8: visible at medium zoom (zoom > 1.0)
-      // score 6: visible at close zoom (zoom > 1.8)
-      // hovered: always visible
+      // Show labels progressively based on zoom level
       const isHovered = hoveredNode?.id === n.id;
       const showLabel = isHovered ||
-        (n.score >= 9 && globalScale > 0.4) ||
-        (n.score >= 7 && globalScale > 1.0) ||
-        (globalScale > 1.8);
+        (n.score >= 8 && globalScale > 0.4) ||
+        (n.score >= 7 && globalScale > 1.2) ||
+        (globalScale > 2.0);
       if (showLabel) {
         const label = truncate(n.title, globalScale > 1.5 ? 50 : 35);
         const fontSize = Math.max(3.5, 11 / globalScale);
         ctx.font = `${fontSize}px Inter, sans-serif`;
         ctx.textAlign = "center"; ctx.textBaseline = "top";
-        ctx.strokeStyle = "rgba(10,14,26,0.8)"; ctx.lineWidth = 3 / globalScale; ctx.lineJoin = "round";
-        ctx.strokeText(label, n.x!, n.y! + radius + 2);
-        const labelAlpha = isHovered || n.score >= 9 ? 0.85 : n.score >= 7 ? 0.65 : 0.5;
+        // Background pill behind label
+        const metrics = ctx.measureText(label);
+        const padX = 4 / globalScale;
+        const padY = 2 / globalScale;
+        const textY = n.y! + radius + 3;
+        const bgX = n.x! - metrics.width / 2 - padX;
+        const bgY = textY - padY;
+        const bgW = metrics.width + padX * 2;
+        const bgH = fontSize + padY * 2;
+        const bgRadius = 3 / globalScale;
+        ctx.beginPath();
+        ctx.roundRect(bgX, bgY, bgW, bgH, bgRadius);
+        ctx.fillStyle = dimmed ? "rgba(10,14,26,0.4)" : "rgba(10,14,26,0.85)";
+        ctx.fill();
+        // Label text
+        const labelAlpha = isHovered || n.score >= 8 ? 0.9 : n.score >= 7 ? 0.7 : 0.55;
         ctx.fillStyle = dimmed ? "rgba(255,255,255,0.15)" : `rgba(255,255,255,${labelAlpha})`;
-        ctx.fillText(label, n.x!, n.y! + radius + 2);
+        ctx.fillText(label, n.x!, textY);
       }
       ctx.globalAlpha = 1;
     },
