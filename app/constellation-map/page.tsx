@@ -67,6 +67,7 @@ export default function ConstellationMapPage() {
   const [sortOrder, setSortOrder] = useState<"score-desc" | "score-asc" | "type" | "alpha">("score-desc");
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
   const [ctaDismissed, setCtaDismissed] = useState(false);
+  const [mobilePanelOpen, setMobilePanelOpen] = useState(false);
   const graphRef = useRef<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
   const drawnLabelsRef = useRef<Array<{ x: number; y: number; w: number; h: number }>>([]);
   const lastFrameRef = useRef(0);
@@ -582,9 +583,36 @@ export default function ConstellationMapPage() {
         </div>
       )}
 
+      {/* ═══ Mobile toggle button for left panel (graph view only) ═══ */}
+      {viewMode === "graph" && (
+        <button
+          onClick={() => setMobilePanelOpen(true)}
+          className="md:hidden fixed top-[68px] left-3 z-50 flex items-center justify-center w-10 h-10 rounded-lg"
+          style={{ background: "rgba(10,14,26,0.85)", border: "1px solid rgba(255,255,255,0.12)", backdropFilter: "blur(16px)" }}
+          aria-label="Open filters panel"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="2" strokeLinecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="18" y2="18"/></svg>
+        </button>
+      )}
+
+      {/* ═══ Mobile backdrop ═══ */}
+      {viewMode === "graph" && mobilePanelOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-40 bg-black/50"
+          onClick={() => setMobilePanelOpen(false)}
+        />
+      )}
+
       {/* ═══ SHARED: Left panel (graph view only) ═══ */}
       {viewMode === "graph" && (
-        <div className="fixed top-[60px] left-4 bottom-20 w-80 z-40 overflow-y-auto rounded-xl p-4 flex flex-col gap-4" style={{ background: "rgba(10,14,26,0.85)", border: "1px solid rgba(255,255,255,0.08)", backdropFilter: "blur(16px)" }}>
+        <div className={`fixed top-[60px] left-4 bottom-20 w-80 z-50 overflow-y-auto rounded-xl p-4 flex flex-col gap-4 transition-transform duration-200 ${mobilePanelOpen ? "translate-x-0" : "-translate-x-[calc(100%+2rem)]"} md:translate-x-0`} style={{ background: "rgba(10,14,26,0.85)", border: "1px solid rgba(255,255,255,0.08)", backdropFilter: "blur(16px)" }}>
+          <button
+            onClick={() => setMobilePanelOpen(false)}
+            className="md:hidden self-end -mt-1 -mr-1 w-7 h-7 flex items-center justify-center rounded-md text-white/50 hover:text-white/80 transition-colors"
+            aria-label="Close filters panel"
+          >
+            &times;
+          </button>
           <div>
             <h2 className="text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Filters</h2>
             <div className="flex flex-wrap gap-2 mb-3">
