@@ -67,6 +67,13 @@ export default async function Home() {
           >
             Explore the constellation map &rarr;
           </Link>
+
+          <div className="mt-8 flex flex-col items-center gap-3 w-full">
+            <p className="text-xs uppercase tracking-[0.2em] text-white/40">
+              Or get this week&apos;s constellations in your inbox
+            </p>
+            <WaitlistForm variant="landing" />
+          </div>
         </div>
       </section>
 
