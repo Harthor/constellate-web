@@ -65,7 +65,7 @@ export default async function Home() {
               boxShadow: "0 0 24px rgba(142,220,230,0.15)",
             }}
           >
-            Explore the constellation map &rarr;
+            Explore this week&apos;s constellations &rarr;
           </Link>
 
           <div className="mt-8 flex flex-col items-center gap-3 w-full">
