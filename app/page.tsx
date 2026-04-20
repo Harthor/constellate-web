@@ -62,17 +62,16 @@ export default async function Home() {
           </h1>
 
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">
-            Every week, Claude reads{" "}
-            <span className="font-semibold text-white">{totalIdeas} tech ideas</span>{" "}
-            from {sourceCount} feeds and finds what&apos;s{" "}
-            <em className="not-italic" style={{ color: "#C4B5FD" }}>missing</em> —{" "}
-            <span className="font-semibold text-white">{absenceCount} real gaps</span>{" "}
-            where something could exist but doesn&apos;t.
+            Every week, Claude reads tech ideas from {sourceCount}{" "}
+            feeds and finds what&apos;s{" "}
+            <em className="not-italic" style={{ color: "#C4B5FD" }}>missing</em> —
+            real gaps where something could exist but doesn&apos;t.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-xs text-white/50">
             <span>
-              <span className="font-semibold text-white/80">{absenceCount}</span> gaps this week
+              This week:{" "}
+              <span className="font-semibold text-white/80">{absenceCount}</span> gaps
             </span>
             <span className="text-white/20">·</span>
             <span>
@@ -124,7 +123,7 @@ export default async function Home() {
                 Where something could exist but doesn&apos;t
               </h2>
               <p className="mt-1 text-base text-white/50">
-                {absences.length} gaps detected across{" "}
+                {absences.length} gaps detected this week across{" "}
                 {data?.metadata.total_ideas} ideas. Each gap is a real pattern
                 of absence — a logical piece the community keeps circling
                 without naming.
