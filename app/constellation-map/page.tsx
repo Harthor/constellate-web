@@ -88,6 +88,43 @@ export default function ConstellationMapPage() {
       .then((d: PipelineData) => { setData(d); setLoading(false); });
   }, []);
 
+  // Deep link: ?c=<index> preselects the matching constellation by its global
+  // index in the constellations array. Cards on the landing use this so the
+  // detail panel opens immediately. Also accepts ?highlight=<hash> for
+  // backwards compatibility — matches the first constellation with that hash.
+  useEffect(() => {
+    if (!data) return;
+    const params = new URLSearchParams(window.location.search);
+    let idx = -1;
+    const cParam = params.get("c");
+    if (cParam !== null) {
+      const parsed = parseInt(cParam, 10);
+      if (Number.isFinite(parsed) && parsed >= 0 && parsed < data.constellations.length) {
+        idx = parsed;
+      }
+    }
+    if (idx === -1) {
+      const hash = params.get("highlight");
+      if (hash) idx = data.constellations.findIndex((c) => c.neighborhood_hash === hash);
+    }
+    if (idx === -1) return;
+    const c = data.constellations[idx];
+    const node: GraphNode = {
+      id: `c_${idx}`,
+      title: c.title,
+      type: c.constellation_type,
+      score: c.score,
+      idea_ids: c.idea_ids,
+      explanation: c.explanation,
+    };
+    // Ensure the type filter includes this constellation's type, otherwise
+    // the node is dimmed/hidden in the graph even though the panel opens.
+    setActiveTypes((prev) => (prev.has(c.constellation_type) ? prev : new Set(prev).add(c.constellation_type)));
+    // Drop the minScore threshold if this constellation wouldn't pass it.
+    setMinScore((prev) => (c.score < prev ? c.score : prev));
+    setSelectedNode(node);
+  }, [data]);
+
   // Configure d3 forces for better spacing and auto-fit after settle
   useEffect(() => {
     const fg = graphRef.current;

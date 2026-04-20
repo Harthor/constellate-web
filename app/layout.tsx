@@ -17,15 +17,21 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "https://constellate.fyi"
   ),
-  title: "Constellate — The hidden patterns in what you're already reading",
+  title: "Constellate — Find what's missing in tech",
   description:
-    "Constellate watches 8 tech sources and surfaces constellations: groups of ideas that together reveal patterns no single source names out loud.",
+    "Every week, Claude reads tech ideas from 9 feeds and finds the gaps — things the community keeps circling but nobody has built yet. Real starting points for what to build next.",
   openGraph: {
-    title: "Constellate — The hidden patterns in what you're already reading",
+    title: "Constellate — Find what's missing in tech",
     description:
-      "Groups of ideas from Hacker News, arXiv, YC, Product Hunt and more that together reveal patterns no single source names out loud.",
+      "Every week, Claude reads 9 tech feeds and surfaces absences — real gaps where something could exist but doesn't. A shortlist of what to build next.",
     url: "/",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Constellate — Find what's missing in tech",
+    description:
+      "Every week, Claude reads 9 tech feeds and surfaces the gaps — what could exist but doesn't.",
   },
 };
 
