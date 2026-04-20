@@ -52,10 +52,11 @@ export default function AbsenceCard({
   const [showIdeas, setShowIdeas] = useState(false);
   const title = cleanTitle(absence.title);
   const ideaCount = absence.idea_ids.length;
-  const href = `/constellation-map?c=${constellationIndex}`;
+  const href = `/constellation-map?view=cards&c=${constellationIndex}`;
 
   // Resolve backing ideas once so the expanded list can render them.
-  const backingIdeas = absence.idea_ids
+  // Dedupe idea_ids — the engine occasionally emits the same id twice.
+  const backingIdeas = Array.from(new Set(absence.idea_ids))
     .map((id) => ({ id, idea: ideas[id] }))
     .filter((x): x is { id: number; idea: IdeaRef } => Boolean(x.idea));
 

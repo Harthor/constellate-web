@@ -85,7 +85,7 @@ export default function PatternsGrid() {
       {patterns.map((p) => (
         <Link
           key={p.type}
-          href={`/constellation-map?type=${p.type}`}
+          href={`/constellation-map?view=cards&type=${p.type}`}
           className="group flex flex-col gap-3 rounded-xl border p-5 text-left transition-colors hover:border-white/20"
           style={{
             background: "rgba(255,255,255,0.02)",

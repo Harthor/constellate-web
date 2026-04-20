@@ -157,7 +157,7 @@ export default async function Home() {
 
             <div className="mt-14 text-center">
               <Link
-                href="/constellation-map"
+                href="/constellation-map?view=cards&type=absence"
                 className="rounded-lg px-6 py-3 text-sm font-semibold transition-colors"
                 style={{
                   background: "rgba(142,220,230,0.15)",
@@ -232,7 +232,7 @@ export default async function Home() {
 
           <div className="mt-10 text-center">
             <Link
-              href="/constellation-map"
+              href="/constellation-map?view=cards&type=absence"
               className="inline-block rounded-lg px-6 py-3 text-sm font-semibold transition-colors"
               style={{
                 background: "rgba(142,220,230,0.12)",

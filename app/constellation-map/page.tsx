@@ -95,6 +95,14 @@ export default function ConstellationMapPage() {
     if (!data) return;
     const params = new URLSearchParams(window.location.search);
 
+    // View mode override from the landing links ("?view=cards"). Only
+    // applied when the caller explicitly asked for it — direct URL visits
+    // fall back to the user's last-used mode from localStorage.
+    const viewParam = params.get("view");
+    if (viewParam === "cards" || viewParam === "graph") {
+      setViewMode(viewParam);
+    }
+
     // Single-type filter from the patterns grid on the landing.
     const typeParam = params.get("type");
     if (typeParam && TYPE_COLORS[typeParam]) {
@@ -532,7 +540,7 @@ export default function ConstellationMapPage() {
               <div>
                 <h4 className="text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Ideas ({selectedNode.idea_ids.length})</h4>
                 <div className="flex flex-col gap-1.5">
-                  {selectedNode.idea_ids.map((ideaId) => {
+                  {Array.from(new Set(selectedNode.idea_ids)).map((ideaId) => {
                     const idea = data.ideas[ideaId];
                     if (!idea) return null;
                     const isHub = hubIdeaIdSet.has(ideaId);
@@ -663,7 +671,7 @@ export default function ConstellationMapPage() {
 
                   {/* Ideas */}
                   <div className="border-t border-white/[0.06] pt-3 flex flex-col gap-1.5">
-                    {node.idea_ids.map((ideaId) => {
+                    {Array.from(new Set(node.idea_ids)).map((ideaId) => {
                       const idea = data.ideas[ideaId];
                       if (!idea) return null;
                       const isHub = hubIdeaIdSet.has(ideaId);
