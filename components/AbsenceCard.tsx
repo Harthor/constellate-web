@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import type { Constellation, IdeaRef } from "@/lib/types";
 import { SOURCE_EMOJI } from "@/lib/types";
 
@@ -46,9 +49,15 @@ export default function AbsenceCard({
   constellationIndex,
   isFlashTarget = false,
 }: AbsenceCardProps) {
+  const [showIdeas, setShowIdeas] = useState(false);
   const title = cleanTitle(absence.title);
   const ideaCount = absence.idea_ids.length;
   const href = `/constellation-map?c=${constellationIndex}`;
+
+  // Resolve backing ideas once so the expanded list can render them.
+  const backingIdeas = absence.idea_ids
+    .map((id) => ({ id, idea: ideas[id] }))
+    .filter((x): x is { id: number; idea: IdeaRef } => Boolean(x.idea));
 
   // Show up to 4 source emojis from the ideas backing this gap, so the card
   // signals provenance without dragging in full idea titles.
@@ -100,12 +109,37 @@ export default function AbsenceCard({
       </p>
 
       <div className="mt-5 flex items-center justify-between gap-3">
-        <span className="text-xs text-white/50">
+        <button
+          type="button"
+          onClick={() => setShowIdeas((v) => !v)}
+          aria-expanded={showIdeas}
+          aria-controls={`ideas-${constellationIndex}`}
+          className="flex items-center gap-1.5 text-xs text-white/50 transition-colors hover:text-white/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C4B5FD] rounded"
+        >
           <span className="font-mono text-sm font-semibold text-white/80">
             {ideaCount}
-          </span>{" "}
+          </span>
           ideas point to this gap
-        </span>
+          <svg
+            width="10"
+            height="10"
+            viewBox="0 0 10 10"
+            aria-hidden="true"
+            style={{
+              transform: showIdeas ? "rotate(180deg)" : "rotate(0deg)",
+              transition: "transform 150ms ease",
+            }}
+          >
+            <path
+              d="M2 3.5 L5 6.5 L8 3.5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
         {sources.length > 0 && (
           <span
             className="flex items-center gap-1 text-sm"
@@ -124,6 +158,55 @@ export default function AbsenceCard({
           </span>
         )}
       </div>
+
+      {showIdeas && (
+        <ul
+          id={`ideas-${constellationIndex}`}
+          className="mt-3 flex flex-col gap-1.5 rounded-lg border p-3"
+          style={{
+            background: "rgba(167,139,250,0.04)",
+            borderColor: "rgba(167,139,250,0.18)",
+          }}
+        >
+          {backingIdeas.map(({ id, idea }) => {
+            const row = (
+              <div className="flex items-start gap-2">
+                <span
+                  className="text-[13px] leading-none flex-shrink-0 mt-0.5"
+                  role="img"
+                  aria-hidden="true"
+                >
+                  {SOURCE_EMOJI[idea.source] ?? "\uD83D\uDCCC"}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <div className="text-xs text-white/85 leading-snug">
+                    {idea.title}
+                  </div>
+                  <div className="text-[10px] font-mono uppercase tracking-wider text-white/35">
+                    {SOURCE_LABEL[idea.source] ?? idea.source}
+                  </div>
+                </div>
+              </div>
+            );
+            return (
+              <li key={id}>
+                {idea.url ? (
+                  <a
+                    href={idea.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block rounded px-1 py-0.5 -mx-1 hover:bg-white/[0.04] transition-colors focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#C4B5FD]"
+                  >
+                    {row}
+                  </a>
+                ) : (
+                  <div className="px-1 py-0.5 -mx-1">{row}</div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      )}
 
       <Link
         href={href}
