@@ -226,10 +226,59 @@ export default function ConstellationMapPage() {
       });
   }, [data, graphNodes]);
 
+  // IDs highlighted in the graph: either a hub's constellations (sidebar)
+  // or the selected constellation + its directly connected siblings (those
+  // that share at least one idea with it). This gives a focused "cluster"
+  // view when opening via deep link or clicking a node.
+  // When a selection is made (manually or via deep link), pan+zoom the
+  // graph to focus on the related cluster. Respects prefers-reduced-motion.
+  useEffect(() => {
+    const fg = graphRef.current;
+    if (!fg || !selectedNode || viewMode !== "graph") return;
+    // Let the d3 simulation place the nodes before measuring.
+    const t = setTimeout(() => {
+      const nodes = (fg.graphData?.().nodes ?? []) as Array<GraphNode & { x?: number; y?: number }>;
+      const selectedIdeaIds = new Set(selectedNode.idea_ids);
+      const cluster = nodes.filter((n) => {
+        if (n.id === selectedNode.id) return true;
+        return n.idea_ids.some((id) => selectedIdeaIds.has(id));
+      });
+      if (cluster.length === 0) return;
+      const xs = cluster.map((n) => n.x ?? 0);
+      const ys = cluster.map((n) => n.y ?? 0);
+      const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
+      const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+      const w = Math.max(1, Math.max(...xs) - Math.min(...xs));
+      const h = Math.max(1, Math.max(...ys) - Math.min(...ys));
+      const reduceMotion =
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const dur = reduceMotion ? 0 : 650;
+      // Heuristic zoom level: smaller cluster → higher zoom.
+      const k = Math.max(0.8, Math.min(3.0, 320 / Math.max(w, h, 120)));
+      try {
+        fg.centerAt(cx, cy, dur);
+        fg.zoom(k, dur);
+      } catch {
+        // Graph not fully initialised yet — give up silently.
+      }
+    }, 300);
+    return () => clearTimeout(t);
+  }, [selectedNode, viewMode]);
+
   const highlightedNodeIds = useMemo(() => {
-    if (!highlightedHub) return null;
-    return new Set(highlightedHub.constellations);
-  }, [highlightedHub]);
+    if (highlightedHub) return new Set(highlightedHub.constellations);
+    if (!selectedNode) return null;
+    const related = new Set<string>([selectedNode.id]);
+    const selectedIdeaIds = new Set(selectedNode.idea_ids);
+    for (const n of graphNodes) {
+      if (n.id === selectedNode.id) continue;
+      if (n.idea_ids.some((id) => selectedIdeaIds.has(id))) {
+        related.add(n.id);
+      }
+    }
+    return related;
+  }, [highlightedHub, selectedNode, graphNodes]);
 
   const hubIdeaIdSet = useMemo(() => new Set(hubIdeas.map((h) => h.id)), [hubIdeas]);
 
@@ -431,6 +480,35 @@ export default function ConstellationMapPage() {
                 <span>Score {hoveredNode.score}</span>
                 <span>{hoveredNode.idea_ids.length} ideas</span>
               </div>
+            </div>
+          )}
+
+          {/* Breadcrumb: when a constellation is selected (typically via deep link
+              from a landing card), show where the user came from + what they're viewing. */}
+          {selectedNode && (
+            <div
+              className="fixed top-[68px] left-1/2 -translate-x-1/2 z-40 flex items-center gap-3 px-4 py-2 rounded-full text-xs font-mono"
+              style={{
+                background: "rgba(10,14,26,0.85)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                backdropFilter: "blur(12px)",
+                maxWidth: "90vw",
+              }}
+            >
+              <Link
+                href="/#top-gaps"
+                className="text-white/50 hover:text-white/90 transition-colors flex-shrink-0"
+              >
+                &larr; Back to gaps
+              </Link>
+              <span className="text-white/20 flex-shrink-0">/</span>
+              <span className="text-white/40 flex-shrink-0">Viewing:</span>
+              <span
+                className="text-white/85 truncate"
+                title={selectedNode.title}
+              >
+                {selectedNode.title}
+              </span>
             </div>
           )}
 
