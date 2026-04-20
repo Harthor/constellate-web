@@ -88,13 +88,19 @@ export default function ConstellationMapPage() {
       .then((d: PipelineData) => { setData(d); setLoading(false); });
   }, []);
 
-  // Deep link: ?c=<index> preselects the matching constellation by its global
-  // index in the constellations array. Cards on the landing use this so the
-  // detail panel opens immediately. Also accepts ?highlight=<hash> for
-  // backwards compatibility — matches the first constellation with that hash.
+  // Deep link: ?c=<index> preselects a constellation; ?type=<kind> restricts
+  // the type filter to a single pattern (used by the landing "Patterns" grid).
+  // Also accepts ?highlight=<hash> for backwards compatibility.
   useEffect(() => {
     if (!data) return;
     const params = new URLSearchParams(window.location.search);
+
+    // Single-type filter from the patterns grid on the landing.
+    const typeParam = params.get("type");
+    if (typeParam && TYPE_COLORS[typeParam]) {
+      setActiveTypes(new Set([typeParam]));
+    }
+
     let idx = -1;
     const cParam = params.get("c");
     if (cParam !== null) {

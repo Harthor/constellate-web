@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { PipelineData } from "@/lib/types";
 import WaitlistForm from "@/components/WaitlistForm";
 import AbsenceCard from "@/components/AbsenceCard";
+import Header from "@/components/Header";
+import PatternsGrid from "@/components/PatternsGrid";
 
 const sources = [
   "Hacker News",
@@ -48,14 +50,10 @@ export default async function Home() {
 
   return (
     <main className="relative">
-      {/* Hero */}
-      <section className="flex flex-col px-6 pb-20 pt-8">
-        <nav className="pb-6" aria-label="Main navigation">
-          <Link href="/" className="text-lg font-bold tracking-tight text-white">
-            Constellate
-          </Link>
-        </nav>
+      <Header currentPath="/" />
 
+      {/* Hero */}
+      <section className="flex flex-col px-6 pb-20 pt-16">
         <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center text-center">
           <h1 className="text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
             Don&apos;t know what to build?
@@ -200,23 +198,23 @@ export default async function Home() {
       </section>
 
       {/* Other patterns */}
-      <section className="px-6 py-24">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            We also find other patterns
-          </h2>
-          <p className="mt-4 text-base text-white/60">
-            Absences are our headline output, but Claude also surfaces{" "}
-            <span className="text-white/90">chains</span> (logical progressions
-            nobody designed),{" "}
-            <span className="text-white/90">convergences</span> (distant domains
-            pointing at the same problem),{" "}
-            <span className="text-white/90">triangulations</span> (three views
-            of one phenomenon), and{" "}
-            <span className="text-white/90">spectrums</span> (positions along an
-            axis of debate).
-          </p>
-          <div className="mt-8">
+      <section id="patterns" className="scroll-mt-20 px-6 py-24">
+        <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              We also find other patterns
+            </h2>
+            <p className="mt-4 text-base text-white/55">
+              Absences are our headline output, but Claude surfaces four more
+              kinds of pattern across the same feeds.
+            </p>
+          </div>
+
+          <div className="mt-12">
+            <PatternsGrid />
+          </div>
+
+          <div className="mt-10 text-center">
             <Link
               href="/constellation-map"
               className="inline-block rounded-lg px-6 py-3 text-sm font-semibold transition-colors"
