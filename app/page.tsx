@@ -4,6 +4,7 @@ import WaitlistForm from "@/components/WaitlistForm";
 import AbsenceCard from "@/components/AbsenceCard";
 import Header from "@/components/Header";
 import PatternsGrid from "@/components/PatternsGrid";
+import ScrollFlash from "@/components/ScrollFlash";
 
 const sources = [
   "Hacker News",
@@ -50,6 +51,7 @@ export default async function Home() {
 
   return (
     <main className="relative">
+      <ScrollFlash />
       <Header currentPath="/" />
 
       {/* Hero */}
@@ -66,24 +68,37 @@ export default async function Home() {
             real gaps where something could exist but doesn&apos;t.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-xs text-white/50">
-            <span>
-              This week:{" "}
-              <span className="font-semibold text-white/80">{absenceCount}</span> gaps
-            </span>
-            <span className="text-white/20">·</span>
-            <span>
-              <span className="font-semibold text-white/80">{totalIdeas}</span> ideas analyzed
-            </span>
-            <span className="text-white/20">·</span>
-            <span>
-              <span className="font-semibold text-white/80">${runCost.toFixed(2)}</span> to run
-            </span>
-          </div>
+          <dl className="mt-10 grid w-full max-w-2xl grid-cols-3 gap-3">
+            {[
+              { value: absenceCount.toString(), label: "gaps this week", accent: "#C4B5FD" },
+              { value: totalIdeas.toString(), label: "ideas analyzed", accent: "#8EDCE6" },
+              { value: `$${runCost.toFixed(2)}`, label: "to run", accent: "#95E1D3" },
+            ].map((s) => (
+              <div
+                key={s.label}
+                className="rounded-xl border px-4 py-4 text-center"
+                style={{
+                  background: "rgba(255,255,255,0.03)",
+                  borderColor: "rgba(255,255,255,0.07)",
+                }}
+              >
+                <dt className="sr-only">{s.label}</dt>
+                <dd
+                  className="font-mono text-3xl font-bold leading-none sm:text-4xl"
+                  style={{ color: s.accent }}
+                >
+                  {s.value}
+                </dd>
+                <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.15em] text-white/45">
+                  {s.label}
+                </div>
+              </div>
+            ))}
+          </dl>
 
           <a
             href="#top-gaps"
-            className="mt-10 rounded-lg px-8 py-3.5 text-sm font-semibold transition-all hover:brightness-110"
+            className="mt-10 rounded-lg px-8 py-3.5 text-sm font-semibold transition-all hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C4B5FD]"
             style={{
               background: "rgba(167,139,250,0.35)",
               color: "#ffffff",
@@ -129,12 +144,13 @@ export default async function Home() {
             </div>
 
             <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {absences.map(({ c, i }) => (
+              {absences.map(({ c, i }, idx) => (
                 <AbsenceCard
                   key={i}
                   absence={c}
                   ideas={data!.ideas}
                   constellationIndex={i}
+                  isFlashTarget={idx === 0}
                 />
               ))}
             </div>
