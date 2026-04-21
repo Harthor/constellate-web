@@ -436,7 +436,7 @@ export default function ConstellationMapPage() {
   if (loading) {
     return (
       <div className="fixed inset-0 flex items-center justify-center" style={{ background: "#0a0e1a" }}>
-        <span className="text-white/60 text-sm font-mono">Loading constellation map...</span>
+        <span className="text-white/60 text-sm font-mono">Loading patterns...</span>
       </div>
     );
   }
