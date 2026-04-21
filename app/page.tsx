@@ -183,7 +183,7 @@ export default async function Home() {
                   border: "1px solid rgba(142,220,230,0.25)",
                 }}
               >
-                Browse all patterns &rarr;
+                Browse all absences &rarr;
               </Link>
             </div>
           </div>
@@ -258,7 +258,7 @@ export default async function Home() {
                 border: "1px solid rgba(142,220,230,0.22)",
               }}
             >
-              Browse all patterns &rarr;
+              Browse all absences &rarr;
             </Link>
           </div>
         </div>

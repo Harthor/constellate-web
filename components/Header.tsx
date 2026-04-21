@@ -63,7 +63,7 @@ export default function Header({ currentPath = "/" }: { currentPath?: string }) 
               : "text-white/60 hover:text-white")
           }
         >
-          Browse all
+          Browse all absences
         </Link>
         <a
           href={anchor("#patterns")}
