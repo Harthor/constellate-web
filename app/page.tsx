@@ -5,6 +5,7 @@ import AbsenceCard from "@/components/AbsenceCard";
 import Header from "@/components/Header";
 import PatternsGrid from "@/components/PatternsGrid";
 import ScrollFlash from "@/components/ScrollFlash";
+import EmailPreview from "@/components/EmailPreview";
 
 const sources = [
   "Hacker News",
@@ -18,20 +19,21 @@ const sources = [
   "Papers With Code",
 ];
 
-async function getData(): Promise<PipelineData | null> {
+async function getData(): Promise<{ data: PipelineData | null; mtime: Date | null }> {
   try {
     const fs = await import("fs");
     const path = await import("path");
     const filePath = path.join(process.cwd(), "public", "data.json");
     const raw = fs.readFileSync(filePath, "utf-8");
-    return JSON.parse(raw);
+    const stat = fs.statSync(filePath);
+    return { data: JSON.parse(raw), mtime: stat.mtime };
   } catch {
-    return null;
+    return { data: null, mtime: null };
   }
 }
 
 export default async function Home() {
-  const data = await getData();
+  const { data, mtime } = await getData();
 
   // Keep the global index alongside each absence so deep links to the map
   // can target a specific constellation (neighborhood_hash is not unique —
@@ -96,6 +98,17 @@ export default async function Home() {
             ))}
           </dl>
 
+          {mtime && (
+            <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
+              Last updated:{" "}
+              {mtime.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })}
+            </p>
+          )}
+
           <a
             href="#top-gaps"
             className="mt-10 rounded-lg px-8 py-3.5 text-sm font-semibold transition-all hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C4B5FD]"
@@ -114,6 +127,12 @@ export default async function Home() {
               Or get them in your inbox
             </p>
             <WaitlistForm variant="landing" />
+            {absences.length > 0 && (
+              <EmailPreview
+                sampleAbsences={absences.slice(0, 3).map(({ c }) => c)}
+                weekCount={absenceCount}
+              />
+            )}
           </div>
         </div>
       </section>
@@ -258,6 +277,12 @@ export default async function Home() {
           <div className="mt-8">
             <WaitlistForm variant="landing" />
           </div>
+          {absences.length > 0 && (
+            <EmailPreview
+              sampleAbsences={absences.slice(0, 3).map(({ c }) => c)}
+              weekCount={absenceCount}
+            />
+          )}
         </div>
       </section>
 

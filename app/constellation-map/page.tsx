@@ -618,7 +618,13 @@ export default function ConstellationMapPage() {
 
           {/* Bottom stats */}
           <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 px-6 py-2.5 rounded-full text-xs font-mono text-white/40 text-center" style={{ background: "rgba(10,14,26,0.8)", border: "1px solid rgba(255,255,255,0.06)" }}>
-            {filteredData.nodes.length} constellations &middot; {Object.keys(TYPE_COLORS).length} types &middot; {filteredData.links.length} edges &middot; {hubIdeas.length} hub ideas
+            {filteredData.nodes.length} constellations &middot; {Object.keys(TYPE_COLORS).length} types &middot; {filteredData.links.length} edges &middot;{" "}
+            <span
+              className="cursor-help underline decoration-dotted decoration-white/30 underline-offset-2"
+              title="Hub ideas are ideas that appear in 3+ constellations — they connect multiple patterns."
+            >
+              {hubIdeas.length} hub ideas
+            </span>
           </div>
         </>
       )}
@@ -809,7 +815,11 @@ export default function ConstellationMapPage() {
             <input type="text" placeholder="Search by title..." value={searchText} onChange={(e) => setSearchText(e.target.value)} className="w-full px-3 py-1.5 text-xs rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/30 outline-none focus:border-white/25" />
           </div>
           <div>
-            <h2 className="text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Hub Ideas <span className="text-white/25">(in 3+ constellations)</span></h2>
+            <h2 className="text-xs font-mono uppercase tracking-wider text-white/40 mb-0.5">Hub Ideas</h2>
+            <p className="text-[10px] text-white/40 mb-3 leading-snug">
+              Ideas that appear in 3+ constellations &mdash; they connect
+              multiple patterns.
+            </p>
             <div className="flex flex-col gap-1">
               {hubIdeas.map((hub) => (
                 <button key={hub.id} onClick={() => { setHighlightedHub(highlightedHub?.id === hub.id ? null : hub); setSelectedNode(null); }} className="text-left px-2 py-1.5 rounded-lg transition-colors text-xs" style={{ background: highlightedHub?.id === hub.id ? "rgba(255,255,255,0.1)" : "transparent" }}>
