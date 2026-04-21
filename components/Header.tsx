@@ -55,7 +55,7 @@ export default function Header({ currentPath = "/" }: { currentPath?: string }) 
           This week
         </a>
         <Link
-          href="/constellation-map"
+          href="/constellation-map?view=cards&type=absence"
           className={
             "text-sm transition-colors " +
             (currentPath === "/constellation-map"
@@ -63,7 +63,7 @@ export default function Header({ currentPath = "/" }: { currentPath?: string }) 
               : "text-white/60 hover:text-white")
           }
         >
-          Browse patterns
+          Browse all
         </Link>
         <a
           href={anchor("#patterns")}
