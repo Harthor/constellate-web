@@ -48,7 +48,6 @@ export default async function Home() {
 
   const absenceCount = data?.metadata.constellations_by_type?.absence ?? absences.length;
   const totalIdeas = data?.metadata.total_ideas ?? 0;
-  const runCost = data?.metadata.estimated_cost_usd ?? 0;
   const sourceCount = sources.length;
 
   return (
@@ -74,7 +73,7 @@ export default async function Home() {
             {[
               { value: absenceCount.toString(), label: "gaps this week", accent: "#C4B5FD" },
               { value: totalIdeas.toString(), label: "ideas analyzed", accent: "#8EDCE6" },
-              { value: `$${runCost.toFixed(2)}`, label: "to run", accent: "#95E1D3" },
+              { value: sourceCount.toString(), label: "sources", accent: "#95E1D3" },
             ].map((s) => (
               <div
                 key={s.label}
@@ -272,7 +271,7 @@ export default async function Home() {
             Get weekly gaps in your inbox
           </h2>
           <p className="mt-4 text-base text-white/55">
-            One email a week with the strongest gaps. Free until launch.
+            Every Monday. No spam. Always free.
           </p>
           <div className="mt-8">
             <WaitlistForm variant="landing" />

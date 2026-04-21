@@ -101,8 +101,7 @@ export default function EmailPreview({ sampleAbsences, weekCount }: EmailPreview
               ))}
             </ul>
             <p className="mt-4 text-[10px] text-white/30">
-              Every Monday &middot; Free until launch &middot; Unsubscribe
-              anytime.
+              Every Monday &middot; Always free &middot; Unsubscribe anytime.
             </p>
           </div>
         </div>

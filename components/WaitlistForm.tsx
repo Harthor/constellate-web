@@ -47,7 +47,7 @@ export default function WaitlistForm({ variant = "landing" }: WaitlistFormProps)
         ) : (
           <>
             <p className="text-white text-sm font-semibold mb-0.5">Like what you see?</p>
-            <p className="text-white/50 text-xs mb-3">Get the weekly digest, free until launch.</p>
+            <p className="text-white/50 text-xs mb-3">Get the weekly digest. Always free.</p>
             <form onSubmit={handleSubmit} className="flex gap-2">
               <label htmlFor="waitlist-email-floating" className="sr-only">Email address</label>
               <input
