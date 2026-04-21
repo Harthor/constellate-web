@@ -183,7 +183,7 @@ export default async function Home() {
                   border: "1px solid rgba(142,220,230,0.25)",
                 }}
               >
-                Explore full constellation map &rarr;
+                Browse all patterns &rarr;
               </Link>
             </div>
           </div>
@@ -258,7 +258,7 @@ export default async function Home() {
                 border: "1px solid rgba(142,220,230,0.22)",
               }}
             >
-              Explore full constellation map &rarr;
+              Browse all patterns &rarr;
             </Link>
           </div>
         </div>

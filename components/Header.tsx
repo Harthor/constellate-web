@@ -63,7 +63,7 @@ export default function Header({ currentPath = "/" }: { currentPath?: string }) 
               : "text-white/60 hover:text-white")
           }
         >
-          Constellation map
+          Browse patterns
         </Link>
         <a
           href={anchor("#patterns")}

@@ -63,7 +63,7 @@ export default function ConstellationMapPage() {
   const [minScore, setMinScore] = useState(6);
   const [searchText, setSearchText] = useState("");
   const [showHelp, setShowHelp] = useState(false);
-  const [viewMode, setViewMode] = useState<"graph" | "cards">("graph");
+  const [viewMode, setViewMode] = useState<"graph" | "cards">("cards");
   const [sortOrder, setSortOrder] = useState<"score-desc" | "score-asc" | "type" | "alpha">("score-desc");
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
   const [ctaDismissed, setCtaDismissed] = useState(false);
