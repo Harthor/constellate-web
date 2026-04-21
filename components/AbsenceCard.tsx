@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import type { Constellation, IdeaRef } from "@/lib/types";
 import { SOURCE_EMOJI } from "@/lib/types";
@@ -52,7 +51,6 @@ export default function AbsenceCard({
   const [showIdeas, setShowIdeas] = useState(false);
   const title = cleanTitle(absence.title);
   const ideaCount = absence.idea_ids.length;
-  const href = `/constellation-map?view=cards&c=${constellationIndex}`;
 
   // Resolve backing ideas once so the expanded list can render them.
   // Dedupe idea_ids — the engine occasionally emits the same id twice.
@@ -209,19 +207,10 @@ export default function AbsenceCard({
         </ul>
       )}
 
-      <Link
-        href={href}
-        className="mt-5 inline-flex items-center justify-between gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C4B5FD]"
-        style={{
-          background: "rgba(167,139,250,0.15)",
-          color: "#C4B5FD",
-          border: "1px solid rgba(167,139,250,0.3)",
-        }}
-        aria-label={`Explore connections for gap: ${title}`}
-      >
-        Explore connections
-        <span aria-hidden="true">&rarr;</span>
-      </Link>
+      {/* "Explore connections" was removed: the card itself and its expanded
+          idea list already surface the same data that the deep-linked map
+          view showed. Users who want the full experience reach it via the
+          "Browse all absences" nav link. */}
     </article>
   );
 }
