@@ -271,7 +271,7 @@ export default async function Home() {
             Get weekly gaps in your inbox
           </h2>
           <p className="mt-4 text-base text-white/55">
-            Every Monday. No spam. Always free.
+            Every Monday. No spam.
           </p>
           <div className="mt-8">
             <WaitlistForm variant="landing" />
