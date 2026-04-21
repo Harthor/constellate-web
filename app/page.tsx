@@ -55,9 +55,9 @@ export default async function Home() {
       <Header currentPath="/" />
 
       {/* Hero */}
-      <section className="flex flex-col px-6 pb-20 pt-16">
-        <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center text-center">
-          <h1 className="text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
+      <section className="flex flex-col px-4 pb-20 pt-16 sm:px-6">
+        <div className="relative z-10 mx-auto flex w-full min-w-0 max-w-3xl flex-col items-center text-center">
+          <h1 className="text-[26px] font-bold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
             Don&apos;t know what to build?
           </h1>
 
@@ -68,7 +68,7 @@ export default async function Home() {
             real gaps where something could exist but doesn&apos;t.
           </p>
 
-          <dl className="mt-10 grid w-full max-w-2xl grid-cols-3 gap-3">
+          <dl className="mt-10 grid w-full max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">
             {[
               { value: absenceCount.toString(), label: "gaps this week", accent: "#C4B5FD" },
               { value: totalIdeas.toString(), label: "ideas analyzed", accent: "#8EDCE6" },
@@ -122,7 +122,7 @@ export default async function Home() {
       {absences.length > 0 && (
         <section
           id="top-gaps"
-          className="scroll-mt-6 bg-white/[0.01] px-6 py-24"
+          className="scroll-mt-6 bg-white/[0.01] px-4 py-24 sm:px-6"
         >
           <div className="mx-auto max-w-6xl">
             <div className="flex flex-col items-start gap-2">
@@ -136,10 +136,10 @@ export default async function Home() {
                 Where something could exist but doesn&apos;t
               </h2>
               <p className="mt-1 text-base text-white/50">
-                {absences.length} gaps detected this week across{" "}
-                {data?.metadata.total_ideas} ideas. Each gap is a real pattern
-                of absence — a logical piece the community keeps circling
-                without naming.
+                Showing the top {absences.length} of {absenceCount} gaps
+                detected this week across {data?.metadata.total_ideas} ideas.
+                Each gap is a real pattern of absence — a logical piece the
+                community keeps circling without naming.
               </p>
             </div>
 
@@ -173,7 +173,7 @@ export default async function Home() {
       )}
 
       {/* How it works */}
-      <section className="px-6 py-24">
+      <section className="px-4 py-24 sm:px-6">
         <div className="mx-auto max-w-3xl">
           <h2 className="text-center text-3xl font-bold tracking-tight text-white sm:text-4xl">
             How it works
@@ -214,7 +214,7 @@ export default async function Home() {
       </section>
 
       {/* Other patterns */}
-      <section id="patterns" className="scroll-mt-20 px-6 py-24">
+      <section id="patterns" className="scroll-mt-20 px-4 py-24 sm:px-6">
         <div className="mx-auto max-w-5xl">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
@@ -247,7 +247,7 @@ export default async function Home() {
       </section>
 
       {/* Waitlist */}
-      <section id="waitlist" className="px-6 py-24">
+      <section id="waitlist" className="px-4 py-24 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Get weekly gaps in your inbox
@@ -262,7 +262,7 @@ export default async function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="px-6 pb-12 pt-8 text-center text-xs text-white/30">
+      <footer className="px-4 pb-12 pt-8 sm:px-6 text-center text-xs text-white/30">
         Constellate &mdash; built by{" "}
         <a
           href="https://github.com/Harthor"

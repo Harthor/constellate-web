@@ -280,6 +280,27 @@ export default function ConstellationMapPage() {
     return () => clearTimeout(t);
   }, [selectedNode, viewMode]);
 
+  // When in Cards view and a constellation is selected (typically via
+  // deep link), scroll the matching card into view so the user can see
+  // what they clicked. The ring-flash animation on the card provides
+  // the visual confirmation.
+  useEffect(() => {
+    if (!selectedNode || viewMode !== "cards") return;
+    // Give React a tick to render the selected-card styles + id.
+    const t = setTimeout(() => {
+      const el = document.getElementById(`card-${selectedNode.id}`);
+      if (!el) return;
+      const reduceMotion =
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      el.scrollIntoView({
+        behavior: reduceMotion ? "auto" : "smooth",
+        block: "center",
+      });
+    }, 120);
+    return () => clearTimeout(t);
+  }, [selectedNode, viewMode]);
+
   const highlightedNodeIds = useMemo(() => {
     if (highlightedHub) return new Set(highlightedHub.constellations);
     if (!selectedNode) return null;
@@ -315,7 +336,24 @@ export default function ConstellationMapPage() {
       const color = TYPE_COLORS[n.type] || "#888";
       const radius = 6 + (n.score - 6) * 2;
       const dimmed = highlightedNodeIds && !highlightedNodeIds.has(n.id);
+      const isSelected = selectedNode?.id === n.id;
       ctx.globalAlpha = dimmed ? 0.12 : 1;
+
+      // Pulse halo around the currently selected node (deep-link or click).
+      // Sin animación si prefers-reduced-motion, pero el halo estático queda.
+      if (isSelected) {
+        const t = (performance.now() % 1800) / 1800; // 0..1 loop
+        const pulseRadius = radius + 10 + Math.sin(t * Math.PI * 2) * 4;
+        const pulseAlpha = 0.45 + Math.cos(t * Math.PI * 2) * 0.2;
+        ctx.save();
+        ctx.globalAlpha = pulseAlpha;
+        ctx.beginPath();
+        ctx.arc(n.x!, n.y!, pulseRadius, 0, Math.PI * 2);
+        ctx.strokeStyle = "#FF9E5E";
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+        ctx.restore();
+      }
 
       if (n.score >= 9) {
         ctx.beginPath(); ctx.arc(n.x!, n.y!, radius + 1.5, 0, Math.PI * 2);
@@ -376,7 +414,7 @@ export default function ConstellationMapPage() {
       }
       ctx.globalAlpha = 1;
     },
-    [highlightedNodeIds, hoveredNode]
+    [highlightedNodeIds, hoveredNode, selectedNode]
   );
 
   const linkCanvasObject = useCallback(
@@ -627,14 +665,25 @@ export default function ConstellationMapPage() {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
             {sortedCards.map((node) => {
               const isExpanded = expandedCards.has(node.id);
+              const isSelected = selectedNode?.id === node.id;
               return (
                 <article
                   key={node.id}
-                  className="rounded-xl p-5 flex flex-col gap-3 transition-all duration-200 hover:border-[#8EDCE6]/30"
+                  id={`card-${node.id}`}
+                  className={
+                    "rounded-xl p-5 flex flex-col gap-3 transition-all duration-200 hover:border-[#8EDCE6]/30" +
+                    (isSelected ? " ring-flash" : "")
+                  }
                   style={{
-                    background: "rgba(255,255,255,0.02)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+                    background: isSelected
+                      ? "rgba(167,139,250,0.08)"
+                      : "rgba(255,255,255,0.02)",
+                    border: isSelected
+                      ? "1px solid rgba(167,139,250,0.6)"
+                      : "1px solid rgba(255,255,255,0.08)",
+                    boxShadow: isSelected
+                      ? "0 0 24px rgba(167,139,250,0.25)"
+                      : "0 2px 8px rgba(0,0,0,0.2)",
                   }}
                 >
                   {/* Badge + score */}
