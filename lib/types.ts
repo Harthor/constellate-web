@@ -8,6 +8,8 @@ export interface Constellation {
   title: string;
   explanation: string;
   score: number;
+  /** 1-10 for absences only: how easily a solo founder could ship this. */
+  actionability?: number;
   model: string;
   prompt_version: string;
 }

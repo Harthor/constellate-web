@@ -38,11 +38,18 @@ export default async function Home() {
   // Keep the global index alongside each absence so deep links to the map
   // can target a specific constellation (neighborhood_hash is not unique —
   // several constellations can share the same neighborhood).
+  //
+  // Rank by a blend of technical score + actionability so the Top Gaps
+  // the visitor sees first are the ones a solo founder could start on
+  // this week, not the philosophical ones. actionability defaults to 5
+  // (neutral) for legacy absences that predate the v2 prompt.
+  const rank = (c: { score: number; actionability?: number }) =>
+    c.score * 0.5 + (c.actionability ?? 5) * 0.5;
   const absences = data
     ? data.constellations
         .map((c, i) => ({ c, i }))
         .filter(({ c }) => c.constellation_type === "absence")
-        .sort((a, b) => b.c.score - a.c.score)
+        .sort((a, b) => rank(b.c) - rank(a.c))
         .slice(0, 12)
     : [];
 
