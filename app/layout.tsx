@@ -19,11 +19,17 @@ export const metadata: Metadata = {
   ),
   title: "Constellate — Find what's missing in tech",
   description:
-    "Every week, Claude reads tech ideas from 9 feeds and finds the gaps — things the community keeps circling but nobody has built yet. Real starting points for what to build next.",
+    "We analyze signals from 9 leading tech sources. Constellate surfaces the gaps — things the community keeps circling but nobody has built yet.",
+  alternates: {
+    canonical: "/",
+  },
+  icons: {
+    icon: "/icon.svg",
+  },
   openGraph: {
     title: "Constellate — Find what's missing in tech",
     description:
-      "Every week, Claude reads 9 tech feeds and surfaces absences — real gaps where something could exist but doesn't. A shortlist of what to build next.",
+      "We analyze signals from 9 leading tech sources and surface absences — real gaps where something could exist but doesn't.",
     url: "/",
     type: "website",
   },
@@ -31,7 +37,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Constellate — Find what's missing in tech",
     description:
-      "Every week, Claude reads 9 tech feeds and surfaces the gaps — what could exist but doesn't.",
+      "We analyze signals from 9 leading tech sources and surface the gaps — what could exist but doesn't.",
   },
 };
 

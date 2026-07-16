@@ -3,15 +3,15 @@
 import { useEffect, useState, useCallback, useMemo, useRef } from "react";
 import Link from "next/link";
 import ForceGraph2D from "@/components/ForceGraphWrapper";
+import UpdatesCta from "@/components/UpdatesCta";
+import { validatePipelineData } from "@/lib/data-schema";
 import {
   TYPE_COLORS,
   TYPE_LABELS,
   TYPE_SHORT,
   SOURCE_EMOJI,
   type PipelineData,
-  type Constellation,
 } from "@/lib/types";
-import WaitlistForm from "@/components/WaitlistForm";
 
 interface GraphNode {
   id: string;
@@ -55,6 +55,7 @@ function truncate(str: string, max: number) {
 export default function ConstellationMapPage() {
   const [data, setData] = useState<PipelineData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [dataError, setDataError] = useState<string | null>(null);
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
   const [highlightedHub, setHighlightedHub] = useState<HubIdea | null>(null);
   const [hoveredNode, setHoveredNode] = useState<GraphNode | null>(null);
@@ -63,29 +64,48 @@ export default function ConstellationMapPage() {
   const [minScore, setMinScore] = useState(6);
   const [searchText, setSearchText] = useState("");
   const [showHelp, setShowHelp] = useState(false);
-  const [viewMode, setViewMode] = useState<"graph" | "cards">("cards");
+  const [viewMode, setViewMode] = useState<"graph" | "cards">(() => {
+    if (typeof window === "undefined") return "cards";
+    const saved = localStorage.getItem("constellate_view_mode");
+    return saved === "graph" || saved === "cards" ? saved : "cards";
+  });
   const [sortOrder, setSortOrder] = useState<"score-desc" | "score-asc" | "type" | "alpha">("score-desc");
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
-  const [ctaDismissed, setCtaDismissed] = useState(false);
+  const [ctaDismissed, setCtaDismissed] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      localStorage.getItem("constellate_cta_dismissed") === "1",
+  );
   const [mobilePanelOpen, setMobilePanelOpen] = useState(false);
   const graphRef = useRef<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
   const drawnLabelsRef = useRef<Array<{ x: number; y: number; w: number; h: number }>>([]);
   const lastFrameRef = useRef(0);
 
   useEffect(() => {
-    const saved = localStorage.getItem("constellate_view_mode");
-    if (saved === "graph" || saved === "cards") setViewMode(saved);
-    if (localStorage.getItem("constellate_cta_dismissed") === "1") setCtaDismissed(true);
-  }, []);
-
-  useEffect(() => {
     localStorage.setItem("constellate_view_mode", viewMode);
   }, [viewMode]);
 
   useEffect(() => {
-    fetch("/data.json")
-      .then((r) => r.json())
-      .then((d: PipelineData) => { setData(d); setLoading(false); });
+    const controller = new AbortController();
+
+    async function loadData() {
+      try {
+        const response = await fetch("/data.json", { signal: controller.signal });
+        if (!response.ok) throw new Error(`Data request failed with HTTP ${response.status}`);
+        const value: unknown = await response.json();
+        const result = validatePipelineData(value);
+        if (!result.success) throw new Error(result.errors[0]);
+        setData(result.data);
+      } catch (error) {
+        if (controller.signal.aborted) return;
+        setDataError(error instanceof Error ? error.message : "Pattern data is unavailable.");
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
+      }
+    }
+
+    void loadData();
+    return () => controller.abort();
   }, []);
 
   // Deep link: ?c=<index> preselects a constellation; ?type=<kind> restricts
@@ -93,50 +113,56 @@ export default function ConstellationMapPage() {
   // Also accepts ?highlight=<hash> for backwards compatibility.
   useEffect(() => {
     if (!data) return;
-    const params = new URLSearchParams(window.location.search);
+    const timer = window.setTimeout(() => {
+      const params = new URLSearchParams(window.location.search);
 
-    // View mode override from the landing links ("?view=cards"). Only
-    // applied when the caller explicitly asked for it — direct URL visits
-    // fall back to the user's last-used mode from localStorage.
-    const viewParam = params.get("view");
-    if (viewParam === "cards" || viewParam === "graph") {
-      setViewMode(viewParam);
-    }
-
-    // Single-type filter from the patterns grid on the landing.
-    const typeParam = params.get("type");
-    if (typeParam && TYPE_COLORS[typeParam]) {
-      setActiveTypes(new Set([typeParam]));
-    }
-
-    let idx = -1;
-    const cParam = params.get("c");
-    if (cParam !== null) {
-      const parsed = parseInt(cParam, 10);
-      if (Number.isFinite(parsed) && parsed >= 0 && parsed < data.constellations.length) {
-        idx = parsed;
+      // View mode override from the landing links ("?view=cards"). Only
+      // applied when the caller explicitly asked for it — direct URL visits
+      // fall back to the user's last-used mode from localStorage.
+      const viewParam = params.get("view");
+      if (viewParam === "cards" || viewParam === "graph") {
+        setViewMode(viewParam);
       }
-    }
-    if (idx === -1) {
-      const hash = params.get("highlight");
-      if (hash) idx = data.constellations.findIndex((c) => c.neighborhood_hash === hash);
-    }
-    if (idx === -1) return;
-    const c = data.constellations[idx];
-    const node: GraphNode = {
-      id: `c_${idx}`,
-      title: c.title,
-      type: c.constellation_type,
-      score: c.score,
-      idea_ids: c.idea_ids,
-      explanation: c.explanation,
-    };
-    // Ensure the type filter includes this constellation's type, otherwise
-    // the node is dimmed/hidden in the graph even though the panel opens.
-    setActiveTypes((prev) => (prev.has(c.constellation_type) ? prev : new Set(prev).add(c.constellation_type)));
-    // Drop the minScore threshold if this constellation wouldn't pass it.
-    setMinScore((prev) => (c.score < prev ? c.score : prev));
-    setSelectedNode(node);
+
+      // Single-type filter from the patterns grid on the landing.
+      const typeParam = params.get("type");
+      if (typeParam && TYPE_COLORS[typeParam]) {
+        setActiveTypes(new Set([typeParam]));
+      }
+
+      let idx = -1;
+      const cParam = params.get("c");
+      if (cParam !== null) {
+        const parsed = parseInt(cParam, 10);
+        if (Number.isFinite(parsed) && parsed >= 0 && parsed < data.constellations.length) {
+          idx = parsed;
+        }
+      }
+      if (idx === -1) {
+        const hash = params.get("highlight");
+        if (hash) idx = data.constellations.findIndex((c) => c.neighborhood_hash === hash);
+      }
+      if (idx === -1) return;
+      const c = data.constellations[idx];
+      const node: GraphNode = {
+        id: `c_${idx}`,
+        title: c.title,
+        type: c.constellation_type,
+        score: c.score,
+        idea_ids: c.idea_ids,
+        explanation: c.explanation,
+      };
+      // Ensure the type filter includes this constellation's type, otherwise
+      // the node is dimmed/hidden in the graph even though the panel opens.
+      setActiveTypes((prev) =>
+        prev.has(c.constellation_type) ? prev : new Set(prev).add(c.constellation_type),
+      );
+      // Drop the minScore threshold if this constellation wouldn't pass it.
+      setMinScore((prev) => (c.score < prev ? c.score : prev));
+      setSelectedNode(node);
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, [data]);
 
   // Configure d3 forces for better spacing and auto-fit after settle
@@ -169,7 +195,7 @@ export default function ConstellationMapPage() {
     fg.d3ReheatSimulation();
     const timer = setTimeout(() => { fg.zoomToFit(400, 45); }, 2500);
     return () => clearTimeout(timer);
-  }, [data, viewMode]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [data, viewMode]);
 
   const toggleType = useCallback((type: string) => {
     setActiveTypes((prev) => {
@@ -177,6 +203,12 @@ export default function ConstellationMapPage() {
       if (next.has(type)) next.delete(type); else next.add(type);
       return next;
     });
+  }, []);
+
+  const resetFilters = useCallback(() => {
+    setActiveTypes(new Set(Object.keys(TYPE_COLORS)));
+    setMinScore(6);
+    setSearchText("");
   }, []);
 
   // Build graph nodes & links from constellations
@@ -441,7 +473,42 @@ export default function ConstellationMapPage() {
     );
   }
 
-  if (!data) return null;
+  if (dataError || !data) {
+    return (
+      <main className="fixed inset-0 flex items-center justify-center px-6 text-center" style={{ background: "#0a0e1a" }}>
+        <div className="max-w-lg rounded-xl border border-amber-300/20 bg-amber-300/[0.05] p-8">
+          <h1 className="text-xl font-semibold text-white">Pattern data could not be loaded</h1>
+          <p className="mt-3 text-sm leading-relaxed text-white/60">
+            The published data file is missing or invalid. Try reloading, or return to the landing page.
+          </p>
+          <div className="mt-6 flex justify-center gap-3">
+            <button onClick={() => window.location.reload()} className="rounded-lg bg-[#8EDCE6] px-4 py-2 text-sm font-semibold text-[#0a0e1a]">
+              Reload
+            </button>
+            <Link href="/" className="rounded-lg border border-white/15 px-4 py-2 text-sm text-white/70">
+              Back home
+            </Link>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  if (data.constellations.length === 0) {
+    return (
+      <main className="fixed inset-0 flex items-center justify-center px-6 text-center" style={{ background: "#0a0e1a" }}>
+        <div className="max-w-lg rounded-xl border border-white/10 bg-white/[0.02] p-8">
+          <h1 className="text-xl font-semibold text-white">No patterns published yet</h1>
+          <p className="mt-3 text-sm leading-relaxed text-white/60">
+            The dataset is valid but empty. Check back after the next manual data publication.
+          </p>
+          <Link href="/" className="mt-6 inline-flex rounded-lg border border-white/15 px-4 py-2 text-sm text-white/70">
+            Back home
+          </Link>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <div className={`fixed inset-0 ${viewMode === "graph" ? "overflow-hidden" : "overflow-auto"}`} style={{ background: "#0a0e1a" }} onMouseMove={viewMode === "graph" ? (e) => setTooltipPos({ x: e.clientX, y: e.clientY }) : undefined}>
@@ -522,6 +589,17 @@ export default function ConstellationMapPage() {
             height={typeof window !== "undefined" ? window.innerHeight : 800}
             cooldownTicks={100}
           />
+
+          {filteredData.nodes.length === 0 && (
+            <div className="fixed inset-0 z-20 flex items-center justify-center px-6 text-center pointer-events-none">
+              <div className="pointer-events-auto rounded-xl border border-white/10 bg-[#0a0e1a]/95 p-6">
+                <p className="text-sm font-semibold text-white">No patterns match these filters</p>
+                <button onClick={resetFilters} className="mt-3 text-xs font-semibold text-[#8EDCE6] hover:underline">
+                  Reset filters
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* Tooltip */}
           {hoveredNode && (
@@ -669,6 +747,14 @@ export default function ConstellationMapPage() {
 
           {/* Card grid */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {sortedCards.length === 0 && (
+              <div className="col-span-full rounded-xl border border-white/10 bg-white/[0.02] p-8 text-center">
+                <p className="text-sm font-semibold text-white">No patterns match these filters</p>
+                <button onClick={resetFilters} className="mt-3 text-xs font-semibold text-[#8EDCE6] hover:underline">
+                  Reset filters
+                </button>
+              </div>
+            )}
             {sortedCards.map((node) => {
               const isExpanded = expandedCards.has(node.id);
               const isSelected = selectedNode?.id === node.id;
@@ -832,7 +918,7 @@ export default function ConstellationMapPage() {
         </div>
       )}
 
-      {/* Floating waitlist CTA */}
+      {/* Floating updates CTA */}
       {!ctaDismissed && (
         <div className="hidden sm:block fixed bottom-20 right-4 z-40 w-72">
           <div className="relative">
@@ -840,11 +926,11 @@ export default function ConstellationMapPage() {
               onClick={() => { setCtaDismissed(true); localStorage.setItem("constellate_cta_dismissed", "1"); }}
               className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-white/40 hover:text-white/70 text-xs transition-colors z-10"
               style={{ background: "rgba(10,14,26,0.9)", border: "1px solid rgba(255,255,255,0.15)" }}
-              aria-label="Dismiss waitlist popup"
+              aria-label="Dismiss updates popup"
             >
               &times;
             </button>
-            <WaitlistForm variant="floating" />
+            <UpdatesCta variant="floating" />
           </div>
         </div>
       )}

@@ -52,7 +52,7 @@ export default function Header({ currentPath = "/" }: { currentPath?: string }) 
           href={anchor("#top-gaps")}
           className="text-sm text-white/60 transition-colors hover:text-white"
         >
-          This week
+          Top gaps
         </a>
         <Link
           href="/constellation-map?view=cards&type=absence"

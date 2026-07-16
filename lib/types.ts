@@ -32,14 +32,18 @@ export interface IdeaRef {
 }
 
 export interface PipelineMetadata {
+  /** ISO-8601 timestamp embedded by the analysis run. */
+  generated_at?: string;
   total_ideas: number;
   neighborhoods_total: number;
   constellations_found: number;
   constellations_by_type: Record<string, number>;
   constellation_cache_hits: number;
   constellation_api_calls: number;
+  constellation_failed_skips?: number;
   pattern_cache_hits: number;
   pattern_api_calls: number;
+  pattern_failed_skips?: number;
   estimated_cost_usd: number;
   elapsed_ms: number;
 }

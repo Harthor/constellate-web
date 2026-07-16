@@ -1,11 +1,11 @@
 import { ImageResponse } from "next/og";
 import type { PipelineData } from "@/lib/types";
 
-// Runs at request time (not during build) so the numbers stay fresh whenever
-// data.json changes. Cached upstream by Next.
+// Generated during the static build from the validated public dataset.
 export const alt = "Constellate — Find what's missing in tech";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+export const dynamic = "force-static";
 
 async function readData(): Promise<PipelineData | null> {
   try {
@@ -68,7 +68,7 @@ export default async function OG() {
               letterSpacing: "0.1em",
             }}
           >
-            GAP FINDER · WEEKLY
+            STATIC SIGNAL MAP
           </div>
         </div>
 
@@ -92,14 +92,14 @@ export default async function OG() {
               maxWidth: 920,
             }}
           >
-            Every week, Claude reads tech ideas from 9 feeds and surfaces
-            what&apos;s missing.
+            We analyze signals from 9 leading tech sources and surface what&apos;s
+            missing.
           </div>
         </div>
 
         {/* Metric row */}
         <div style={{ display: "flex", gap: 48, alignItems: "flex-end" }}>
-          <Stat value={absences.toString()} label="GAPS THIS WEEK" color="#C4B5FD" />
+          <Stat value={absences.toString()} label="CURRENT GAPS" color="#C4B5FD" />
           <Stat value={ideas.toString()} label="IDEAS ANALYZED" color="#8EDCE6" />
           <Stat value="constellate.fyi" label="READ MORE" color="#95E1D3" small />
         </div>

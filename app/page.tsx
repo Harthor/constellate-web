@@ -1,11 +1,11 @@
 import Link from "next/link";
 import type { PipelineData } from "@/lib/types";
-import WaitlistForm from "@/components/WaitlistForm";
+import { validatePipelineData } from "@/lib/data-schema";
+import UpdatesCta from "@/components/UpdatesCta";
 import AbsenceCard from "@/components/AbsenceCard";
 import Header from "@/components/Header";
 import PatternsGrid from "@/components/PatternsGrid";
 import ScrollFlash from "@/components/ScrollFlash";
-import EmailPreview from "@/components/EmailPreview";
 
 const sources = [
   "Hacker News",
@@ -19,21 +19,37 @@ const sources = [
   "Papers With Code",
 ];
 
-async function getData(): Promise<{ data: PipelineData | null; mtime: Date | null }> {
+async function getData(): Promise<{
+  data: PipelineData | null;
+  mtime: Date | null;
+  error: string | null;
+}> {
   try {
     const fs = await import("fs");
     const path = await import("path");
     const filePath = path.join(process.cwd(), "public", "data.json");
     const raw = fs.readFileSync(filePath, "utf-8");
     const stat = fs.statSync(filePath);
-    return { data: JSON.parse(raw), mtime: stat.mtime };
-  } catch {
-    return { data: null, mtime: null };
+    const parsed: unknown = JSON.parse(raw);
+    const result = validatePipelineData(parsed);
+    if (!result.success) {
+      return { data: null, mtime: stat.mtime, error: result.errors[0] };
+    }
+    const generatedAt = result.data.metadata.generated_at
+      ? new Date(result.data.metadata.generated_at)
+      : stat.mtime;
+    return { data: result.data, mtime: generatedAt, error: null };
+  } catch (error) {
+    return {
+      data: null,
+      mtime: null,
+      error: error instanceof Error ? error.message : "The data file could not be read.",
+    };
   }
 }
 
 export default async function Home() {
-  const { data, mtime } = await getData();
+  const { data, mtime, error } = await getData();
 
   // Keep the global index alongside each absence so deep links to the map
   // can target a specific constellation (neighborhood_hash is not unique —
@@ -70,15 +86,15 @@ export default async function Home() {
           </h1>
 
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">
-            Every week, Claude reads tech ideas from {sourceCount}{" "}
-            feeds and finds what&apos;s{" "}
+            We analyze signals from {sourceCount}{" "}leading tech sources. Claude
+            surfaces what&apos;s{" "}
             <em className="not-italic" style={{ color: "#C4B5FD" }}>missing</em> —
             real gaps where something could exist but doesn&apos;t.
           </p>
 
           <dl className="mt-10 grid w-full max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">
             {[
-              { value: absenceCount.toString(), label: "gaps this week", accent: "#C4B5FD" },
+              { value: absenceCount.toString(), label: "gaps in this dataset", accent: "#C4B5FD" },
               { value: totalIdeas.toString(), label: "ideas analyzed", accent: "#8EDCE6" },
               { value: sourceCount.toString(), label: "sources", accent: "#95E1D3" },
             ].map((s) => (
@@ -106,7 +122,7 @@ export default async function Home() {
 
           {mtime && (
             <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
-              Last updated:{" "}
+              Last analysis run:{" "}
               {mtime.toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "short",
@@ -125,23 +141,40 @@ export default async function Home() {
               boxShadow: "0 0 24px rgba(167,139,250,0.18)",
             }}
           >
-            See this week&apos;s gaps &darr;
+            See current gaps &darr;
           </a>
 
           <div className="mt-8 flex flex-col items-center gap-3 w-full">
             <p className="text-xs uppercase tracking-[0.2em] text-white/40">
-              Or get them in your inbox
+              Follow future releases
             </p>
-            <WaitlistForm variant="landing" />
-            {absences.length > 0 && (
-              <EmailPreview
-                sampleAbsences={absences.slice(0, 3).map(({ c }) => c)}
-                weekCount={absenceCount}
-              />
-            )}
+            <UpdatesCta variant="landing" />
           </div>
         </div>
       </section>
+
+      {error && (
+        <section className="px-4 pb-12 sm:px-6" aria-live="polite">
+          <div className="mx-auto max-w-3xl rounded-xl border border-amber-300/20 bg-amber-300/[0.05] p-6 text-center">
+            <h2 className="text-lg font-semibold text-white">Pattern data is unavailable</h2>
+            <p className="mt-2 text-sm text-white/60">
+              The published dataset is missing or invalid. The site is still online,
+              but there are no patterns to display right now.
+            </p>
+          </div>
+        </section>
+      )}
+
+      {!error && data && data.constellations.length === 0 && (
+        <section className="px-4 pb-12 sm:px-6" aria-live="polite">
+          <div className="mx-auto max-w-3xl rounded-xl border border-white/10 bg-white/[0.02] p-6 text-center">
+            <h2 className="text-lg font-semibold text-white">No patterns published yet</h2>
+            <p className="mt-2 text-sm text-white/60">
+              The dataset is valid but empty. Check back after the next manual data publication.
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* Top Gaps */}
       {absences.length > 0 && (
@@ -155,14 +188,14 @@ export default async function Home() {
                 className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em]"
                 style={{ color: "#C4B5FD" }}
               >
-                Top Gaps &mdash; this week
+                Top Gaps &mdash; current dataset
               </span>
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 Where something could exist but doesn&apos;t
               </h2>
               <p className="mt-1 text-base text-white/50">
                 Showing the top {absences.length} of {absenceCount} gaps
-                detected this week across {data?.metadata.total_ideas} ideas.
+                detected across {data?.metadata.total_ideas} ideas.
                 Each gap is a real pattern of absence — a logical piece the
                 community keeps circling without naming.
               </p>
@@ -208,7 +241,7 @@ export default async function Home() {
             {[
               {
                 n: "1",
-                title: "We read 9 tech feeds every week",
+                title: "We analyze signals from 9 leading tech sources",
                 desc: "Hacker News, arXiv, GitHub Trending, Y Combinator, Product Hunt, Hugging Face, Dev.to, BetaList, Papers With Code. You never have to add a source.",
               },
               {
@@ -271,24 +304,19 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Waitlist */}
-      <section id="waitlist" className="px-4 py-24 sm:px-6">
+      {/* Updates */}
+      <section id="updates" className="px-4 py-24 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Get weekly gaps in your inbox
+            Follow the next data release
           </h2>
           <p className="mt-4 text-base text-white/55">
-            Every Monday. No spam.
+            A new verified snapshot is published every 1&ndash;2 weeks. The analysis
+            date above always shows how current this dataset is.
           </p>
           <div className="mt-8">
-            <WaitlistForm variant="landing" />
+            <UpdatesCta variant="landing" />
           </div>
-          {absences.length > 0 && (
-            <EmailPreview
-              sampleAbsences={absences.slice(0, 3).map(({ c }) => c)}
-              weekCount={absenceCount}
-            />
-          )}
         </div>
       </section>
 
@@ -303,14 +331,23 @@ export default async function Home() {
         >
           Harthor
         </a>
-        . &copy; 2026. Source-available under{" "}
+        . &copy; 2026. Browse the{" "}
+        <a
+          href="https://github.com/Harthor/constellate-web"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline underline-offset-4 decoration-white/30 hover:decoration-[#8EDCE6] hover:text-[#8EDCE6] transition-colors"
+        >
+          frontend source
+        </a>
+        {" "}or the{" "}
         <a
           href="https://github.com/Harthor/constellate-engine"
           target="_blank"
           rel="noopener noreferrer"
           className="underline underline-offset-4 decoration-white/30 hover:decoration-[#8EDCE6] hover:text-[#8EDCE6] transition-colors"
         >
-          BSL 1.1
+          BSL 1.1 engine
         </a>
         .
       </footer>
