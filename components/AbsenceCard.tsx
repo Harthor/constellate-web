@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import type { Constellation, IdeaRef } from "@/lib/types";
+import type { Constellation } from "@/lib/types";
+import type { CompactIdea } from "@/lib/derived-data";
 import { SOURCE_EMOJI } from "@/lib/types";
 
 // Human-readable source names — used for aria-labels and hover tooltips so
@@ -20,7 +21,7 @@ const SOURCE_LABEL: Record<string, string> = {
 
 interface AbsenceCardProps {
   absence: Constellation;
-  ideas: Record<number, IdeaRef>;
+  ideas: Record<number, CompactIdea>;
   /**
    * Global index of this constellation in the `constellations` array.
    * Used as a unique deep-link target because `neighborhood_hash` is shared
@@ -29,7 +30,7 @@ interface AbsenceCardProps {
   constellationIndex: number;
   /**
    * When true, attaches the `flash-target` class the ScrollFlash component
-   * looks for to pulse a ring after the "See this week's gaps" CTA scrolls
+   * looks for to pulse a ring after the current-gaps CTA scrolls
    * the user down.
    */
   isFlashTarget?: boolean;
@@ -56,7 +57,7 @@ export default function AbsenceCard({
   // Dedupe idea_ids — the engine occasionally emits the same id twice.
   const backingIdeas = Array.from(new Set(absence.idea_ids))
     .map((id) => ({ id, idea: ideas[id] }))
-    .filter((x): x is { id: number; idea: IdeaRef } => Boolean(x.idea));
+    .filter((x): x is { id: number; idea: CompactIdea } => Boolean(x.idea));
 
   // Show up to 4 source emojis from the ideas backing this gap, so the card
   // signals provenance without dragging in full idea titles.

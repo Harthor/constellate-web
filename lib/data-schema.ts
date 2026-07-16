@@ -10,13 +10,15 @@ type ValidationResult =
   | { success: true; data: PipelineData }
   | { success: false; errors: string[] };
 
-const CONSTELLATION_TYPES = new Set([
+export const CONSTELLATION_TYPE_NAMES = [
   "chain",
   "triangulation",
   "convergence",
   "absence",
   "spectrum",
-]);
+] as const;
+
+const CONSTELLATION_TYPES = new Set<string>(CONSTELLATION_TYPE_NAMES);
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -42,6 +44,18 @@ function requireNumber(
   errors: string[],
 ): void {
   if (!isFiniteNumber(value[key])) errors.push(`${path}.${key} must be a finite number`);
+}
+
+function requireNonNegativeInteger(
+  value: Record<string, unknown>,
+  key: string,
+  path: string,
+  errors: string[],
+): void {
+  const candidate = value[key];
+  if (!Number.isInteger(candidate) || (candidate as number) < 0) {
+    errors.push(`${path}.${key} must be a non-negative integer`);
+  }
 }
 
 function validateIdea(value: unknown, path: string, errors: string[]): value is IdeaRef {
@@ -139,9 +153,12 @@ function validateMetadata(value: unknown, errors: string[]): value is PipelineMe
     return false;
   }
 
-  if (
-    value.generated_at !== undefined &&
-    (typeof value.generated_at !== "string" || Number.isNaN(Date.parse(value.generated_at)))
+  if (typeof value.generated_at !== "string" || value.generated_at.trim() === "") {
+    errors.push("metadata.generated_at is required");
+  } else if (
+    !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(
+      value.generated_at,
+    ) || Number.isNaN(Date.parse(value.generated_at))
   ) {
     errors.push("metadata.generated_at must be an ISO-8601 timestamp");
   }
@@ -154,22 +171,32 @@ function validateMetadata(value: unknown, errors: string[]): value is PipelineMe
     "constellation_api_calls",
     "pattern_cache_hits",
     "pattern_api_calls",
-    "estimated_cost_usd",
-    "elapsed_ms",
   ]) {
-    requireNumber(value, key, "metadata", errors);
+    requireNonNegativeInteger(value, key, "metadata", errors);
   }
 
   for (const key of ["constellation_failed_skips", "pattern_failed_skips"]) {
-    if (value[key] !== undefined) requireNumber(value, key, "metadata", errors);
+    if (value[key] !== undefined) {
+      requireNonNegativeInteger(value, key, "metadata", errors);
+    }
+  }
+
+  for (const key of ["estimated_cost_usd", "elapsed_ms"]) {
+    requireNumber(value, key, "metadata", errors);
+    if (isFiniteNumber(value[key]) && value[key] < 0) {
+      errors.push(`metadata.${key} must not be negative`);
+    }
   }
 
   if (!isRecord(value.constellations_by_type)) {
     errors.push("metadata.constellations_by_type must be an object");
   } else {
     for (const [key, count] of Object.entries(value.constellations_by_type)) {
-      if (!isFiniteNumber(count) || count < 0) {
-        errors.push(`metadata.constellations_by_type.${key} must be a non-negative number`);
+      if (!CONSTELLATION_TYPES.has(key)) {
+        errors.push(`metadata.constellations_by_type.${key} is not supported`);
+      }
+      if (!Number.isInteger(count) || (count as number) < 0) {
+        errors.push(`metadata.constellations_by_type.${key} must be a non-negative integer`);
       }
     }
   }
@@ -217,7 +244,48 @@ export function validatePipelineData(value: unknown): ValidationResult {
     });
   }
 
-  validateMetadata(value.metadata, errors);
+  const metadataIsValid = validateMetadata(value.metadata, errors);
+  if (metadataIsValid) {
+    const metadata = value.metadata as unknown as PipelineMetadata;
+    const actualIdeaCount = Object.keys(ideas).length;
+    if (metadata.total_ideas !== actualIdeaCount) {
+      errors.push(
+        `metadata.total_ideas is ${metadata.total_ideas}, but ideas contains ${actualIdeaCount} records`,
+      );
+    }
+
+    if (metadata.constellations_found !== constellations.length) {
+      errors.push(
+        `metadata.constellations_found is ${metadata.constellations_found}, but constellations contains ${constellations.length} records`,
+      );
+    }
+
+    const actualByType = Object.fromEntries(
+      CONSTELLATION_TYPE_NAMES.map((type) => [
+        type,
+        constellations.filter((constellation) => constellation.constellation_type === type)
+          .length,
+      ]),
+    );
+    for (const type of CONSTELLATION_TYPE_NAMES) {
+      const declared = metadata.constellations_by_type[type] ?? 0;
+      if (declared !== actualByType[type]) {
+        errors.push(
+          `metadata.constellations_by_type.${type} is ${declared}, but ${actualByType[type]} ${type} constellations exist`,
+        );
+      }
+    }
+
+    const declaredTypeTotal = Object.values(metadata.constellations_by_type).reduce(
+      (sum, count) => sum + count,
+      0,
+    );
+    if (declaredTypeTotal !== metadata.constellations_found) {
+      errors.push(
+        `metadata.constellations_by_type sums to ${declaredTypeTotal}, but metadata.constellations_found is ${metadata.constellations_found}`,
+      );
+    }
+  }
   if (errors.length > 0) return { success: false, errors };
 
   return {

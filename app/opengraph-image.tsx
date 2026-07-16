@@ -1,18 +1,18 @@
 import { ImageResponse } from "next/og";
-import type { PipelineData } from "@/lib/types";
+import { parseSummaryData, type SummaryData } from "@/lib/derived-data";
 
 // Generated during the static build from the validated public dataset.
-export const alt = "Constellate — Find what's missing in tech";
+export const alt = "Constellate — AI-Powered Technology Gap Discovery";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const dynamic = "force-static";
 
-async function readData(): Promise<PipelineData | null> {
+async function readData(): Promise<SummaryData | null> {
   try {
     const fs = await import("fs");
     const path = await import("path");
-    const p = path.join(process.cwd(), "public", "data.json");
-    return JSON.parse(fs.readFileSync(p, "utf-8"));
+    const p = path.join(process.cwd(), "public", "data", "summary.json");
+    return parseSummaryData(JSON.parse(fs.readFileSync(p, "utf-8")));
   } catch {
     return null;
   }
@@ -68,7 +68,7 @@ export default async function OG() {
               letterSpacing: "0.1em",
             }}
           >
-            STATIC SIGNAL MAP
+            LATEST VERIFIED SNAPSHOT
           </div>
         </div>
 

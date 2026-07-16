@@ -4,13 +4,15 @@ import { useEffect, useState, useCallback, useMemo, useRef } from "react";
 import Link from "next/link";
 import ForceGraph2D from "@/components/ForceGraphWrapper";
 import UpdatesCta from "@/components/UpdatesCta";
-import { validatePipelineData } from "@/lib/data-schema";
+import {
+  parseConstellationMapData,
+  type ConstellationMapData,
+} from "@/lib/derived-data";
 import {
   TYPE_COLORS,
   TYPE_LABELS,
   TYPE_SHORT,
   SOURCE_EMOJI,
-  type PipelineData,
 } from "@/lib/types";
 
 interface GraphNode {
@@ -53,7 +55,7 @@ function truncate(str: string, max: number) {
 }
 
 export default function ConstellationMapPage() {
-  const [data, setData] = useState<PipelineData | null>(null);
+  const [data, setData] = useState<ConstellationMapData | null>(null);
   const [loading, setLoading] = useState(true);
   const [dataError, setDataError] = useState<string | null>(null);
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
@@ -64,48 +66,71 @@ export default function ConstellationMapPage() {
   const [minScore, setMinScore] = useState(6);
   const [searchText, setSearchText] = useState("");
   const [showHelp, setShowHelp] = useState(false);
-  const [viewMode, setViewMode] = useState<"graph" | "cards">(() => {
-    if (typeof window === "undefined") return "cards";
-    const saved = localStorage.getItem("constellate_view_mode");
-    return saved === "graph" || saved === "cards" ? saved : "cards";
-  });
+  const [viewMode, setViewMode] = useState<"graph" | "cards">("cards");
   const [sortOrder, setSortOrder] = useState<"score-desc" | "score-asc" | "type" | "alpha">("score-desc");
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
-  const [ctaDismissed, setCtaDismissed] = useState(
-    () =>
-      typeof window !== "undefined" &&
-      localStorage.getItem("constellate_cta_dismissed") === "1",
-  );
+  const [ctaDismissed, setCtaDismissed] = useState(false);
+  const [preferencesLoaded, setPreferencesLoaded] = useState(false);
   const [mobilePanelOpen, setMobilePanelOpen] = useState(false);
   const graphRef = useRef<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
   const drawnLabelsRef = useRef<Array<{ x: number; y: number; w: number; h: number }>>([]);
   const lastFrameRef = useRef(0);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const requestedView = params.get("view");
+    if (requestedView !== "graph" && requestedView !== "cards") {
+      const savedView = localStorage.getItem("constellate_view_mode");
+      if (savedView === "graph" || savedView === "cards") setViewMode(savedView);
+    }
+    setCtaDismissed(localStorage.getItem("constellate_cta_dismissed") === "1");
+    setPreferencesLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (!preferencesLoaded) return;
     localStorage.setItem("constellate_view_mode", viewMode);
-  }, [viewMode]);
+  }, [preferencesLoaded, viewMode]);
 
   useEffect(() => {
     const controller = new AbortController();
+    let disposed = false;
+    let timedOut = false;
+    const timeout = window.setTimeout(() => {
+      timedOut = true;
+      controller.abort();
+    }, 12_000);
 
     async function loadData() {
       try {
-        const response = await fetch("/data.json", { signal: controller.signal });
+        const response = await fetch("/data/constellations.json", {
+          signal: controller.signal,
+          cache: "force-cache",
+        });
         if (!response.ok) throw new Error(`Data request failed with HTTP ${response.status}`);
         const value: unknown = await response.json();
-        const result = validatePipelineData(value);
-        if (!result.success) throw new Error(result.errors[0]);
-        setData(result.data);
+        setData(parseConstellationMapData(value));
       } catch (error) {
-        if (controller.signal.aborted) return;
-        setDataError(error instanceof Error ? error.message : "Pattern data is unavailable.");
+        if (disposed) return;
+        setDataError(
+          timedOut
+            ? "The pattern data request timed out."
+            : error instanceof Error
+              ? error.message
+              : "Pattern data is unavailable.",
+        );
       } finally {
-        if (!controller.signal.aborted) setLoading(false);
+        window.clearTimeout(timeout);
+        if (!disposed) setLoading(false);
       }
     }
 
     void loadData();
-    return () => controller.abort();
+    return () => {
+      disposed = true;
+      window.clearTimeout(timeout);
+      controller.abort();
+    };
   }, []);
 
   // Deep link: ?c=<index> preselects a constellation; ?type=<kind> restricts
@@ -467,9 +492,35 @@ export default function ConstellationMapPage() {
 
   if (loading) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center" style={{ background: "#0a0e1a" }}>
-        <span className="text-white/60 text-sm font-mono">Loading patterns...</span>
-      </div>
+      <main
+        className="fixed inset-0 overflow-hidden px-4 pt-20 sm:px-6"
+        style={{ background: "#0a0e1a" }}
+        aria-busy="true"
+        aria-live="polite"
+      >
+        <div className="mx-auto max-w-7xl">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <div className="h-4 w-40 animate-pulse rounded bg-white/10" />
+              <p className="mt-3 text-sm font-mono text-white/55">Loading latest analysis…</p>
+            </div>
+            <div className="h-8 w-40 animate-pulse rounded-lg bg-white/[0.06]" />
+          </div>
+          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {Array.from({ length: 6 }, (_, index) => (
+              <div
+                key={index}
+                className="h-56 animate-pulse rounded-xl border border-white/[0.06] bg-white/[0.025] p-5"
+              >
+                <div className="h-5 w-24 rounded bg-white/10" />
+                <div className="mt-5 h-4 w-4/5 rounded bg-white/[0.08]" />
+                <div className="mt-3 h-3 w-full rounded bg-white/[0.05]" />
+                <div className="mt-2 h-3 w-3/4 rounded bg-white/[0.05]" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
     );
   }
 
@@ -479,8 +530,9 @@ export default function ConstellationMapPage() {
         <div className="max-w-lg rounded-xl border border-amber-300/20 bg-amber-300/[0.05] p-8">
           <h1 className="text-xl font-semibold text-white">Pattern data could not be loaded</h1>
           <p className="mt-3 text-sm leading-relaxed text-white/60">
-            The published data file is missing or invalid. Try reloading, or return to the landing page.
+            The latest analysis could not be loaded. Try reloading, or return to the landing page.
           </p>
+          {dataError && <p className="mt-2 text-xs text-white/35">{dataError}</p>}
           <div className="mt-6 flex justify-center gap-3">
             <button onClick={() => window.location.reload()} className="rounded-lg bg-[#8EDCE6] px-4 py-2 text-sm font-semibold text-[#0a0e1a]">
               Reload

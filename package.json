@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "npm run generate:data",
     "dev": "next dev",
     "validate:data": "tsx scripts/validate-data.ts",
-    "build": "npm run validate:data && next build",
+    "generate:data": "tsx scripts/generate-derived-data.ts",
+    "prebuild": "npm run generate:data",
+    "build": "next build",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:smoke": "tsx scripts/smoke-static.ts"
   },
   "dependencies": {
     "next": "^16.2.10",

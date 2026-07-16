@@ -1,77 +1,66 @@
 import Link from "next/link";
-import type { PipelineData } from "@/lib/types";
-import { validatePipelineData } from "@/lib/data-schema";
+import {
+  parseSummaryData,
+  parseTopGapsData,
+  type SummaryData,
+  type TopGapsData,
+} from "@/lib/derived-data";
 import UpdatesCta from "@/components/UpdatesCta";
 import AbsenceCard from "@/components/AbsenceCard";
 import Header from "@/components/Header";
 import PatternsGrid from "@/components/PatternsGrid";
 import ScrollFlash from "@/components/ScrollFlash";
 
-const sources = [
-  "Hacker News",
-  "arXiv",
-  "Y Combinator",
-  "Product Hunt",
-  "GitHub Trending",
-  "Hugging Face",
-  "Dev.to",
-  "BetaList",
-  "Papers With Code",
-];
-
 async function getData(): Promise<{
-  data: PipelineData | null;
-  mtime: Date | null;
+  summary: SummaryData | null;
+  topGaps: TopGapsData | null;
   error: string | null;
 }> {
   try {
     const fs = await import("fs");
     const path = await import("path");
-    const filePath = path.join(process.cwd(), "public", "data.json");
-    const raw = fs.readFileSync(filePath, "utf-8");
-    const stat = fs.statSync(filePath);
-    const parsed: unknown = JSON.parse(raw);
-    const result = validatePipelineData(parsed);
-    if (!result.success) {
-      return { data: null, mtime: stat.mtime, error: result.errors[0] };
+    const dataDirectory = path.join(process.cwd(), "public", "data");
+    const summary = parseSummaryData(
+      JSON.parse(fs.readFileSync(path.join(dataDirectory, "summary.json"), "utf-8")),
+    );
+    const topGaps = parseTopGapsData(
+      JSON.parse(fs.readFileSync(path.join(dataDirectory, "top-gaps.json"), "utf-8")),
+    );
+    if (summary.metadata.generated_at !== topGaps.metadata.generated_at) {
+      throw new Error("Derived homepage files were generated from different snapshots");
     }
-    const generatedAt = result.data.metadata.generated_at
-      ? new Date(result.data.metadata.generated_at)
-      : stat.mtime;
-    return { data: result.data, mtime: generatedAt, error: null };
+    return { summary, topGaps, error: null };
   } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "The derived data files could not be read.";
+    if (process.env.NODE_ENV !== "production") {
+      console.error(`[Constellate] Homepage data unavailable: ${message}`);
+    }
     return {
-      data: null,
-      mtime: null,
-      error: error instanceof Error ? error.message : "The data file could not be read.",
+      summary: null,
+      topGaps: null,
+      error: message,
     };
   }
 }
 
 export default async function Home() {
-  const { data, mtime, error } = await getData();
-
-  // Keep the global index alongside each absence so deep links to the map
-  // can target a specific constellation (neighborhood_hash is not unique —
-  // several constellations can share the same neighborhood).
-  //
-  // Rank by a blend of technical score + actionability so the Top Gaps
-  // the visitor sees first are the ones a solo founder could start on
-  // this week, not the philosophical ones. actionability defaults to 5
-  // (neutral) for legacy absences that predate the v2 prompt.
-  const rank = (c: { score: number; actionability?: number }) =>
-    c.score * 0.5 + (c.actionability ?? 5) * 0.5;
-  const absences = data
-    ? data.constellations
-        .map((c, i) => ({ c, i }))
-        .filter(({ c }) => c.constellation_type === "absence")
-        .sort((a, b) => rank(b.c) - rank(a.c))
-        .slice(0, 12)
-    : [];
-
-  const absenceCount = data?.metadata.constellations_by_type?.absence ?? absences.length;
-  const totalIdeas = data?.metadata.total_ideas ?? 0;
-  const sourceCount = sources.length;
+  const { summary, topGaps, error } = await getData();
+  const absences = topGaps?.gaps ?? [];
+  const absenceCount = summary?.metadata.constellations_by_type.absence;
+  const totalIdeas = summary?.metadata.total_ideas;
+  const sourceCount = summary?.sources.length;
+  const sourcePhrase = sourceCount
+    ? `${sourceCount} leading tech sources`
+    : "leading tech sources";
+  const latestAnalysis = summary
+    ? new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        timeZone: "UTC",
+      }).format(new Date(summary.metadata.generated_at))
+    : null;
 
   return (
     <main className="relative">
@@ -86,17 +75,16 @@ export default async function Home() {
           </h1>
 
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">
-            We analyze signals from {sourceCount}{" "}leading tech sources. Claude
-            surfaces what&apos;s{" "}
-            <em className="not-italic" style={{ color: "#C4B5FD" }}>missing</em> —
-            real gaps where something could exist but doesn&apos;t.
+            Constellate analyzes ideas from {sourcePhrase} and finds what&apos;s{" "}
+            <em className="not-italic" style={{ color: "#C4B5FD" }}>missing</em>
+            &mdash;real gaps where something could exist but doesn&apos;t.
           </p>
 
           <dl className="mt-10 grid w-full max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">
             {[
-              { value: absenceCount.toString(), label: "gaps in this dataset", accent: "#C4B5FD" },
-              { value: totalIdeas.toString(), label: "ideas analyzed", accent: "#8EDCE6" },
-              { value: sourceCount.toString(), label: "sources", accent: "#95E1D3" },
+              { value: absenceCount?.toLocaleString("en-US") ?? "—", label: "gaps detected", accent: "#C4B5FD" },
+              { value: totalIdeas?.toLocaleString("en-US") ?? "—", label: "ideas analyzed", accent: "#8EDCE6" },
+              { value: sourceCount?.toLocaleString("en-US") ?? "—", label: "sources", accent: "#95E1D3" },
             ].map((s) => (
               <div
                 key={s.label}
@@ -120,14 +108,9 @@ export default async function Home() {
             ))}
           </dl>
 
-          {mtime && (
+          {latestAnalysis && (
             <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
-              Last analysis run:{" "}
-              {mtime.toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-              })}
+              Latest analysis: {latestAnalysis}
             </p>
           )}
 
@@ -165,7 +148,7 @@ export default async function Home() {
         </section>
       )}
 
-      {!error && data && data.constellations.length === 0 && (
+      {!error && summary?.metadata.constellations_found === 0 && (
         <section className="px-4 pb-12 sm:px-6" aria-live="polite">
           <div className="mx-auto max-w-3xl rounded-xl border border-white/10 bg-white/[0.02] p-6 text-center">
             <h2 className="text-lg font-semibold text-white">No patterns published yet</h2>
@@ -188,26 +171,26 @@ export default async function Home() {
                 className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em]"
                 style={{ color: "#C4B5FD" }}
               >
-                Top Gaps &mdash; current dataset
+                Top Gaps &mdash; latest analysis
               </span>
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 Where something could exist but doesn&apos;t
               </h2>
               <p className="mt-1 text-base text-white/50">
                 Showing the top {absences.length} of {absenceCount} gaps
-                detected across {data?.metadata.total_ideas} ideas.
+                detected across {totalIdeas?.toLocaleString("en-US")} ideas.
                 Each gap is a real pattern of absence — a logical piece the
                 community keeps circling without naming.
               </p>
             </div>
 
             <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {absences.map(({ c, i }, idx) => (
+              {absences.map(({ absence, ideas, constellationIndex }, idx) => (
                 <AbsenceCard
-                  key={i}
-                  absence={c}
-                  ideas={data!.ideas}
-                  constellationIndex={i}
+                  key={constellationIndex}
+                  absence={absence}
+                  ideas={ideas}
+                  constellationIndex={constellationIndex}
                   isFlashTarget={idx === 0}
                 />
               ))}
@@ -215,7 +198,7 @@ export default async function Home() {
 
             <div className="mt-14 text-center">
               <Link
-                href="/constellation-map?view=cards&type=absence"
+                href="/constellation-map/?view=cards&type=absence"
                 className="rounded-lg px-6 py-3 text-sm font-semibold transition-colors"
                 style={{
                   background: "rgba(142,220,230,0.15)",
@@ -241,8 +224,10 @@ export default async function Home() {
             {[
               {
                 n: "1",
-                title: "We analyze signals from 9 leading tech sources",
-                desc: "Hacker News, arXiv, GitHub Trending, Y Combinator, Product Hunt, Hugging Face, Dev.to, BetaList, Papers With Code. You never have to add a source.",
+                title: sourceCount
+                  ? `We analyze ${sourceCount} leading tech sources`
+                  : "We analyze leading tech sources",
+                desc: `${summary?.sources.join(", ") ?? "The configured technology feeds"}. You never have to add a source.`,
               },
               {
                 n: "2",
@@ -290,7 +275,7 @@ export default async function Home() {
 
           <div className="mt-10 text-center">
             <Link
-              href="/constellation-map?view=cards&type=absence"
+              href="/constellation-map/?view=cards&type=absence"
               className="inline-block rounded-lg px-6 py-3 text-sm font-semibold transition-colors"
               style={{
                 background: "rgba(142,220,230,0.12)",
@@ -311,8 +296,8 @@ export default async function Home() {
             Follow the next data release
           </h2>
           <p className="mt-4 text-base text-white/55">
-            A new verified snapshot is published every 1&ndash;2 weeks. The analysis
-            date above always shows how current this dataset is.
+            The date above identifies the latest manually published snapshot.
+            Follow the repository to see when the next verified release is available.
           </p>
           <div className="mt-8">
             <UpdatesCta variant="landing" />

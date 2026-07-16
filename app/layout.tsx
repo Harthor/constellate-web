@@ -17,9 +17,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "https://constellate.fyi"
   ),
-  title: "Constellate — Find what's missing in tech",
+  title: "Constellate — AI-Powered Technology Gap Discovery",
   description:
-    "We analyze signals from 9 leading tech sources. Constellate surfaces the gaps — things the community keeps circling but nobody has built yet.",
+    "Constellate analyzes ideas from leading technology sources to uncover hidden connections, emerging patterns, and opportunities for products that do not exist yet.",
   alternates: {
     canonical: "/",
   },
@@ -27,17 +27,26 @@ export const metadata: Metadata = {
     icon: "/icon.svg",
   },
   openGraph: {
-    title: "Constellate — Find what's missing in tech",
+    title: "Constellate — AI-Powered Technology Gap Discovery",
     description:
-      "We analyze signals from 9 leading tech sources and surface absences — real gaps where something could exist but doesn't.",
+      "Constellate analyzes ideas from leading technology sources to uncover hidden connections, emerging patterns, and opportunities for products that do not exist yet.",
     url: "/",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Constellate technology gap discovery overview",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Constellate — Find what's missing in tech",
+    title: "Constellate — AI-Powered Technology Gap Discovery",
     description:
-      "We analyze signals from 9 leading tech sources and surface the gaps — what could exist but doesn't.",
+      "Constellate analyzes ideas from leading technology sources to uncover hidden connections, emerging patterns, and opportunities for products that do not exist yet.",
+    images: ["/twitter-image"],
   },
 };
 

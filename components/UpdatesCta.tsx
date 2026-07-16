@@ -15,9 +15,9 @@ export default function UpdatesCta({ variant = "landing" }: UpdatesCtaProps) {
           backdropFilter: "blur(16px)",
         }}
       >
-        <p className="text-sm font-semibold text-white">Want future data releases?</p>
+        <p className="text-sm font-semibold text-white">Weekly digest coming soon</p>
         <p className="mb-3 mt-0.5 text-xs text-white/50">
-          Follow the open-source frontend on GitHub.
+          Follow the open-source frontend for verified data releases.
         </p>
         <a
           href={WEB_REPOSITORY}
@@ -44,7 +44,7 @@ export default function UpdatesCta({ variant = "landing" }: UpdatesCtaProps) {
         Follow on GitHub
       </a>
       <p className="mt-3 text-xs text-white/40">
-        Email updates are paused; the current dataset remains fully browsable.
+        Weekly digest coming soon. No email form is active yet.
       </p>
     </div>
   );

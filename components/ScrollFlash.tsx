@@ -5,7 +5,7 @@ import { useEffect } from "react";
 /**
  * Tiny client component that adds a brief ring animation to the first element
  * inside `#top-gaps .absence-flashtarget` when the user arrives at the #top-gaps
- * anchor. Confirms visually which section the "See this week's gaps ↓" CTA
+ * anchor. Confirms visually which section the "See current gaps ↓" CTA
  * scrolled them to.
  *
  * Respects prefers-reduced-motion.
